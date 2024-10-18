@@ -13,6 +13,7 @@ const countries = {
   "Okdi":"public/emblems/Okdian-Kingdom-Emblem.png",
   "Straia":"public/emblems/Straian-Empire-Emblem.png",
   "Yeonguk":"public/emblems/Most-Serene-Republic-of-Yeonguk-Emblem.png",
+  "Any":"public/emblems/Neutral.png",
   "Neutral":"public/emblems/Neutral.png",
   "Uknown":"public/emblems/Unknown.png",
   "null":"public/emblems/Unknown.png",
@@ -27,7 +28,8 @@ const nationalities = {
   "Okdi":"Okdian",
   "Straia":"Straian",
   "Yeonguk":"Yeongukish",
-  "Neutral":"Any/Neutral",
+  "Any":"Any"
+  "Neutral":"Neutral",
   "Uknown":"Uknown",
   "null":"Uknown",
   "?":"Uknown",
