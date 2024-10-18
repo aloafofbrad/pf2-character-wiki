@@ -35,3 +35,6 @@ design/*
 
 # Vue sample code
 src/sample/*
+
+# Backup files
+*.bak
