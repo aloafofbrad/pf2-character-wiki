@@ -1,0 +1,32 @@
+{
+  "backgrounds":{
+    "null": {
+      "id": -1,
+      "name": "null",
+      "rarity": "null",
+      "boosts": ["null", "null"],
+      "AoNID": null
+    },
+    "Street Urchin": {
+      "id": 0,
+      "name": "Street Urchin",
+      "rarity": "Common",
+      "boosts": ["Dex", "Con"],
+      "AoNID": 33
+    },
+    "Royalty": {
+      "id": 1,
+      "name": "Royalty",
+      "rarity": "Rare",
+      "boosts": ["Int", "Cha"],
+      "AoNID": 189
+    },
+    "Hermit": {
+      "id": 2,
+      "name": "Hermit",
+      "rarity": "Common",
+      "boosts": ["Con", "Int"],
+      "AoNID": 21
+    }
+  }
+}
