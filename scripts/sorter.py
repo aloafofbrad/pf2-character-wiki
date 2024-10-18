@@ -3,11 +3,19 @@ from jsonreadwriter import JsonReadWriter
 
 # Object that sorts a json array inside of a file
 class Sorter:
-    def __init__(self, filename:str, key:str, ascending:bool=True):
+    """
+    Args:
+    filename     the json file to be used. Also sets this for the JsonReadWriter object
+    key          the key used to sort each object in the json array (e.g. "id")
+    arrayKey     the key used to access the json array (e.g. "data")
+    ascending    sets the sort to be ascending/descending. Ascending by default
+    """
+    def __init__(self, filename:str, key:str, arrayKey:str="data", ascending:bool=True):
         self.setFilename(filename)
         self.setKey(key)
+        self.setArrayKey(arrayKey)
         self.setAscending(ascending)
-        self.__arrayKey = "data"
+        # self.__arrayKey = "data"
         # self.__setRawData(None)
         self.readWriter = JsonReadWriter(filename)
 
@@ -20,6 +28,12 @@ class Sorter:
         self.__key = key
     def getKey(self) -> str:
         return self.__key
+    
+    def setArrayKey(self, key:str) -> None:
+        self.__arrayKey = key
+    def getArrayKey(self) -> str:
+        return self.__arrayKey
+    
     
     def setAscending(self, ascending:bool=True) -> None:
         self.__ascending = ascending
@@ -36,7 +50,7 @@ class Sorter:
         array = []
         try:
             # array = data[self.__arrayKey]
-            array = self.readWriter.getRawData()[self.__arrayKey]
+            array = self.readWriter.getRawData()[self.getArrayKey()]
         except KeyError as e:
             print(e)
         return array
@@ -45,7 +59,7 @@ class Sorter:
     def __insertArray(self, data:list) -> None:
         # self.__rawData[self.__arrayKey] = data
         rawdata = self.readWriter.getRawData()
-        rawdata[self.__arrayKey] = data
+        rawdata[self.getArrayKey()] = data
         self.readWriter.setRawData(rawdata)
     
     def sort(self):
