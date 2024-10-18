@@ -28,7 +28,7 @@ const nationalities = {
   "Okdi":"Okdian",
   "Straia":"Straian",
   "Yeonguk":"Yeongukish",
-  "Any":"Any"
+  "Any":"Any",
   "Neutral":"Neutral",
   "Uknown":"Uknown",
   "null":"Uknown",
