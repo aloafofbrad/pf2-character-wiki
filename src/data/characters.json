@@ -99,7 +99,7 @@
                 },
                 "status": "?",
                 "biography": [
-                    "?"
+                    "A being of great power. He wreaks a path of devastation upon any land that he visits.","He attacked Knork, the capitol of Kolis, where the party had just awoken in the hospital. He summoned an ogre warrior and a mysterious young man to help him attack the city. He has not been seen since this attack."
                 ]
             }
         },
@@ -124,7 +124,7 @@
                 },
                 "status": "?",
                 "biography": [
-                    "?"
+                    "A mysterious young man who seems to be in cahoots with Grandpa. He seems to have similar powers to Grandpa."
                 ]
             }
         },
@@ -399,7 +399,7 @@
                 "class": "?",
                 "level": "?",
                 "pronouns": "He/Him",
-                "nationality": "?",
+                "nationality": "Any",
                 "age": {
                     "age": "25 or older",
                     "exact": true,
