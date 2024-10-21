@@ -6,7 +6,7 @@ class JsonReadWriter:
         self.setFilename(filename)
         self.setRawData(None)
         
-    def setFilename(self, filename) -> None:
+    def setFilename(self, filename:str) -> None:
         self.__filename = filename
     def getFilename(self) -> str:
         return self.__filename
