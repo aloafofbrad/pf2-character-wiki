@@ -1,3 +1,4 @@
+from config import DATA_KEY
 import json
 from jsonreadwriter import JsonReadWriter
 
@@ -10,7 +11,7 @@ class Sorter:
     arrayKey     the key used to access the json array (e.g. "data")
     ascending    sets the sort to be ascending/descending. Ascending by default
     """
-    def __init__(self, filename:str, key:str, arrayKey:str="data", ascending:bool=True):
+    def __init__(self, filename:str, key:str, arrayKey:str=DATA_KEY, ascending:bool=True):
         self.setFilename(filename)
         self.setKey(key)
         self.setArrayKey(arrayKey)
@@ -19,7 +20,7 @@ class Sorter:
         # self.__setRawData(None)
         self.readWriter = JsonReadWriter(filename)
 
-    def setFilename(self, filename) -> None:
+    def setFilename(self, filename:str) -> None:
         self.__filename = filename
     def getFilename(self) -> str:
         return self.__filename
@@ -94,8 +95,8 @@ class Sorter:
         # /\ Test/debug code /\
 
 def driver():
-    import config
-    sorter = Sorter(config.CHARACTER_FILE, key="id")
+    from config import CHARACTER_FILE
+    sorter = Sorter(CHARACTER_FILE, key="id")
     # sorter.__read()
     sorter.sort()
 
