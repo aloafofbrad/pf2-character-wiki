@@ -44,18 +44,20 @@ class Reader:
     key         the key to use for target
     printKey    If True, prints the key before the value.
     """
-    def __printKeyValue(self, target:dict, key:str, printKey:bool=True) -> None:
+    def __printKeyValue(self, target:dict, key:str, printKey:bool=False) -> None:
         try:
             keyPrintValue = ""
+            endPrintValue = "\t"
             if printKey:
                 keyPrintValue = f"{key}\t"
+                endPrintValue = "\n"
             objectType = type(target[key])
             if objectType in [int, float, str, None]:
-                print(f"""{keyPrintValue}{target[key]}""")
+                print(f"""{keyPrintValue}{target[key]}""",end=endPrintValue)
             elif objectType in [list, dict]:
-                print(f"""{keyPrintValue}{target[key]}""")         
+                print(f"""{keyPrintValue}{target[key]}""",end=endPrintValue)         
         except KeyError as e:
-            print(e)
+            pass
     
     # Prints an object that resides in a JSON object
     # Can be a dictionary, array, etc. Type agnostic
@@ -63,7 +65,12 @@ class Reader:
         try:
             print(f"""{object}""")
         except Exception as e:
-            print(e)
+            pass
+    
+    def __printHeader(self) -> None:
+        for key in self.__keys:
+            print(key, end="\t")
+        print()
 
     # Prints objects assigned to given keys
     """
@@ -75,9 +82,10 @@ class Reader:
     ...
 
     """
-    def printObjects(self, printKey:bool=True) -> None:
+    def printObjects(self, printKey:bool=False) -> None:
         self.__read()
         data = self.readWriter.getRawData()[self.__arrayKey]
+        self.__printHeader()
         for obj in data:
             try: # Expected to raise KeyError if obj doesn't have an "info" key
                 for key in self.__keys:
