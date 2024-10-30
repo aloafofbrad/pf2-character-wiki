@@ -63,9 +63,8 @@ function renderLink() {
 
   var key = anKey()
   var value = ancestries.ancestries[key]
-  console.log(key)
-  console.log(value)
-  return value !== null && value !== undefined
+  console.log(key + ":" + value)
+  return exists(value)
 }
 
 function setup(){
