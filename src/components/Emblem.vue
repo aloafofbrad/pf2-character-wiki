@@ -43,7 +43,6 @@ const hover = ref(false)
   <div class="Emblem prevent-select" :tooltip="nationalities[nationality]"
     @mouseenter="hover = true" @mouseleave="hover = false"
   >
-    <Subtitle v-if="hover" :name="nationalities[nationality]" :type="Normal"></Subtitle>
     <img id="emblem" :src="imageUrl(nationality)" :title="nationalities[nationality]"/>
   </div>
 </template>
