@@ -14,7 +14,7 @@ const hover = ref(false)
 </script>
 
 <template>
-  <div class="Tile"
+  <div class="Tile snappy"
     :style="{ backgroundImage: 'url(' + imageUrl + ')' }"
     @mouseenter="hover = true" @mouseleave="hover = false"
   >
@@ -44,6 +44,5 @@ const hover = ref(false)
 .Tile:hover {
   box-shadow: 0px 0px 12px 8px black;
   scale:calc(1.1);
-  transition-duration: 250ms;
 }
 </style>
