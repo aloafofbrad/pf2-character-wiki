@@ -1,0 +1,119 @@
+{
+    "ancestries":{
+      "Alchemist": {
+        "id": 0,
+        "name": "Alchemist",
+        "AoNID": 1
+      },
+      "Barbarian": {
+        "id": 1,
+        "name": "Barbarian",
+        "AoNID": 2
+      },
+      "Bard": {
+        "id": 2,
+        "name": "Bard",
+        "AoNID": 32
+      },
+      "Champion": {
+        "id": 3,
+        "name": "Champion",
+        "AoNID": 4
+      },
+      "Cleric": {
+        "id": 4,
+        "name": "Cleric",
+        "AoNID": 33
+      },
+      "Druid": {
+        "id": 5,
+        "name": "Druid",
+        "AoNID": 34
+      },
+      "Fighter": {
+        "id": 6,
+        "name": "Fighter",
+        "AoNID": 35
+      },
+      "Investigator": {
+        "id": 7,
+        "name": "Investigator",
+        "AoNID": 13
+      },
+      "Kineticist": {
+        "id": 8,
+        "name": "Kineticist",
+        "AoNID": 23
+      },
+      "Magus": {
+        "id": 9,
+        "name": "Magus",
+        "AoNID": 17
+      },
+      "Monk": {
+        "id": 10,
+        "name": "Monk",
+        "AoNID": 8
+      },
+      "Oracle": {
+        "id": 11,
+        "name": "Oracle",
+        "AoNID": 14
+      },
+      "Psychic": {
+        "id": 12,
+        "name": "Psychic",
+        "AoNID": 21
+      },
+      "Ranger": {
+        "id": 13,
+        "name": "Ranger",
+        "AoNID": 36
+      },
+      "Rogue": {
+        "id": 14,
+        "name": "Rogue",
+        "AoNID": 37
+      },
+      "Sorcerer": {
+        "id": 15,
+        "name": "Sorcerer",
+        "AoNID": 11
+      },
+      "Summoner": {
+        "id": 16,
+        "name": "Summoner",
+        "AoNID": 18
+      },
+      "Swashbuckler": {
+        "id": 17,
+        "name": "Swashbuckler",
+        "AoNID": 15
+      },
+      "Thaumaturge": {
+        "id": 18,
+        "name": "Thaumaturge",
+        "AoNID": 22
+      },
+      "Witch": {
+        "id": 19,
+        "name": "Witch",
+        "AoNID": 38
+      },
+      "Wizard": {
+        "id": 20,
+        "name": "Wizard",
+        "AoNID": 39
+      },
+      "Gunslinger": {
+        "id": 21,
+        "name": "Gunslinger",
+        "AoNID": 20
+      },
+      "Inventor": {
+        "id": 22,
+        "name": "Inventor",
+        "AoNID": 19
+      }
+    }
+  }
