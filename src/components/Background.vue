@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
-import backgrounds from '../data/backgrounds.json'
 import Dynalink from './Dynalink.vue';
+import backgrounds from '../data/backgrounds.json'
 
 const props = defineProps({
   background:{
@@ -10,12 +10,25 @@ const props = defineProps({
   }
 })
 
+const addendum = computed (() => {
+  var result = ""
+  var key = bgKey()
+  var rarity = backgrounds.backgrounds[key]["rarity"]
+  if (rarity !== "Common") {
+    result = `${rarity}!`
+  }
+  return result
+})
+
 const innerText = computed(() => {
   var result = "Background: "
   if (props.background === "" || props.background === "?"){
     return result.concat("?")
   }
-  return result.concat(props.background)
+  if (addendum.value !== "" && addendum.value !== "?") {
+    return result.concat(`${props.background} (${addendum.value})`)
+  }
+  return result.concat(`${props.background}`)
 })
 
 const domain = ref('https://2e.aonprd.com/')
@@ -68,6 +81,7 @@ function setup(){
     :domain="domain"
     :path="path"
     :params="backgroundParams"
+    :title="tooltip"
     class="contents"
   />
   <p v-else class="contents">{{ innerText }}</p>
