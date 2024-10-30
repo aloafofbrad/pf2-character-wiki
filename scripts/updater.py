@@ -77,23 +77,28 @@ class Updater:
 
     args
     value       The value to be written to the object
+    start       Which index to start at
+    stop        If -1, updates every object
     insideInfo  If true, update this field inside the info object
     allowNull   If true, allows the field to be given a None/null value
     """
-    def updateJSONObjects(self, value=None, insideInfo:bool=True, allowNull:bool=False):
+    def updateJSONObjects(self, value=None, start:int=0, stop:int=-1, insideInfo:bool=True, allowNull:bool=False):
         # Use the defined default value if none is given
         if value == None and not allowNull:
             value = self.__value
+
+        if stop == -1:
+            stop = len(data)
         
         if self.readWriter.getRawData() == None:
             self.__read()
         data = self.__extractArray(self.readWriter.getRawData())
 
         if insideInfo:
-            for i in range(0, len(data)):
+            for i in range(start, stop):
                 data[i][self.__infoKey][self.__key] = value
         else:
-            for i in range(0, len(data)):
+            for i in range(start, stop):
                 data[i][self.__key] = value
 
         self.__insertArray(data)
