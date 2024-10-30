@@ -85,8 +85,8 @@ function showHumanYears() {
 </script>
 
 <template>
-    <li v-if="showHumanYears()" tooltip="Human Years">{{ age }}</li>
-    <li v-else>{{ age }}</li>
+    <li class="tag" v-if="showHumanYears()" tooltip="Human Years">{{ age }}</li>
+    <li class="tag" v-else>{{ age }}</li>
 </template>
 
 <style>

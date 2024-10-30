@@ -32,3 +32,39 @@ body {
   color: white;
   background: black;
 }
+
+.tag {
+  width: fit-content;
+  font-size: small;
+  border-radius: 16px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  transition-duration: 125ms;
+}
+
+.tagList {
+  list-style-type: none;
+}
+
+.tagList > .tag {
+  background-color: white;
+  color: black;
+}
+
+.tag:hover {
+  background-color: #b4dd1e;
+  /* color: white; */
+}
+
+.tag > a:hover {
+  background-color: unset;
+  color: inherit;
+}
+
+.snappy {
+  transition-duration: 250ms;
+}
