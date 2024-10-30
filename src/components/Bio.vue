@@ -3,6 +3,7 @@ import Age from './Age.vue'
 import Ancestry from './Ancestry.vue'
 import Background from './Background.vue'
 import Class from './Class.vue'
+import CharacterType from './CharacterType.vue'
 import Dynalink from './Dynalink.vue'
 import Emblem from './Emblem.vue'
 import Group from './Group.vue'
@@ -26,7 +27,7 @@ function setup(){
     <h1 v-else id="characterName">{{ info.name }}</h1>
     <div class="BasicInfoBox">
         <ul class="tagList">
-          <li class="tag" v-if="info.type !== 'Normal'" tooltip="This entry represents a {{ info.type }}.">Type: {{ info.type }}</li>
+          <li class="tag" v-if="info.type !== 'Normal'"><CharacterType :type="info.type" :customTooltip="''"/></li>
           <li class="tag" v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</li>
           <li class="tag"><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></li>
           <li class="tag"><Background :background="info.background"/></li>
@@ -92,7 +93,7 @@ function setup(){
   margin-top:0;
   align-items:flex-start;
   justify-content: flex-start;
-  border-top: 2px dotted #000;
+  /* border-top: 2px dotted white; */
   font-family: serif;
   background-color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(16px);
@@ -154,7 +155,7 @@ function setup(){
 
 .BasicInfoBox {
   padding-right: 2em;
-  border: 1px dotted;
+  /* border: 1px dotted; */
 }
 
 .BasicInfoBox > ul {
@@ -171,7 +172,7 @@ function setup(){
   flex-flow: row wrap;
   align-items: flex-start;
   justify-content: flex-start;
-  border: 1px white dotted;
+  /* border: 1px white dotted; */
 }
 
 /* #biography > ul {
