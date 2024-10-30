@@ -21,38 +21,40 @@ function setup(){
 </script>
 
 <template class="bio">
-  <div id="leftColumn">
-    <div id="deselect" class="prevent-select" @click="$emit('deselectEntry')" @keyup.esc="$emit('deselectEntry')">x close</div>
-    <img id="pic" :src="imageUrl()" alt="img" @click="$emit('deselectEntry')"/>
-    <h1 v-if="info.type !== 'Normal'" id="characterName">{{ info.name }} ({{ info.type }})</h1>
-    <h1 v-else id="characterName">{{ info.name }}</h1>
-    <div class="BasicInfoBox">
-        <ul class="tagList">
-          <li class="tag" v-if="info.type !== 'Normal'"><CharacterType :type="info.type" :customTooltip="''"/></li>
-          <li class="tag" v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</li>
-          <li class="tag"><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></li>
-          <li class="tag"><Background :background="info.background"/></li>
-          <li class="tag"><Class :class="info.class" :level="info.level"/></li>
-          <li class="tag" v-if="info.deity !== ''"><Deity :deity="info.deity"/></li>
-          <li class="tag">ID: {{ info.id }}</li>
-        </ul>
-      </div>
-  </div>
-  <div id="rightColumn">
-    <div id="basics">
-      <Emblem :nationality="info.nationality"/>
+  <div id="deselect" class="prevent-select tag" @click="$emit('deselectEntry')" @keyup.esc="$emit('deselectEntry')">X</div>
+  <div id="split">
+    <div id="leftColumn">
+      <img id="pic" :src="imageUrl()" alt="img" @click="$emit('deselectEntry')"/>
+      <h1 v-if="info.type !== 'Normal'" id="characterName">{{ info.name }} ({{ info.type }})</h1>
+      <h1 v-else id="characterName">{{ info.name }}</h1>
       <div class="BasicInfoBox">
-        <ul class="tagList">
-          <Age :age="info.age" :ancestry="info.ancestry"/>
-          <li class="tag" v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</li>
-          <li class="tag" v-if="info.nationality">Nationality: {{ info.nationality }}</li>
+          <ul class="tagList">
+            <li class="tag" v-if="info.type !== 'Normal'"><CharacterType :type="info.type" :customTooltip="''"/></li>
+            <li class="tag" v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</li>
+            <li class="tag"><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></li>
+            <li class="tag"><Background :background="info.background"/></li>
+            <li class="tag"><Class :class="info.class" :level="info.level"/></li>
+            <li class="tag" v-if="info.deity !== ''"><Deity :deity="info.deity"/></li>
+            <li class="tag">ID: {{ info.id }}</li>
+          </ul>
+        </div>
+    </div>
+    <div id="rightColumn">
+      <div id="basics">
+        <Emblem :nationality="info.nationality"/>
+        <div class="BasicInfoBox">
+          <ul class="tagList">
+            <Age :age="info.age" :ancestry="info.ancestry"/>
+            <li class="tag" v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</li>
+            <li class="tag" v-if="info.nationality">Nationality: {{ info.nationality }}</li>
+          </ul>
+        </div>
+      </div>
+      <div id="biography">
+        <ul>
+          <p v-for="bi in info.biography" :key="bi.id">{{ bi }}</p>
         </ul>
       </div>
-    </div>
-    <div id="biography">
-      <ul>
-        <p v-for="bi in info.biography" :key="bi.id">{{ bi }}</p>
-      </ul>
     </div>
   </div>
 </template>
@@ -80,30 +82,33 @@ function setup(){
 } */
 /* /\ /\ /\ /\ DEBUG /\ /\ /\ /\ */
 
-/* CONTAINS leftColumn, rightColumn */
+/* Contains #split */
 #bio {
-  display:flex;
-  flex-direction: row;
-  position: absolute;
+  flex-direction: column;
+  z-index: 2;
   top: 24px;
-  /* top: calc(24px + 128px); */
-  /* width: calc(100vw - 16px); */
   width: 100vw;
-  height: 100vh;
   bottom: 100%;
-  padding-top:0;
-  margin-top:0;
-  align-items:flex-start;
-  justify-content: flex-start;
-  /* border-top: 2px dotted white; */
-  font-family: serif;
+  height: calc(100vh - 24px);
   background-color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(16px);
 }
 
+/* CONTAINS leftColumn, rightColumn */
+#split {
+  flex-direction: row;
+  z-index: 1;
+}
+
+#bio, #split {
+  display: flex;
+  position: absolute;
+  font-family: serif;
+}
+
 /* \/ \/ \/ \/ LEFT COLUMN \/ \/ \/ \/ */
 #leftColumn {
-  width: 256px;
+  width: 352px;
   height: 100%;
   display: flex;
   flex-flow: column wrap;
@@ -111,17 +116,16 @@ function setup(){
 }
 
 #pic {
-  width: 100%;
-  background-color: #696969;
+  width: 256px;
+  padding-left: 48px;
+  padding-right: 48px;
 }
 
 #characterName {
-  width: 120%;
+  width: 100%;
   margin: 0;
   padding-left: 0.25em;
-  padding-right: 0.25em;
   word-wrap: break-word;
-  /* font-family: serif; */
 }
 
 #leftColumn > .BasicInfoBox {
@@ -129,8 +133,7 @@ function setup(){
 }
 
 #leftColumn > .tagList, #leftColumn > .tagList > .tag {
-  position: absolute;
-  left: 2px;
+  padding-left: 4px;
 }
 /* /\ /\ /\ /\ LEFT COLUMN /\ /\ /\ /\ */
 
@@ -142,11 +145,6 @@ function setup(){
   flex-flow: column wrap;
   align-items: flex-start;
 }
-
-/* #rightColumn {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-family: serif;
-} */
 
 #basics {
   width: 100%;
@@ -168,35 +166,27 @@ function setup(){
 
 #biography {
   width: calc(100% - 2em);
-  padding-top: 1em;
-  padding-left: 1em;
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
   justify-content: flex-start;
-  /* border: 1px white dotted; */
 }
 
-/* #biography > ul {
-} */
 /* /\ /\ /\ /\ RIGHT COLUMN /\ /\ /\ /\ */
 
-/* div, h1, li, p, #characterName {
-  color: #bababa;
-} */
-
 #deselect {
-  width: calc(256px - 16px);
+  position: absolute;
+  z-index: 3;
   height: 1.5em;
-  font-size: x-small;
+  font-family: monospace;
+  font-weight: bold;
   text-align: center;
   background-color: white;
   color: black;
 }
 
 #deselect:hover {
-  background-color: black;
-  color: white;
+  background-color: #b4dd1e;
 }
 
 .tag:hover {
