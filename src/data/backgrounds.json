@@ -1,32 +1,52 @@
 {
   "backgrounds":{
-    "null": {
-      "id": -1,
-      "name": "null",
-      "rarity": "null",
-      "boosts": ["null", "null"],
-      "AoNID": null
-    },
     "Street Urchin": {
       "id": 0,
       "name": "Street Urchin",
       "rarity": "Common",
-      "boosts": ["Dex", "Con"],
       "AoNID": 33
     },
     "Royalty": {
       "id": 1,
       "name": "Royalty",
       "rarity": "Rare",
-      "boosts": ["Int", "Cha"],
       "AoNID": 189
     },
     "Hermit": {
       "id": 2,
       "name": "Hermit",
       "rarity": "Common",
-      "boosts": ["Con", "Int"],
       "AoNID": 21
+    },
+    "Junk Collector": {
+      "id": 3,
+      "name": "Junk Collector",
+      "rarity": "Common",
+      "AoNID": 274
+    },
+    "Back-Alley Doctor": {
+      "id": 4,
+      "name": "Back-Alley Doctor",
+      "rarity": "Common",
+      "AoNID": 267
+    },
+    "Emissary": {
+      "id": 5,
+      "name": "Emissary",
+      "rarity": "Common",
+      "AoNID": 420
+    },
+    "Scholar": {
+      "id": 6,
+      "name": "Scholar",
+      "rarity": "Common",
+      "AoNID": 440
+    },
+    "Entertainer": {
+      "id": 7,
+      "name": "Entertainer",
+      "rarity": "Common",
+      "AoNID": 421
     }
   }
 }
