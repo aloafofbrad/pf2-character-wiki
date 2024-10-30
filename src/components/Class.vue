@@ -36,16 +36,16 @@ const innerText = computed(() => {
   if (props.level === "" || props.level === "?"){
     return result.concat(`${props.class}`)
   }
+  
+  // Select a suffix based on the level provided.
+  // Since the expected range of numbers is only 1-20,
+  // (maybe sometimes 0), levels 1-3 are the only ones
+  // that use suffixes other than "th".
   var levelSuffix = "th"
-  if (props.level === "1") {
-    levelSuffix = "st"
-  }
-  else if (props.level === "2") {
-    levelSuffix = "nd"
-  }
-  else if (props.level === "3") {
-    levelSuffix = "rd"
-  }
+  if (props.level === "1") {      levelSuffix = "st" }
+  else if (props.level === "2") { levelSuffix = "nd" }
+  else if (props.level === "3") { levelSuffix = "rd" }
+
   return result.concat(`${props.level}${levelSuffix}-level ${props.class}`)
 })
 
