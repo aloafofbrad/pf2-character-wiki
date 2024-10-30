@@ -20,18 +20,18 @@ function setup(){
 
 <template class="bio">
   <div id="leftColumn">
-    <img id="pic" :src="imageUrl()" alt="img"/>
+    <div id="deselect" class="prevent-select" @click="$emit('deselectEntry')" @keyup.esc="$emit('deselectEntry')">x close</div>
+    <img id="pic" :src="imageUrl()" alt="img" @click="$emit('deselectEntry')"/>
     <h1 v-if="info.type !== 'Normal'" id="characterName">{{ info.name }} ({{ info.type }})</h1>
     <h1 v-else id="characterName">{{ info.name }}</h1>
     <div class="BasicInfoBox">
-        <ul>
-          <li v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</li>
-          <li><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></li>
-          <!-- <li>Background: {{ info.background }}</li> -->
-          <li><Background :background="info.background"/></li>
-          <li v-if="info.level !== '?' && info.level !== ''">Class: {{ info.level }}-level {{ info.class }}</li>
-          <li v-else>Class: {{ info.class }}</li>
-          <li>ID: {{ info.id }}</li>
+        <ul class="tagList">
+          <li class="tag" v-if="info.type !== 'Normal'" tooltip="This entry represents a {{ info.type }}.">Type: {{ info.type }}</li>
+          <li class="tag" v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</li>
+          <li class="tag"><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></li>
+          <li class="tag"><Background :background="info.background"/></li>
+          <li class="tag"><Class :class="info.class" :level="info.level"/></li>
+          <li class="tag">ID: {{ info.id }}</li>
         </ul>
       </div>
   </div>
@@ -39,10 +39,10 @@ function setup(){
     <div id="basics">
       <Emblem :nationality="info.nationality"/>
       <div class="BasicInfoBox">
-        <ul>
+        <ul class="tagList">
           <Age :age="info.age" :ancestry="info.ancestry"/>
-          <li v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</li>
-          <li v-if="info.nationality">Nationality: {{ info.nationality }}</li>
+          <li class="tag" v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</li>
+          <li class="tag" v-if="info.nationality">Nationality: {{ info.nationality }}</li>
         </ul>
       </div>
     </div>
@@ -77,17 +77,15 @@ function setup(){
 } */
 /* /\ /\ /\ /\ DEBUG /\ /\ /\ /\ */
 
-#characterName, li, p, .Bio > div, Age, Ancestry, Background, Emblem {
-  color:black;
-}
-
 /* CONTAINS leftColumn, rightColumn */
 #bio {
   display:flex;
   flex-direction: row;
-  /* top: 24px; */
-  top: calc(24px + 128px);
-  width: calc(100vw - 16px);
+  position: absolute;
+  top: 24px;
+  /* top: calc(24px + 128px); */
+  /* width: calc(100vw - 16px); */
+  width: 100vw;
   height: 100vh;
   bottom: 100%;
   padding-top:0;
@@ -96,6 +94,8 @@ function setup(){
   justify-content: flex-start;
   border-top: 2px dotted #000;
   font-family: serif;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(16px);
 }
 
 /* \/ \/ \/ \/ LEFT COLUMN \/ \/ \/ \/ */
@@ -108,17 +108,26 @@ function setup(){
 }
 
 #pic {
-  width: 256px;
+  width: 100%;
   background-color: #696969;
 }
 
 #characterName {
-  max-width: 256px;
+  width: 120%;
   margin: 0;
   padding-left: 0.25em;
   padding-right: 0.25em;
   word-wrap: break-word;
   /* font-family: serif; */
+}
+
+#leftColumn > .BasicInfoBox {
+  width: 100%;
+}
+
+#leftColumn > .tagList, #leftColumn > .tagList > .tag {
+  position: absolute;
+  left: 2px;
 }
 /* /\ /\ /\ /\ LEFT COLUMN /\ /\ /\ /\ */
 
@@ -144,25 +153,59 @@ function setup(){
 }
 
 .BasicInfoBox {
-  /* padding-right: 4px; */
-  border: 1px solid;
+  padding-right: 2em;
+  border: 1px dotted;
 }
 
 .BasicInfoBox > ul {
   margin: 0;
-  padding-left: 1.5em;
+  padding-left: 0;
   padding-right: 1.5em;
 }
 
 #biography {
-  width: 100%;
+  width: calc(100% - 2em);
+  padding-top: 1em;
+  padding-left: 1em;
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
   justify-content: flex-start;
+  border: 1px white dotted;
 }
 
 /* #biography > ul {
 } */
 /* /\ /\ /\ /\ RIGHT COLUMN /\ /\ /\ /\ */
+
+/* div, h1, li, p, #characterName {
+  color: #bababa;
+} */
+
+#deselect {
+  width: calc(256px - 16px);
+  height: 1.5em;
+  font-size: x-small;
+  text-align: center;
+  background-color: white;
+  color: black;
+}
+
+#deselect:hover {
+  background-color: black;
+  color: white;
+}
+
+.tag:hover {
+  scale: calc(1.05);
+}
+
+.tag > p {
+  color: black;
+}
+
+.tag > a:hover {
+  color: black;
+}
+
 </style>

@@ -91,13 +91,16 @@ function isAValidId(id) {
 }
 
 function setSelectedEntry(id) {
+  console.log("setting selected entry to: " + id)
   if (isAValidId(id) && id !== selected.value){
     // console.log("changing selected value \"" + selected.value + "\" to \"" + id + "\"")
     selected.value = id
   }
   else{
     selected.value = DESELECTED
+    console.log("deselected")
   }
+  console.log("set selected.value = " + selected.value)
 }
 
 function getSelectedEntry() {
@@ -236,7 +239,12 @@ const arranged = computed(() => {
       </Tile>
     </div>
     <div id="bio" v-show="!noSelectionMade()">
-      <Bio :ID="selected.value" :info="getSelectedEntry().info"/>
+      <Bio
+        :ID="selected.value"
+        :info="getSelectedEntry().info"
+        @deselect-entry="deselectEntry()"
+        @select-entry="handleTileClick(entry.id)">
+      </Bio>
     </div>
   </main>
 </template>
@@ -266,10 +274,10 @@ main {
   scroll-behavior: auto;
 }
 
-#Bio {
+/* #Bio {
   top: calc(24px + 256px + 8px);
-  /* max-height: calc(100vh - 24px - 256px - 8px); */
-}
+  max-height: calc(100vh - 24px - 256px - 8px);
+} */
 
 #ArtContainer > .Tile {
   margin: 2px;
