@@ -52,9 +52,8 @@ const backgroundParams = computed(() => {
 function renderLink() {
   var key = bgKey()
   var value = backgrounds.backgrounds[key]
-  console.log(key)
-  console.log(value)
-  return value !== null && value !== undefined
+  console.log(key + ":" + value)
+  return exists(value)
   // return (backgroundParams["ID"] !== null && backgroundParams["ID"] !== undefined)
 }
 
