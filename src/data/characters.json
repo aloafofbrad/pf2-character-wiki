@@ -22,7 +22,8 @@
                 "status": "?",
                 "biography": [
                     "?"
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -50,7 +51,8 @@
                     "Russel was always sending him letters back of his adventures exploring historical sites and forgotten tombs. He would receive old trinkets from Russel that basil would attempt to guess what they were used for. He would often end up over thinking it and include them in some over engineered and conviluted creation and convince himself that this was definately what it would have looked like and been used for.",
                     "One day though the letters from his brother stopped and after one too many accidental fires/explosions caused by his \"reconstructed creations\" he was encouraged by the rest of his large family to finally take the steps and explore for himself and find his brother.",
                     "Being fresh to the world though every shiny thing Basil saw must be something far more important than what it seems to be. That shiny penny in the gutter? It must be a clue from some historical mystery because it had a slight chip in the upper right corner that could be a sypher to the next step in finding Russel or a grand treasure... For example."
-                ]
+                ],
+                "deity": "Lao Shu Po"
             }
         },
         {
@@ -75,7 +77,8 @@
                 "status": "In Party",
                 "biography": [
                     "?"
-                ]
+                ],
+                "deity": "Bes"
             }
         },
         {
@@ -99,8 +102,10 @@
                 },
                 "status": "?",
                 "biography": [
-                    "A being of great power. He wreaks a path of devastation upon any land that he visits.","He attacked Knork, the capitol of Kolis, where the party had just awoken in the hospital. He summoned an ogre warrior and a mysterious young man to help him attack the city. He has not been seen since this attack."
-                ]
+                    "A being of great power. He wreaks a path of devastation upon any land that he visits.",
+                    "He attacked Knork, the capitol of Kolis, where the party had just awoken in the hospital. He summoned an ogre warrior and a mysterious young man to help him attack the city. He has not been seen since this attack."
+                ],
+                "deity": ""
             }
         },
         {
@@ -125,7 +130,8 @@
                 "status": "?",
                 "biography": [
                     "A mysterious young man who seems to be in cahoots with Grandpa. He seems to have similar powers to Grandpa."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -150,7 +156,8 @@
                 "status": "In Party",
                 "biography": [
                     "?"
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -177,7 +184,8 @@
                     "Freddy Tsar of Kolis.",
                     "Freddy has scar on hand.",
                     "Freddy die after Wubbins Goose Potato assissination plot, thanks to party and peanut allergy."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -202,7 +210,8 @@
                 "status": "Missing",
                 "biography": [
                     "Mac is a mysterious little feline found at Sir George Grimcomb's house."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -227,7 +236,8 @@
                 "status": "?",
                 "biography": [
                     "?"
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -252,7 +262,8 @@
                 "status": "Alive",
                 "biography": [
                     "?"
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -280,7 +291,8 @@
                     "He was hired by the Psycho Bitches to play music at their underground fashion show in the Tin Trove Mine.",
                     "Later he was hired by the Lord Butler Nathaniel Hammer to perform standup comedy at a dinner party. He made a racist joke about ratfolk when he noticed Basil Nimble-Fingers in the audience.",
                     "Current whereabouts: unknown."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -305,7 +317,8 @@
                 "status": "?",
                 "biography": [
                     ""
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -333,7 +346,8 @@
                     "Where Georg get Egg? Real big mystery.",
                     "Seem like going to hatch.",
                     "Georg entrust to Basil, Sol."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -358,7 +372,8 @@
                 "status": "?",
                 "biography": [
                     "?"
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -383,7 +398,8 @@
                 "status": "?",
                 "biography": [
                     "?"
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -409,7 +425,8 @@
                 "biography": [
                     "These curious creatures can be found keeping all manner of pubs and taverns. Some hearty specimens can even be found in the occasional distillery.",
                     "No one is quite sure how their biology truly works."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -434,7 +451,8 @@
                 "status": "?",
                 "biography": [
                     "?"
-                ]
+                ],
+                "deity": "Bes"
             }
         },
         {
@@ -459,7 +477,8 @@
                 "status": "Away",
                 "biography": [
                     "An Emissary of Bes befriended by the party. She seems nice, albeit reserved."
-                ]
+                ],
+                "deity": "Bes"
             }
         },
         {
@@ -485,7 +504,8 @@
                 "biography": [
                     "\"Wubbins knows all, Wubbins sees all.\"",
                     "A mysterious entity that oversees Kolis. He and Goose Potato asked the party to help him overthrow Tsar Freddy so that Georg could take Freddy's place."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -511,7 +531,8 @@
                 "biography": [
                     "In collaboration with Wubbins', he engineered a special poison to kill Tsar Freddy, which turned out to just be peanut oil--exploiting Freddy's peanut allergy.",
                     "Sol, Basil, Quinn, Georg, and Rachel Brooks awoke in tubes in his lab after leaving Nathaniel Hammer's dinner party several months prior. He told them they had been asleep the entire time."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -537,7 +558,8 @@
                 "biography": [
                     "Georg Ex. She slap Georg at Freddy brunch and yell at Georg in front of nobles. Embarassing.",
                     "Seemed bit neutral about Freddy demise."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -562,7 +584,8 @@
                 "status": "Dead",
                 "biography": [
                     "A dessert that broke free from the Palace kitchens in Kolis."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -587,7 +610,8 @@
                 "status": "?",
                 "biography": [
                     "Hated denizens of inns, markets, kitchens, and eateries everywhere."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -612,7 +636,8 @@
                 "status": "?",
                 "biography": [
                     "Basil Nimble-Fingers' older brother. An explorer and archaeologist."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -637,7 +662,8 @@
                 "status": "?",
                 "biography": [
                     "Russel Gatsby Nimble-Fingers' close friend."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -662,7 +688,8 @@
                 "status": "?",
                 "biography": [
                     "Someone Russel mentioned in one of his letters to Basil. Not much else is known about her(?)."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -687,7 +714,8 @@
                 "status": "Mythological",
                 "biography": [
                     "A dragon present in Frambean folklore. Supposedly, he resides in a cavern called the Eastern Lair in the Savage Burrows."
-                ]
+                ],
+                "deity": ""
             }
         },
         {
@@ -712,7 +740,8 @@
                 "status": "?",
                 "biography": [
                     "A foreign wizard hired by Wubbins to look after the village of Kursk."
-                ]
+                ],
+                "deity": ""
             }
         }
     ]
