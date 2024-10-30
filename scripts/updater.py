@@ -52,11 +52,6 @@ class Updater:
         self.__ascending = ascending
     def getAscending(self) -> bool:
         return self.__ascending
-    
-    # def __setRawData(self, rawData) -> None:
-    #     self.__rawData = rawData
-    # def __clearRawData(self) -> None:
-    #     self.__setRawData(None)
 
     # Grabs the inner, unsorted array from the dict (json object)
     def __extractArray(self, data:dict) -> list:
@@ -106,25 +101,10 @@ class Updater:
         self.readWriter.clearRawData()
     
     def __write(self) -> None:
-        # json_data = json.dumps(self.__rawData, indent=4)
-        # with open(self.__filename, "w") as outfile:
-        #     outfile.write(json_data)
         self.readWriter.write()
 
     def __read(self) -> None:
-        # rawData = None
-        # with open(self.__filename, "r") as infile:
-        #     rawData = json.load(infile)
-        # if rawData != None:
-        #     self.__setRawData(rawData)
         self.readWriter.read()
-
-        # \/ Test/debug code \/
-        # data = rawData["data"]
-        # for dict in data:
-        #     curr = dict["info"]
-        #     print(f"""{curr["id"]}\t{curr["name"]}""")
-        # /\ Test/debug code /\
 
 def driver():
     from config import CHARACTER_FILE
