@@ -4,6 +4,7 @@ import Ancestry from './Ancestry.vue'
 import Background from './Background.vue'
 import Class from './Class.vue'
 import CharacterType from './CharacterType.vue'
+import Deity from './Deity.vue'
 import Dynalink from './Dynalink.vue'
 import Emblem from './Emblem.vue'
 import Group from './Group.vue'
@@ -32,6 +33,7 @@ function setup(){
           <li class="tag"><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></li>
           <li class="tag"><Background :background="info.background"/></li>
           <li class="tag"><Class :class="info.class" :level="info.level"/></li>
+          <li class="tag" v-if="info.deity !== ''"><Deity :deity="info.deity"/></li>
           <li class="tag">ID: {{ info.id }}</li>
         </ul>
       </div>
