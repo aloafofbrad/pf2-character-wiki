@@ -27,22 +27,18 @@ const hover = ref(false)
 
 <style>
 .Tile {
-  display:block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   width: 128px;
   height: 128px;
-  /* background-image: v-bind(imageUrl); */
   background-size:cover;
-  /* border: 2px solid #f0f; */
   background-color: #696969;
   transition-duration: 125ms;
 }
 
-.Tile > p {
-  visibility: hidden;
-}
-
 .Tile:hover {
   box-shadow: 0px 0px 12px 8px black;
-  scale:calc(1.1);
+  scale: calc(1.1);
 }
 </style>
