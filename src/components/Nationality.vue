@@ -61,8 +61,8 @@ const hover = ref(false)
 
 .Nationality > img {
   /* border-radius: 16px; */
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.25em;
+  height: 1.25em;
   margin-left: 4px;
 }
 </style>
