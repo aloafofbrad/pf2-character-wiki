@@ -229,7 +229,7 @@ const arranged = computed(() => {
   </header>
   
   <main>
-    <div id="ArtContainer">
+    <div id="ArtContainer" v-show="noSelectionMade()">
       <Tile
         v-show="isAValidId(entry.id)"
         v-for="entry in arranged"
