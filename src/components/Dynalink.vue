@@ -53,7 +53,7 @@ const url = computed (() => {
 </script>
 
 <template>
-  <a :href="url">{{ innerText }}</a>
+  <a :href="url" target="_blank">{{ innerText }}</a>
 </template>
 
 <style>
