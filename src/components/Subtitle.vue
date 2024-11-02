@@ -17,7 +17,7 @@ const props = defineProps({
 
 <style>
 .SubtitleBox {
-    display: inherit;
+    display: flex;
     position: fixed;
     top: 64px;
     width: 128px;
@@ -30,6 +30,8 @@ const props = defineProps({
     font-size: 40%;
     word-wrap: break-word;
     text-align: center;
+    justify-content: center;
+    align-content: center;
     
     /* padding: 2px; */
     border-radius: 0px;
@@ -44,17 +46,5 @@ const props = defineProps({
     --h: 5px;
     --w: 10px;
     --p: 50%;
-}
-
-/* .SubtitleBox > * {
-    font-family: serif;
-} */
-
-.SubtitleBox > h1 {
-    margin: 0;
-    padding-top: 5%;
-    padding-left: 2.5%;
-    padding-right: 0;
-    padding-bottom: 0;
 }
 </style>
