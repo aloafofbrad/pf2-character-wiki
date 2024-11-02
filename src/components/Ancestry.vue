@@ -46,7 +46,6 @@ const ancestryParams = computed(() => {
   var result = null
   try{
     var key = anKey()
-    console.log(ancestries.ancestries[key]['AoNID'])
     result = {"ID":`${ancestries.ancestries[key]['AoNID']}`}
   }
   catch (e){
@@ -57,13 +56,8 @@ const ancestryParams = computed(() => {
 })
 
 function renderLink() {
-  // var result = ancestries.ancestries[props.ancestry]
-  // return result !== null && result !== undefined
-  // return (ancestryParams["ID"] !== null && ancestryParams["ID"] !== undefined)
-
   var key = anKey()
   var value = ancestries.ancestries[key]
-  console.log(key + ":" + value)
   return exists(value)
 }
 
