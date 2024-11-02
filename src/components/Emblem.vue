@@ -1,40 +1,12 @@
 <script setup>
 import { ref, computed } from 'vue'
-import Subtitle from './Subtitle.vue'
+import countries from '../data/countries.json'
+import nationalities from '../data/nationalities.json'
 
 const props = defineProps({
   nationality: String
 })
-const countries = {
-  "Aremia":"public/emblems/Aremian-Empire-Emblem.png",
-  "Esmaa":"public/emblems/Esmaan-Diocese-Emblem.png",
-  "Frambe":"public/emblems/Frambean-Empire-Emblem.png",
-  "Kolis":"public/emblems/Protectorate-of-Kolis-Emblem.png",
-  "Okdi":"public/emblems/Okdian-Kingdom-Emblem.png",
-  "Straia":"public/emblems/Straian-Empire-Emblem.png",
-  "Yeonguk":"public/emblems/Most-Serene-Republic-of-Yeonguk-Emblem.png",
-  "Any":"public/emblems/Neutral.png",
-  "Neutral":"public/emblems/Neutral.png",
-  "Uknown":"public/emblems/Unknown.png",
-  "null":"public/emblems/Unknown.png",
-  "?":"public/emblems/Unknown.png",
-  "":"public/emblems/Unknown.png"
-}
-const nationalities = {
-  "Aremia":"Aremian",
-  "Esmaa":"Esmaan",
-  "Frambe":"Frambean",
-  "Kolis":"Kolissian",
-  "Okdi":"Okdian",
-  "Straia":"Straian",
-  "Yeonguk":"Yeongukish",
-  "Any":"Any",
-  "Neutral":"Neutral",
-  "Uknown":"Uknown",
-  "null":"Uknown",
-  "?":"Uknown",
-  "":"Uknown"
-}
+
 function imageUrl() { return new URL(`/${countries[props.nationality]}`, import.meta.url).href; }
 const hover = ref(false)
 </script>
@@ -70,5 +42,15 @@ const hover = ref(false)
   height: var(--size);
   margin: 0;
   padding: 0;
+}
+
+@media only screen and (orientation:portrait){
+  #emblem {
+    --size: 64px;
+    position: absolute;
+    z-index: 3;
+    left: calc(10% - calc(var(--size) / 2));
+    top: calc(var(--size) + 24px);
+  }
 }
 </style>
