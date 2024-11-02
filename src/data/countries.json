@@ -1,0 +1,17 @@
+{
+    "countries":{
+        "Aremia":"public/emblems/Aremian-Empire-Emblem.png",
+        "Esmaa":"public/emblems/Esmaan-Diocese-Emblem.png",
+        "Frambe":"public/emblems/Frambean-Empire-Emblem.png",
+        "Kolis":"public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "Okdi":"public/emblems/Okdian-Kingdom-Emblem.png",
+        "Straia":"public/emblems/Straian-Empire-Emblem.png",
+        "Yeonguk":"public/emblems/Most-Serene-Republic-of-Yeonguk-Emblem.png",
+        "Any":"public/emblems/Neutral.png",
+        "Neutral":"public/emblems/Neutral.png",
+        "Uknown":"public/emblems/Unknown.png",
+        "null":"public/emblems/Unknown.png",
+        "?":"public/emblems/Unknown.png",
+        "":"public/emblems/Unknown.png"
+    }
+}

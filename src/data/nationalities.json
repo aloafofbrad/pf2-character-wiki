@@ -1,0 +1,17 @@
+{
+    "nationalities":{
+        "Aremia":"Aremian",
+        "Esmaa":"Esmaan",
+        "Frambe":"Frambean",
+        "Kolis":"Kolissian",
+        "Okdi":"Okdian",
+        "Straia":"Straian",
+        "Yeonguk":"Yeongukish",
+        "Any":"Any",
+        "Neutral":"Neutral",
+        "Uknown":"Uknown",
+        "null":"Uknown",
+        "?":"Uknown",
+        "":"Uknown"
+    }
+}
