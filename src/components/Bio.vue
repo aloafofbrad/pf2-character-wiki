@@ -5,9 +5,7 @@ import Background from './Background.vue'
 import Class from './Class.vue'
 import CharacterType from './CharacterType.vue'
 import Deity from './Deity.vue'
-import Dynalink from './Dynalink.vue'
-import Emblem from './Emblem.vue'
-import Group from './Group.vue'
+import Nationality from './Nationality.vue'
 import { ref, computed } from 'vue'
 
 const props = defineProps({
@@ -28,31 +26,21 @@ function setup(){
       <h1 v-if="info.type !== 'Normal'" id="characterName">{{ info.name }} ({{ info.type }})</h1>
       <h1 v-else id="characterName">{{ info.name }}</h1>
       <div class="BasicInfoBox">
-          <ul class="tagList">
-            <li class="tag" v-if="info.type !== 'Normal'"><CharacterType :type="info.type" :customTooltip="''"/></li>
-            <li class="tag" v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</li>
-            <li class="tag"><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></li>
-            <li class="tag"><Background :background="info.background"/></li>
-            <li class="tag"><Class :class="info.class" :level="info.level"/></li>
-            <li class="tag" v-if="info.deity !== ''"><Deity :deity="info.deity"/></li>
-            <Age class="visible-mobile" :age="info.age" :ancestry="info.ancestry"/>
-            <li class="tag visible-mobile" v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</li>
-            <li class="tag visible-mobile" v-if="info.nationality">Nationality: {{ info.nationality }}</li>
-            <li class="tag">ID: {{ info.id }}</li>
-          </ul>
+          <div class="tagList">
+            <p class="tag" v-if="info.type !== 'Normal'"><CharacterType :type="info.type" :customTooltip="''"/></p>
+            <p class="tag" v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</p>
+            <p class="tag"><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></p>
+            <p class="tag"><Background :background="info.background"/></p>
+            <p class="tag"><Class :class="info.class" :level="info.level"/></p>
+            <p class="tag" v-if="info.deity !== ''"><Deity :deity="info.deity"/></p>
+            <p class="tag"><Age :age="info.age" :ancestry="info.ancestry"/></p>
+            <p class="tag" v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</p>
+             <Nationality class="tag" v-if="info.nationality" :nationality="info.nationality"/>
+            <p class="tag">ID: {{ info.id }}</p>
+          </div>
         </div>
     </div>
     <div id="rightColumn">
-      <div id="basics">
-        <Emblem :nationality="info.nationality"/>
-        <div class="BasicInfoBox">
-          <ul class="tagList">
-            <Age class="visible-landscape" :age="info.age" :ancestry="info.ancestry"/>
-            <li class="tag visible-landscape" v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</li>
-            <li class="tag visible-landscape" v-if="info.nationality">Nationality: {{ info.nationality }}</li>
-          </ul>
-        </div>
-      </div>
       <div id="biography">
         <ul>
           <p v-for="bi in info.biography" :key="bi.id">{{ bi }}</p>
@@ -126,11 +114,10 @@ function setup(){
     z-index: 1;
   }
 
-  .tagList {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
+  #leftColumn > .BasicInfoBox > .tagList {
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* align-items: center; */
   }
 
   .visible-landscape {
