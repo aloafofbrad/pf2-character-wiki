@@ -66,14 +66,9 @@ function setup(){
     :domain="domain"
     :path="path"
     :params="ancestryParams"
-    class="contents"
   />
-  <p v-else class="contents">{{ innerText }}</p>
+  <p v-else>{{ innerText }}</p>
 </template>
 
 <style>
-.contents {
-  margin: 0;
-  padding: 0;
-}
 </style>

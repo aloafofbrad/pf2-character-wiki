@@ -82,14 +82,9 @@ function setup(){
     :path="path"
     :params="backgroundParams"
     :title="tooltip"
-    class="contents"
   />
-  <p v-else class="contents">{{ innerText }}</p>
+  <p v-else>{{ innerText }}</p>
 </template>
 
 <style>
-.contents {
-  margin: 0;
-  padding: 0;
-}
 </style>
