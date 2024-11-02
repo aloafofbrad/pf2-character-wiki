@@ -12,10 +12,6 @@ const props = defineProps({
   }
 })
 
-function exists(x) {
-  return x !== null && x !== undefined
-}
-
 const innerText = computed(() => {
   var result = "Type: "
   if (props.type !== ""){
@@ -39,54 +35,11 @@ const tooltip = computed(() => {
   }
   return result
 })
-
-// const domain = ref('https://2e.aonprd.com/')
-// const path = ref('Ancestries.aspx')
-
-// const ancestryParams = computed(() => {
-//   var result = null
-//   try{
-//     var key = anKey()
-//     console.log(ancestries.ancestries[key]['AoNID'])
-//     result = {"ID":`${ancestries.ancestries[key]['AoNID']}`}
-//   }
-//   catch (e){
-//     // console.log(e) // Mainly just logging safe typeerrors
-//     return null
-//   }
-//   return result
-// })
-
-// function renderLink() {
-//   // var result = ancestries.ancestries[props.ancestry]
-//   // return result !== null && result !== undefined
-//   // return (ancestryParams["ID"] !== null && ancestryParams["ID"] !== undefined)
-
-//   // var key = anKey()
-//   // var value = ancestries.ancestries[key]
-//   // console.log(key + ":" + value)
-//   // return exists(value)
-// }
-
-function setup(){
-}
 </script>
 
 <template>
-  <!-- <Dynalink v-if="renderLink()"
-    :inner-text="innerText"
-    :domain="domain"
-    :path="path"
-    :params="ancestryParams"
-    class="contents"
-  />
-  <p v-else class="contents">{{ innerText }}</p> -->
-  <p class="contents" :title="tooltip">{{ innerText }}</p>
+  <p :title="tooltip">{{ innerText }}</p>
 </template>
 
 <style>
-.contents {
-  margin: 0;
-  padding: 0;
-}
 </style>
