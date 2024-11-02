@@ -39,6 +39,7 @@ body {
 }
 
 .tag {
+  height: fit-content;
   width: fit-content;
   font-size: small;
   border-radius: 16px;
@@ -48,12 +49,22 @@ body {
   padding-right: 8px;
   margin-top: 1px;
   margin-bottom: 1px;
+  margin-right: 1px;
+  margin-left: 1px;
   transition-duration: 125ms;
+}
+
+.tag > * {
+  margin: 0;
+  padding: 0;
 }
 
 .tagList {
   list-style-type: none;
-  /* display: flex; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
 }
 
 .tagList > .tag {
