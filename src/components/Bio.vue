@@ -57,6 +57,7 @@ function setup(){
       </div>
     </div>
   </div>
+  <div></div>
 </template>
 
 <style>
@@ -85,19 +86,34 @@ function setup(){
 /* Contains #split */
 #bio {
   flex-direction: column;
+  flex-wrap: wrap;
   z-index: 2;
   top: 24px;
   width: 100vw;
-  bottom: 100%;
-  height: calc(100vh - 24px);
+  height: 100%;
+  min-height: calc(100vh - 24px);
   background-color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(16px);
+  overflow-y: auto;
 }
 
 /* CONTAINS leftColumn, rightColumn */
-#split {
-  flex-direction: row;
-  z-index: 1;
+@media only screen and (orientation: landscape){
+  #split {
+    justify-content: flex-start;
+    z-index: 1;
+  }
+}
+
+@media only screen and (orientation: portrait){
+  #split {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+
+    z-index: 1;
+  }
 }
 
 #bio, #split {
