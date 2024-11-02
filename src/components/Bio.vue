@@ -9,8 +9,11 @@ import Nationality from './Nationality.vue'
 import { ref, computed } from 'vue'
 
 const props = defineProps({
+  ID: Object,
   info: Object
 })
+
+const emit = defineEmits(['deselect-entry', 'select-entry'])
 function imageUrl() { return new URL(`/${props.info.image}`, import.meta.url) }
 
 function setup(){
@@ -19,10 +22,10 @@ function setup(){
 </script>
 
 <template class="bio">
-  <div id="deselect" class="prevent-select tag" @click="$emit('deselectEntry')" @keyup.esc="$emit('deselectEntry')">X</div>
+  <div id="deselect" class="prevent-select tag" @click="$emit('deselect-entry')" @keyup.esc="$emit('deselect-entry')">X</div>
   <div id="split">
     <div id="leftColumn">
-      <img id="pic" :src="imageUrl()" alt="img" @click="$emit('deselectEntry')"/>
+      <img id="pic" :src="imageUrl()" alt="img" @click="$emit('deselect-entry')"/>
       <h1 v-if="info.type !== 'Normal'" id="characterName">{{ info.name }} ({{ info.type }})</h1>
       <h1 v-else id="characterName">{{ info.name }}</h1>
       <div class="BasicInfoBox">
