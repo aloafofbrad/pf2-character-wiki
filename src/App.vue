@@ -91,16 +91,13 @@ function isAValidId(id) {
 }
 
 function setSelectedEntry(id) {
-  console.log("setting selected entry to: " + id)
   if (isAValidId(id) && id !== selected.value){
-    // console.log("changing selected value \"" + selected.value + "\" to \"" + id + "\"")
     selected.value = id
   }
   else{
     selected.value = DESELECTED
-    console.log("deselected")
   }
-  console.log("set selected.value = " + selected.value)
+  console.log(`selected entry: ${id}`)
 }
 
 function getSelectedEntry() {
@@ -261,23 +258,16 @@ main {
 }
 
 #ArtContainer {
-  width: 100vw; 
-  /* min-height: calc(256px + 8px); */
+  max-width: 100vw;
   max-height: calc(100vh - 24px);
   top: 24px;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   align-items: flex-start;
   justify-content: flex-start;
   align-content: flex-start;
   scroll-behavior: auto;
 }
-
-/* #Bio {
-  top: calc(24px + 256px + 8px);
-  max-height: calc(100vh - 24px - 256px - 8px);
-} */
 
 #ArtContainer > .Tile {
   margin: 2px;
