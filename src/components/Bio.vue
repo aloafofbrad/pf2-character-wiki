@@ -35,6 +35,9 @@ function setup(){
             <li class="tag"><Background :background="info.background"/></li>
             <li class="tag"><Class :class="info.class" :level="info.level"/></li>
             <li class="tag" v-if="info.deity !== ''"><Deity :deity="info.deity"/></li>
+            <Age class="visible-mobile" :age="info.age" :ancestry="info.ancestry"/>
+            <li class="tag visible-mobile" v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</li>
+            <li class="tag visible-mobile" v-if="info.nationality">Nationality: {{ info.nationality }}</li>
             <li class="tag">ID: {{ info.id }}</li>
           </ul>
         </div>
@@ -44,9 +47,9 @@ function setup(){
         <Emblem :nationality="info.nationality"/>
         <div class="BasicInfoBox">
           <ul class="tagList">
-            <Age :age="info.age" :ancestry="info.ancestry"/>
-            <li class="tag" v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</li>
-            <li class="tag" v-if="info.nationality">Nationality: {{ info.nationality }}</li>
+            <Age class="visible-landscape" :age="info.age" :ancestry="info.ancestry"/>
+            <li class="tag visible-landscape" v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</li>
+            <li class="tag visible-landscape" v-if="info.nationality">Nationality: {{ info.nationality }}</li>
           </ul>
         </div>
       </div>
@@ -103,6 +106,14 @@ function setup(){
     justify-content: flex-start;
     z-index: 1;
   }
+
+  .visible-landscape {
+    display: inherit;
+  }
+
+  .visible-mobile {
+    display: none;
+  }
 }
 
 @media only screen and (orientation: portrait){
@@ -113,6 +124,21 @@ function setup(){
     align-items: flex-start;
 
     z-index: 1;
+  }
+
+  .tagList {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .visible-landscape {
+    display: none;
+  }
+
+  .visible-mobile {
+    display: inherit;
   }
 }
 
