@@ -24,8 +24,8 @@ const SORT_ALPHA_DESC = "alphabetical_desc"
 const SORT_CHRONO_DESC = "chronological_desc"
 
 const selected = ref(DESELECTED)
-const history = ref([])
-const index = ref(-1)
+const history = ref([-1,])
+const index = ref(0)
 const userRegex = ref('')
 const SEARCH_BLEACH = "/[^a-zA-Z0-9 -\?]/g"
 
@@ -76,7 +76,6 @@ function sortChronologically() {
   sortParadigm.value = SORT_CHRONO
 }
 
-// Selection setters, getters, validations
 function deselectEntry() {
   setSelectedEntry(DESELECTED)
 }
@@ -97,7 +96,7 @@ function setSelectedEntry(id) {
   else{
     selected.value = DESELECTED
   }
-  console.log(`selected entry: ${id}`)
+  console.log(`NOW VIEWING ENTRY: ${id}`)
 }
 
 function getSelectedEntry() {
@@ -121,29 +120,28 @@ function isAValidHistoricalIndex(value) {
 
 function goBack() {
   setIndex(index.value - 1)
-  setSelectedEntry(history[index.value].value)
+  setSelectedEntry(history.value[index.value])
 }
 
 function goForward() {
   setIndex(index.value + 1)
-  setSelectedEntry(history[index.value].value)
+  setSelectedEntry(history.value[index.value])
 }
 
 function setIndex(value) {
+  var old = 0 + index.value
   if (!isAValidHistoricalIndex(value)){
     return
   }
   index.value = value
+  // console.log(`history index, prev: ${old}`)
+  // console.log(`history index, curr: ${index.value}`)
 }
 
-function pushHistory(index) {
-  history.value.push(index)
-  setIndex(index + 1)
-}
-
-function shiftHistory() {
-  var erasedHistory = history.value.shift()
-  setIndex(index - 1)
+function pushHistory(curr) {
+  history.value.push(curr)
+  setIndex(index.value + 1)
+  // console.log(`history: ${history.value}`)
 }
 
 function handleTileClick(id) {
@@ -157,6 +155,11 @@ function handleTileClick(id) {
   console.log(history.value)
 }
 
+function handleBioClose(){
+  // pushHistory(DESELECTED)
+  deselectEntry()
+}
+
 // Search
 function updateSearch(query) {
   userRegex.value = cleanString(query)
@@ -166,7 +169,6 @@ function cleanString(s){
   return s.replace(SEARCH_BLEACH, "")
 }
 
-// const sortParadigm = ref(SORT_ALPHA)
 const sortParadigm = ref(SORT_CHRONO)
 const sortParadigms = reactive({
   [SORT_ALPHA]: compareNames,
@@ -175,7 +177,6 @@ const sortParadigms = reactive({
 
 function sort(list) {
   var paradigm = sortParadigms[sortParadigm.value]
-  // console.log("sortParadigms['" + sortParadigm.value + "'] = " + paradigm)
   if (paradigm === null || paradigm === undefined){
     return list.slice()
   }
@@ -184,7 +185,6 @@ function sort(list) {
 
 function matchesRegex(s, regex){
   try {
-    // var result = regex.match(s)
     var result = regex.test(s)
     return result
   }
@@ -200,12 +200,8 @@ function filter(list){
   if (userRegex.value === "" || userRegex.value === null || userRegex === undefined){
     return list.slice()
   }
-  // var regex = "/".concat(userRegex.value.concat("/g"))
-  // var regex = cleanString(userRegex.value)
-  // var regex = "/".concat(userRegex.value).concat("/g")
   var regex = new RegExp(userRegex.value.toLowerCase())
   console.log("regex\t" + regex)
-  // return list.slice().filter(x => regex.match(x['info']['name']))
   return list.filter(entry => matchesRegex(entry['info']['name'].toLowerCase(), regex))
 }
 
@@ -219,7 +215,7 @@ const arranged = computed(() => {
 
 <template>
   <header>
-    <Navbar :searchQuery="userRegex" :history="history" :index="index.value" :version="packageJson.version"
+    <Navbar :searchQuery="userRegex" :history="history" :index="index" :version="packageJson.version"
       @go-back="goBack" @go-forward="goForward" @sort-alphabetically="sortAlphabetically"
       @sort-chronologically="sortChronologically" @update-search="updateSearch"
     />
@@ -239,7 +235,7 @@ const arranged = computed(() => {
       <Bio
         :ID="selected.value"
         :info="getSelectedEntry().info"
-        @deselect-entry="deselectEntry()"
+        @deselect-entry="handleBioClose()"
         @select-entry="handleTileClick(entry.id)">
       </Bio>
     </div>

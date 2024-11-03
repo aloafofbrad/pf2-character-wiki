@@ -3,11 +3,12 @@ import { ref, computed } from 'vue'
 
 const props = defineProps({
     history: {
-        Type: Array,
-        Default: []
+        // Type: Array,
+        Default: [],
+        Required: false
     },
     index: {
-        Type: Number,
+        // Type: Number,
         Default: -1
     },
     version: {
@@ -19,14 +20,105 @@ const props = defineProps({
         Default: ""
     }
 })
+const emit = defineEmits(['goBack', 'goForward'])
+
 const searchQuery = ref('');
+const debug = true;
+
+function historyExists() {
+    var result = props.history !== null && props.history !== undefined
+    if (debug) {
+        if (!result) {
+            console.log("Navbar didn't get history")
+        }
+        console.log(`history (navbar): ${props.history}`)
+    }
+    return result
+}
+
+function indexExists() {
+    var result = props.index !== null && props.index !== undefined
+    if (debug) {
+        if (!result) {
+            console.log("Navbar didn't get index")
+        }
+        console.log(`history index (navbar): ${props.index}`)
+    }
+    return result
+}
 
 function canGoBack() {
-    return props.index !== -1 && props.index > 0
+    var result = false
+    if (!historyExists() || !indexExists()){
+        return false
+    }
+    result = props.index > 0
+    return result
 }
 
 function canGoForward() {
-    return props.index !== -1 && props.index < (props.history.length - 1)
+    var result = false
+    if (!historyExists() || !indexExists()){
+        return false
+    }
+    result = props.index < (props.history.length - 1)
+    return result
+}
+
+function getHTMLElement(id){
+    var element = document.getElementById(id)
+    return element
+}
+
+function updateElementStyle(element, property, value){
+    if (element !== null && element !== undefined){
+        try{
+            // element.style.setProperty("filter", "grayscale(1.0)")
+            element.style.setProperty(property, value)
+        }
+        catch{}
+    }
+}
+
+function updateHistoryButtons(){
+    var back = getHTMLElement("backButton")
+    var forward = getHTMLElement("forwardButton")
+    let filterValue = "grayscale(100%)"
+    let noFilter = "none"
+    if (canGoBack()){
+        updateElementStyle(back, "filter", noFilter)
+    }
+    else {
+        updateElementStyle(back, "filter", filterValue)
+    }
+    if (canGoForward()){
+        updateElementStyle(forward, "filter", noFilter)
+    }
+    else {
+        updateElementStyle(forward, "filter", filterValue)
+    }
+}
+
+function goBack(){
+    if (canGoBack()){
+        emit('goBack')
+    }
+}
+
+function goForward(){
+    if (canGoForward()){
+        emit('goForward')
+    }
+}
+
+function move(direction){
+    if (direction === 'back'){
+        goBack()
+    }
+    if (direction === 'forward'){
+        goForward()
+    }
+    updateHistoryButtons()
 }
 </script>
 
@@ -47,15 +139,15 @@ function canGoForward() {
         >
         ■Sort ⌛
     </div>
-    <div class="NavButton prevent-select"
-        v-show="canGoBack()" @click="$emit('goBack')"
+    <div class="NavButton prevent-select historyButton" id="backButton"
+        @click="move('back')"
         >
-        ⬅️
+        ■Back ⬅️
     </div>
-    <div class="NavButton prevent-select"
-        v-show="canGoForward()" @click="$emit('goForward')"
+    <div class="NavButton prevent-select historyButton" id="forwardButton"
+        @click="move('forward')"
         >
-        ➡️
+        ■Next ➡️
     </div>
     <!-- Right-aligned elements -->
     <div class="NavButton prevent-select NavButtonRight">■Source Code</div>
@@ -150,5 +242,9 @@ input::placeholder {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
+}
+
+.historyButton {
+    filter: grayscale(100%);
 }
 </style>
