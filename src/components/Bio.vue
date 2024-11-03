@@ -6,6 +6,7 @@ import Class from './Class.vue'
 import CharacterType from './CharacterType.vue'
 import Deity from './Deity.vue'
 import Nationality from './Nationality.vue'
+import Tag from './Tag.vue'
 import { ref, computed } from 'vue'
 
 const props = defineProps({
@@ -22,7 +23,7 @@ function setup(){
 </script>
 
 <template class="bio">
-  <div id="deselect" class="prevent-select tag" @click="$emit('deselect-entry')" @keyup.esc="$emit('deselect-entry')">X</div>
+  <div id="deselect" class="prevent-select snappy" @click="$emit('deselect-entry')" @keyup.esc="$emit('deselect-entry')">❌</div>
   <div id="split">
     <div id="leftColumn">
       <img id="pic" :src="imageUrl()" alt="img" @click="$emit('deselect-entry')"/>
@@ -30,16 +31,16 @@ function setup(){
       <h1 v-else id="characterName">{{ info.name }}</h1>
       <div class="BasicInfoBox">
           <div class="tagList">
-            <p class="tag" v-if="info.type !== 'Normal'"><CharacterType :type="info.type" :customTooltip="''"/></p>
-            <p class="tag" v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</p>
-            <p class="tag"><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></p>
-            <p class="tag"><Background :background="info.background"/></p>
-            <p class="tag"><Class :class="info.class" :level="info.level"/></p>
-            <p class="tag" v-if="info.deity !== ''"><Deity :deity="info.deity"/></p>
-            <p class="tag"><Age :age="info.age" :ancestry="info.ancestry"/></p>
-            <p class="tag" v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</p>
-             <Nationality class="tag" v-if="info.nationality" :nationality="info.nationality"/>
-            <p class="tag">ID: {{ info.id }}</p>
+            <Tag v-if="info.type !== 'Normal'"><CharacterType :type="info.type" :customTooltip="''"/></Tag>
+            <Tag v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</Tag>
+            <Tag><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></Tag>
+            <Tag><Background :background="info.background"/></Tag>
+            <Tag><Class :class="info.class" :level="info.level"/></Tag>
+            <Tag v-if="info.deity !== ''"><Deity :deity="info.deity"/></Tag>
+            <Tag><Age :age="info.age" :ancestry="info.ancestry"/></Tag>
+            <Tag v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</Tag>
+            <Tag><Nationality class="tag" v-if="info.nationality" :nationality="info.nationality"/></Tag>
+            <Tag>ID: {{ info.id }}</Tag>
           </div>
         </div>
     </div>
@@ -208,29 +209,27 @@ function setup(){
 
 #deselect {
   position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
   z-index: 3;
-  height: 1.5em;
   font-family: monospace;
   font-weight: bold;
   text-align: center;
   background-color: white;
   color: black;
+  padding: 4px 4px 4px 4px;
+  margin: 4px 4px 4px 4px;
+  border-radius: 16px;
+  filter:grayscale(1.0);
 }
-
 #deselect:hover {
-  background-color: #b4dd1e;
-}
-
-.tag:hover {
   scale: calc(1.05);
 }
-
-.tag > p {
-  color: black;
-}
-
-.tag > a:hover {
-  color: black;
+#deselect, #deselect > * {
+  height: 1.5em;
+  width: 1.5em;
 }
 
 </style>
