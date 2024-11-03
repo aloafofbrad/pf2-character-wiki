@@ -22,8 +22,8 @@ function setup(){
 }
 </script>
 
-<template class="bio">
-  <div id="deselect" class="prevent-select snappy" @click="$emit('deselect-entry')" @keyup.esc="$emit('deselect-entry')">❌</div>
+<template class="bio" @keyup.esc="$emit('deselect-entry')">
+  <div id="deselect" class="prevent-select snappy" @click="$emit('deselect-entry')">❌</div>
   <div id="split">
     <div id="leftColumn">
       <img id="pic" :src="imageUrl()" alt="img" @click="$emit('deselect-entry')"/>
