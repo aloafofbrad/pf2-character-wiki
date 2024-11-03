@@ -155,7 +155,7 @@
                 },
                 "status": "In Party",
                 "biography": [
-                    "?"
+                    "An orphan Basil & Sol saved from the Grandpa attack in Knork, the capitol of Kolis.", "He seems to like berries."
                 ],
                 "deity": ""
             }
@@ -233,9 +233,9 @@
                     "exact": false,
                     "calculateHumanYears": false
                 },
-                "status": "?",
+                "status": "Active?",
                 "biography": [
-                    "?"
+                    "A group of goblins. The party met them in Tin Trove Mine, where they were having an underground fashion show."
                 ],
                 "deity": ""
             }
@@ -250,18 +250,18 @@
                 "ancestry": "Human",
                 "heritage": "?",
                 "background": "Hermit?",
-                "class": "Martial?",
+                "class": "Barbarian?",
                 "level": "",
                 "pronouns": "He/Him",
                 "nationality": "Kolis",
                 "age": {
-                    "age": "",
+                    "age": "35-45",
                     "exact": false,
                     "calculateHumanYears": false
                 },
                 "status": "Alive",
                 "biography": [
-                    "?"
+                    "Georg new Tsar of Kolis. Georg live in mountain after Freddy hit Georg head with lamp."
                 ],
                 "deity": ""
             }
@@ -302,7 +302,7 @@
                 "name": "Leader of the Psycho Bitches?",
                 "image": "public/act1/mindy-psycho-bitch-192.png",
                 "type": "Normal",
-                "ancestry": "Human?",
+                "ancestry": "Human",
                 "heritage": "?",
                 "background": "?",
                 "class": "?",
@@ -316,7 +316,7 @@
                 },
                 "status": "?",
                 "biography": [
-                    ""
+                    "The apparent leader of the Psycho Bitches."
                 ],
                 "deity": ""
             }
@@ -450,7 +450,7 @@
                 },
                 "status": "?",
                 "biography": [
-                    "?"
+                    "Loyal emissaries of the deity Bes."
                 ],
                 "deity": "Bes"
             }
