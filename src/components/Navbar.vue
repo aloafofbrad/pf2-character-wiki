@@ -15,6 +15,10 @@ const props = defineProps({
         Type: String,
         Default: ""
     },
+    source: {
+        Type: String,
+        Default: ""
+    },
     searchQuery: {
         Type:String,
         Default: ""
@@ -22,8 +26,8 @@ const props = defineProps({
 })
 const emit = defineEmits(['goBack', 'goForward'])
 
-const searchQuery = ref('');
-const debug = true;
+const searchQuery = ref('')
+const debug = true
 
 function historyExists() {
     var result = props.history !== null && props.history !== undefined
@@ -125,32 +129,23 @@ function move(direction){
 <template>
   <div class="Navbar">
     <!-- Left-aligned elements -->
-    <form id="NavbarSearch" class="NavButton prevent-select"
-    >
+    <form id="NavbarSearch" class="NavButton prevent-select">
         Search <input name="query" v-model.trim="searchQuery" placeholder="you know you want to... :3" autocomplete="off" @submit.prevent="onSubmit" @keyup="$emit('updateSearch', searchQuery)"/>
     </form>
-    <div class="NavButton prevent-select"
-        @click="$emit('sortAlphabetically')"
-        >
+    <div class="NavButton prevent-select" @click="$emit('sortAlphabetically')">
         ■Sort 🅰
     </div>
-    <div class="NavButton prevent-select"
-        @click="$emit('sortChronologically')"
-        >
+    <div class="NavButton prevent-select" @click="$emit('sortChronologically')">
         ■Sort ⌛
     </div>
-    <div class="NavButton prevent-select historyButton" id="backButton"
-        @click="move('back')"
-        >
-        ■Back ⬅️
+    <div class="NavButton prevent-select historyButton" id="backButton" @click="move('back')">
+        ■Back ⏪
     </div>
-    <div class="NavButton prevent-select historyButton" id="forwardButton"
-        @click="move('forward')"
-        >
-        ■Next ➡️
+    <div class="NavButton prevent-select historyButton" id="forwardButton" @click="move('forward')">
+        ■Next ⏩
     </div>
     <!-- Right-aligned elements -->
-    <div class="NavButton prevent-select NavButtonRight">■Source Code</div>
+    <div class="NavButton prevent-select NavButtonRight"><a :href="props.source">■Source Code</a></div>
     <div class="NavButton prevent-select NavButtonRight">Version {{ version }}</div>
     <!-- <div class="NavButton prevent-select NavButtonRight" v-if="props.searchQuery.length">■{{ props.searchQuery }}■</div> -->
   </div>
@@ -158,8 +153,12 @@ function move(direction){
 
 <style>
 
-.Navbar, .NavButton, .NavButtonRight {
+.Navbar, .NavButton, .NavButton > * {
     font-family: monospace;
+}
+
+.NavButton > a {
+    text-decoration: none;
 }
 
 .Navbar {
@@ -187,8 +186,15 @@ function move(direction){
     float:right;
 }
 
-.Navbar, .Navbar > .NavButton, .Navbar > .NavItem, form, input {
+.Navbar {
+    min-height: 24px;
+}
+
+.Navbar > .NavButton, form, input, a {
     height: 24px;
+}
+
+.Navbar, .Navbar > .NavButton, .NavButton > form, .NavButton > input, .NavButton > a {
     color: white;
     background-color: black;
     opacity: 0.75;
@@ -199,7 +205,7 @@ function move(direction){
     padding-right: 8px;
 }
 
-.input[type=text]:focus {
+.NavButton > .input[type=text]:focus {
     border: 1px solid black;
 }
 
@@ -209,18 +215,23 @@ function move(direction){
     color: black;
 }
 
+.NavButton > *, .NavButton:hover > *, .NavButton:hover > *:visited {
+    background-color: inherit;
+    color: inherit;
+}
+
 .Navbar:last-child {
     margin-left:auto;
 }
 
-input:hover {
+.NavButton > input:hover {
     background-color: white;
     opacity: 1.0;
     color: black;
     border: 1px solid black;
 }
 
-input {
+.NavButton > input {
     outline: none;
     color: #fff;
     margin-top: 2px;
@@ -233,7 +244,7 @@ input {
     width: 16em;
 }
 
-input::placeholder {
+.NavButton > input::placeholder {
     color: #fff;
     opacity: 1;
 }
