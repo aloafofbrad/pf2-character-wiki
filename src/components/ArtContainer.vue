@@ -8,7 +8,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['handleTileClick'])
+const emit = defineEmits(['updateSelection'])
 
 function isAValidId(id) {
   return (id >= 0 && id <= (props.entries.length - 1))
@@ -23,7 +23,7 @@ function isAValidId(id) {
       v-for="entry in props.entries"
       :key="entry.id"
       :info="entry.info"
-      @click="$emit('handleTileClick', entry.id)">
+      @click="$emit('updateSelection', entry.id)">
     </Tile>
   </div>
 </template>
