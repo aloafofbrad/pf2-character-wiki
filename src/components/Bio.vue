@@ -167,13 +167,13 @@ function setup(){
   }
 
   .tagList {
-    padding-left: 4px;
+    margin-left: 4px;
 
     .tag {
-      padding-left: inherit;
+      margin-left: inherit;
 
       * {
-        padding-left: unset;
+        margin-left: unset;
       }
     }
   }
