@@ -53,28 +53,28 @@ const url = computed (() => {
 </script>
 
 <template>
-  <a :href="url" target="_blank">{{ innerText }}</a>
+  <a :href="url" target="_blank" class="dynalink">{{ innerText }}</a>
 </template>
 
 <style>
-a {
+.dynalink {
   /* color: #aaccff; */
   color: darkblue;
-}
 
-a:visited {
-  /* color: #ffccff; */
-  color: darkorchid;
-}
+  &:visited {
+    /* color: #ffccff; */
+    color: darkorchid;
+  }
 
-a:hover {
-  background-color: darkblue;
-  color: white;
-}
+  &:hover {
+    background-color: inherit;
+    color: white;
+  }
 
-a:visited:hover {
-  background-color: darkorchid;
-  color: white;
+  &:visited:hover {
+    background-color: inherit;
+    color: white;
+  }
 }
 
 </style>
