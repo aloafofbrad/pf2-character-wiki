@@ -1,11 +1,15 @@
 <script setup>
 import Bio from './components/Bio.vue'
-import Tile from './components/Tile.vue'
+// import Tile from './components/Tile.vue'
+import ArtContainer from './components/ArtContainer.vue'
 import Navbar from './components/Navbar.vue'
+import Tag from './components/Tag.vue'
 import { ref, reactive, computed } from 'vue'
 import packageJson from "../package.json"
 
 import data from './data/characters.json'
+
+const source = `https://github.com/aloafofbrad/pf2-character-wiki`
 
 var entries = ref([])
 
@@ -24,10 +28,16 @@ const SORT_ALPHA_DESC = "alphabetical_desc"
 const SORT_CHRONO_DESC = "chronological_desc"
 
 const selected = ref(DESELECTED)
-const history = ref([-1,])
+const history = ref([DESELECTED,])
 const index = ref(0)
 const userRegex = ref('')
 const SEARCH_BLEACH = "/[^a-zA-Z0-9 -\?]/g"
+
+const ART_VIEW = 0
+const LIST_VIEW = 1
+const DEFAULT_VIEW = ART_VIEW
+const MULTI_VIEW_ENABLED = true
+const viewMode = ref(DEFAULT_VIEW)
 
 // Comparisons & helpers
 function DNE(arg) {
@@ -84,6 +94,25 @@ function noSelectionMade() {
   return selected.value === DESELECTED
 }
 
+function showArtContainer() {
+  return noSelectionMade() && viewMode.value === ART_VIEW
+}
+
+function showListContainer() {
+  return noSelectionMade() && viewMode.value === LIST_VIEW
+}
+
+function toggleView() {
+  if (MULTI_VIEW_ENABLED){
+    if (viewMode.value === ART_VIEW){
+      viewMode.value = LIST_VIEW
+    }
+    else if (viewMode.value === LIST_VIEW) {
+      viewMode.value = ART_VIEW
+    }
+  }
+}
+
 function isAValidId(id) {
   // console.log("validating id\t" + id + "\tagainst\t" + (entries.value.length - 1))
   return (id >= 0 && id <= (entries.value.length - 1))
@@ -129,12 +158,12 @@ function goForward() {
 }
 
 function setIndex(value) {
-  var old = 0 + index.value
+  // var old = 0 + index.value
+  // console.log(`history index, prev: ${old}`)
   if (!isAValidHistoricalIndex(value)){
     return
   }
   index.value = value
-  // console.log(`history index, prev: ${old}`)
   // console.log(`history index, curr: ${index.value}`)
 }
 
@@ -142,6 +171,30 @@ function pushHistory(curr) {
   history.value.push(curr)
   setIndex(index.value + 1)
   // console.log(`history: ${history.value}`)
+}
+
+function cleanHistory() {
+  /* Removes instances of DESELECTED from the history so that
+  when goBack() and goForward() are called, DESELECTED is only
+  shown at the beginning and end of the history. As such,
+  the for loop ignores indices 0 and (n-1)
+  
+  Calling this function in handleTileClick() and HandleBioClose() 
+  because those will probably be called much less often than 
+  goBack() and goForward() */
+  var oldLength = history.value.length
+  var newHistory = [DESELECTED,]
+  for (let i = 1;i < oldLength - 1;i++){
+    var curr = history.value[i]
+    if (curr !== DESELECTED){
+      newHistory.push(curr)
+    }
+    else if (i !== 0 && curr === DESELECTED){
+      setIndex(index.value - 1)
+    }
+  }
+  newHistory.push(history.value[oldLength - 1])
+  history.value = newHistory
 }
 
 function handleTileClick(id) {
@@ -152,12 +205,15 @@ function handleTileClick(id) {
     pushHistory(id)
   }
   setSelectedEntry(id)
-  console.log(history.value)
+  cleanHistory()
+  console.log(`history.value: ${history.value}`)
 }
 
 function handleBioClose(){
   // pushHistory(DESELECTED)
   deselectEntry()
+  cleanHistory()
+  console.log(`history.value: ${history.value}`)
 }
 
 // Search
@@ -215,21 +271,24 @@ const arranged = computed(() => {
 
 <template>
   <header>
-    <Navbar :searchQuery="userRegex" :history="history" :index="index" :version="packageJson.version"
-      @go-back="goBack" @go-forward="goForward" @sort-alphabetically="sortAlphabetically"
-      @sort-chronologically="sortChronologically" @update-search="updateSearch"
+    <Navbar :searchQuery="userRegex" :version="packageJson.version"
+      :history="history" :index="index" :source="source"
+      :view="viewMode.value" :art_view="ART_VIEW" :list_view="LIST_VIEW" :multi_view_enabled="MULTI_VIEW_ENABLED"
+      @go-back="goBack" @go-forward="goForward"
+      @sort-alphabetically="sortAlphabetically" @sort-chronologically="sortChronologically"
+      @toggle-view="toggleView"
+      @update-search="updateSearch"
     />
   </header>
   
   <main>
-    <div id="ArtContainer" v-show="noSelectionMade()">
-      <Tile
-        v-show="isAValidId(entry.id)"
-        v-for="entry in arranged"
-        :key="entry.id"
-        :info="entry.info"
-        @click="handleTileClick(entry.id)">
-      </Tile>
+    <ArtContainer v-show="showArtContainer()"
+      :entries="arranged"
+      @handle-tile-click="handleTileClick"/>
+    <div id="listContainer" v-show="showListContainer()">
+      <ul>
+        <Tag v-show="isAValidId(entry.id)" v-for="entry in arranged" @click="handleTileClick(entry.id)" class="Tag">{{ entry.info.name }}</Tag>
+      </ul>
     </div>
     <div id="bio" v-show="!noSelectionMade()">
       <Bio
@@ -243,30 +302,41 @@ const arranged = computed(() => {
 </template>
 
 <style scoped>
+
+body, main {
+  overflow-y: hidden;
+}
+
+template {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+}
+
 header {
-  line-height: 1.5;
+  position: sticky;
+  z-index: 2;
+  top: 0vh;
+  left: 0;
+  overflow-y: hidden;
+  width: 100%;
 }
 
 main {
+  top: auto;
+  z-index: 0;
   margin: 0;
   padding: 0;
-  display: contents;
-}
-
-#ArtContainer {
-  max-width: 100vw;
-  max-height: calc(100vh - 24px);
-  top: 24px;
   display: flex;
-  flex-flow: row wrap;
-  align-items: flex-start;
+  flex-flow: column nowrap;
   justify-content: flex-start;
-  align-content: flex-start;
-  scroll-behavior: auto;
+  align-items: center;
+  flex-grow: 1;
 }
 
-#ArtContainer > .Tile {
-  margin: 2px;
+#listContainer > ul > .Tag {
+  background-color: white;
+  color: black;
 }
 
 </style>
