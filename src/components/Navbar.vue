@@ -22,12 +22,36 @@ const props = defineProps({
     searchQuery: {
         Type:String,
         Default: ""
+    },
+    view: {
+        Type: Number
+    },
+    art_view: {
+        Type: Number
+    },
+    list_view: {
+        Type: Number
+    },
+    multi_view_enabled: {
+        Type: Boolean
     }
 })
-const emit = defineEmits(['goBack', 'goForward'])
+const emit = defineEmits(['goBack', 'goForward', 'toggleView'])
 
 const searchQuery = ref('')
 const debug = true
+
+const viewToggleText = computed(() => {
+    var artText = "View List"
+    var listText = "View Art"
+    if (props.view === props.art_view){
+        return listText
+    }
+    else if (props.view === props.list_view){
+        return artText
+    }
+    return artText
+})
 
 function historyExists() {
     var result = props.history !== null && props.history !== undefined
@@ -124,6 +148,10 @@ function move(direction){
     }
     updateHistoryButtons()
 }
+
+function toggleView() {
+    emit('toggleView')
+}
 </script>
 
 <template>
@@ -144,6 +172,7 @@ function move(direction){
     <div class="NavButton prevent-select historyButton" id="forwardButton" @click="move('forward')">
         ■Next ⏩
     </div>
+    <div class="NavButton prevent-select" v-if="props.multi_view_enabled" @click="toggleView()">■{{ viewToggleText }}</div>
     <!-- Right-aligned elements -->
     <div class="NavButton prevent-select NavButtonRight"><a :href="props.source">■Source Code</a></div>
     <div class="NavButton prevent-select NavButtonRight">Version {{ version }}</div>
@@ -162,20 +191,25 @@ function move(direction){
 }
 
 .Navbar {
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    left: 0;
-    min-width: 100vw;
+    overflow-y: hidden;
+    width: 100%;
     justify-content: space-between;
     padding: unset;
     backdrop-filter: blur(8px);
 }
 
-.Navbar:after {
-  content: '';
-  display: table;
-  clear: both;
+.NavButton, .NavButton > * {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#NavbarSearch {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .Navbar > .NavButton {
@@ -188,16 +222,11 @@ function move(direction){
 
 .Navbar {
     min-height: 24px;
+    overflow-y: hidden;
 }
 
 .Navbar > .NavButton, form, input, a {
     height: 24px;
-}
-
-.Navbar, .Navbar > .NavButton, .NavButton > form, .NavButton > input, .NavButton > a {
-    color: white;
-    background-color: black;
-    opacity: 0.75;
 }
 
 .Navbar > .NavButton, .form {
@@ -205,8 +234,12 @@ function move(direction){
     padding-right: 8px;
 }
 
-.NavButton > .input[type=text]:focus {
-    border: 1px solid black;
+.Navbar, .Navbar > .NavButton, .NavButton > *, .NavButton > a {
+    /* Specifcially need to use .NavButton > a in this rule to
+    override the rule in main.css */
+    color: white;
+    background-color: black;
+    opacity: 0.75;
 }
 
 .NavButton:hover {
@@ -224,6 +257,16 @@ function move(direction){
     margin-left:auto;
 }
 
+.NavButton > input {
+    font-size: smaller;
+    font-family: monospace;
+    border: 1px solid white;
+    margin-left: 0.5em;
+    height: 12px;
+    width: 16em;
+    outline: none;
+}
+
 .NavButton > input:hover {
     background-color: white;
     opacity: 1.0;
@@ -231,28 +274,13 @@ function move(direction){
     border: 1px solid black;
 }
 
-.NavButton > input {
-    outline: none;
-    color: #fff;
-    margin-top: 2px;
-    margin-left: 0.5em;
-    height: 12px;
-    font-size: smaller;
-    font-family: monospace;
-    background-color: #181818;
-    border: 1px solid white;
-    width: 16em;
+.NavButton > .input[type=text]:focus {
+    border: 1px solid black;
 }
 
 .NavButton > input::placeholder {
     color: #fff;
     opacity: 1;
-}
-
-#NavbarSearch {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-end;
 }
 
 .historyButton {
