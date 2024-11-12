@@ -45,10 +45,10 @@ const viewToggleText = computed(() => {
     var artText = "View List"
     var listText = "View Art"
     if (props.view === props.art_view){
-        return listText
+        return artText
     }
     else if (props.view === props.list_view){
-        return artText
+        return listText
     }
     return artText
 })
