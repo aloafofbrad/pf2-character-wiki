@@ -1,9 +1,8 @@
 <script setup>
-import Bio from './components/Bio.vue'
-// import Tile from './components/Tile.vue'
 import ArtContainer from './components/ArtContainer.vue'
+import Bio from './components/Bio.vue'
+import ListContainer from './components/ListContainer.vue'
 import Navbar from './components/Navbar.vue'
-import Tag from './components/Tag.vue'
 import { ref, reactive, computed } from 'vue'
 import packageJson from "../package.json"
 
@@ -106,11 +105,14 @@ function toggleView() {
   if (MULTI_VIEW_ENABLED){
     if (viewMode.value === ART_VIEW){
       viewMode.value = LIST_VIEW
+      sortAlphabetically()
     }
     else if (viewMode.value === LIST_VIEW) {
       viewMode.value = ART_VIEW
+      sortChronologically()
     }
   }
+  updateSelection(DESELECTED)
 }
 
 function isAValidId(id) {
@@ -179,7 +181,7 @@ function cleanHistory() {
   shown at the beginning and end of the history. As such,
   the for loop ignores indices 0 and (n-1)
   
-  Calling this function in handleTileClick() and HandleBioClose() 
+  Calling this function in updateSelection() and HandleBioClose() 
   because those will probably be called much less often than 
   goBack() and goForward() */
   var oldLength = history.value.length
@@ -197,7 +199,7 @@ function cleanHistory() {
   history.value = newHistory
 }
 
-function handleTileClick(id) {
+function updateSelection(id) {
   if (id === selected.value){
     pushHistory(DESELECTED)
   }
@@ -273,7 +275,7 @@ const arranged = computed(() => {
   <header>
     <Navbar :searchQuery="userRegex" :version="packageJson.version"
       :history="history" :index="index" :source="source"
-      :view="viewMode.value" :art_view="ART_VIEW" :list_view="LIST_VIEW" :multi_view_enabled="MULTI_VIEW_ENABLED"
+      :view="viewMode" :art_view="ART_VIEW" :list_view="LIST_VIEW" :multi_view_enabled="MULTI_VIEW_ENABLED"
       @go-back="goBack" @go-forward="goForward"
       @sort-alphabetically="sortAlphabetically" @sort-chronologically="sortChronologically"
       @toggle-view="toggleView"
@@ -282,20 +284,14 @@ const arranged = computed(() => {
   </header>
   
   <main>
-    <ArtContainer v-show="showArtContainer()"
-      :entries="arranged"
-      @handle-tile-click="handleTileClick"/>
-    <div id="listContainer" v-show="showListContainer()">
-      <ul>
-        <Tag v-show="isAValidId(entry.id)" v-for="entry in arranged" @click="handleTileClick(entry.id)" class="Tag">{{ entry.info.name }}</Tag>
-      </ul>
-    </div>
+    <ArtContainer v-show="showArtContainer()" :entries="arranged" @update-selection="updateSelection"/>
+    <ListContainer v-show="showListContainer()" :entries="arranged" @update-selection="updateSelection"/>
     <div id="bio" v-show="!noSelectionMade()">
       <Bio
         :ID="selected.value"
         :info="getSelectedEntry().info"
         @deselect-entry="handleBioClose()"
-        @select-entry="handleTileClick(entry.id)">
+        @select-entry="updateSelection(entry.id)">
       </Bio>
     </div>
   </main>
