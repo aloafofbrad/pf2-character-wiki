@@ -161,13 +161,24 @@ function setup(){
   word-wrap: break-word;
 }
 
-#leftColumn > .BasicInfoBox {
-  width: 100%;
+#leftColumn {
+  .BasicInfoBox {
+    width: 100%;
+  }
+
+  .tagList {
+    padding-left: 4px;
+
+    .tag {
+      padding-left: inherit;
+
+      * {
+        padding-left: unset;
+      }
+    }
+  }
 }
 
-#leftColumn > .tagList, #leftColumn > .tagList > .tag {
-  padding-left: 4px;
-}
 /* /\ /\ /\ /\ LEFT COLUMN /\ /\ /\ /\ */
 
 /* \/ \/ \/ \/ RIGHT COLUMN \/ \/ \/ \/ */

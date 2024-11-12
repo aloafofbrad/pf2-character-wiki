@@ -182,27 +182,103 @@ function toggleView() {
 
 <style>
 
-.Navbar, .NavButton, .NavButton > * {
-    font-family: monospace;
-}
-
-.NavButton > a {
-    text-decoration: none;
-}
-
 .Navbar {
+    min-height: 24px;
+    overflow-y: hidden;
+    font-family: monospace;
     overflow-y: hidden;
     width: 100%;
     justify-content: space-between;
     padding: unset;
     backdrop-filter: blur(8px);
+
+    a {
+        text-decoration: none;
+    }
+
+    .NavButton {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        float: left;
+        font-family: inherit;
+
+        * {
+            display: inherit;
+            flex-flow: inherit;
+            justify-content: inherit;
+            align-items: inherit;
+            font-family: inherit;
+        }
+
+        &:hover {
+            background-color: white;
+            opacity: 1.0;
+            color: black;
+        }
+
+        input {
+            font-size: smaller;
+            font-family: monospace;
+            border: 1px solid white;
+            margin-left: 0.5em;
+            height: 12px;
+            width: 16em;
+            outline: none;
+
+            &:hover {
+                background-color: white;
+                opacity: 1.0;
+                color: black;
+                border: 1px solid black;
+            }
+
+            &[type=text]:focus {
+                border: 1px solid black;
+            }
+
+            &::placeholder {
+                color: #fff;
+                opacity: 1;
+            }
+        }
+    }
+
+    .NavButton, form {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .NavButton, form, input, a {
+        height: 24px;
+    }
+
+    .NavButtonRight {
+        float: right;
+    }
+
+    &:last-child {
+        margin-left:auto;
+    }
 }
 
-.NavButton, .NavButton > * {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
+.Navbar {
+    color: white;
+    background-color: black;
+    opacity: 0.75;
+
+    .NavButton {
+        color: inherit;
+        background-color: inherit;
+        opacity: inherit;
+
+        * {
+            color: inherit;
+            background-color: inherit;
+            opacity: inherit;
+        }
+    }
 }
 
 #NavbarSearch {
@@ -210,77 +286,6 @@ function toggleView() {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-}
-
-.Navbar > .NavButton {
-    float:left;
-}
-
-.Navbar > .NavButtonRight {
-    float:right;
-}
-
-.Navbar {
-    min-height: 24px;
-    overflow-y: hidden;
-}
-
-.Navbar > .NavButton, form, input, a {
-    height: 24px;
-}
-
-.Navbar > .NavButton, .form {
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-.Navbar, .Navbar > .NavButton, .NavButton > *, .NavButton > a {
-    /* Specifcially need to use .NavButton > a in this rule to
-    override the rule in main.css */
-    color: white;
-    background-color: black;
-    opacity: 0.75;
-}
-
-.NavButton:hover {
-    background-color: white;
-    opacity: 1.0;
-    color: black;
-}
-
-.NavButton > *, .NavButton:hover > *, .NavButton:hover > *:visited {
-    background-color: inherit;
-    color: inherit;
-}
-
-.Navbar:last-child {
-    margin-left:auto;
-}
-
-.NavButton > input {
-    font-size: smaller;
-    font-family: monospace;
-    border: 1px solid white;
-    margin-left: 0.5em;
-    height: 12px;
-    width: 16em;
-    outline: none;
-}
-
-.NavButton > input:hover {
-    background-color: white;
-    opacity: 1.0;
-    color: black;
-    border: 1px solid black;
-}
-
-.NavButton > .input[type=text]:focus {
-    border: 1px solid black;
-}
-
-.NavButton > input::placeholder {
-    color: #fff;
-    opacity: 1;
 }
 
 .historyButton {
