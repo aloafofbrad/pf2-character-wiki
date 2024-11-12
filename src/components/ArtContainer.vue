@@ -35,27 +35,17 @@ function isAValidId(id) {
   min-height: 100%;
   display: flex;
   flex-flow: row wrap;
-  align-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: flex-start;
   scroll-behavior: smooth;
   overflow-y: auto;
   min-height: auto;
   padding-bottom: 24px;
-
-  .Tile {
-    margin: 2px;
-  }
 }
 
-@media only screen and (orientation: landscape){
-  #ArtContainer {
-    justify-content: center;
-  }
-}
-
-@media only screen and (orientation: portrait){
-  #ArtContainer {
-    justify-content: center;
-  }
+#ArtContainer > .Tile {
+  margin: 2px;
 }
 
 </style>
