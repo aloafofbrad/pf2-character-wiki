@@ -36,16 +36,16 @@ function isAValidId(id) {
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: center;
   align-content: flex-start;
   scroll-behavior: smooth;
   overflow-y: auto;
   min-height: auto;
   padding-bottom: 24px;
-}
 
-#ArtContainer > .Tile {
-  margin: 2px;
+  .Tile {
+    margin: 2px;
+  }
 }
 
 </style>
