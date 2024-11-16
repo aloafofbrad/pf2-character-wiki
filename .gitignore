@@ -41,3 +41,4 @@ src/sample/*
 
 # Python cache
 scripts/__pycache__/*
+output.txt
