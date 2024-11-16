@@ -2,14 +2,22 @@ from config import DATA_KEY, INFO_KEY
 import json
 from jsonreadwriter import JsonReadWriter
 
-# Simple class that skims the characters file and outputs basic data on each character
+# Class that skims the characters file and outputs basic data on each character
 class Reader:
+    """
+    Args:
+    filename     the json file to be used. Also sets this for the JsonReadWriter object
+    key          keys to be printed
+    __filters    values to filter output by. Sort of like piping this into grep, but without having to use grep
+    arrayKey     the key used to access the json array (e.g. "data")
+    infoKey      the key used to locate info inside each json object
+    """
     def __init__(self, filename:str, keys:list=[], arrayKey:str=DATA_KEY, infoKey:str=INFO_KEY):
         self.setFilename(filename)
         self.setKeys(keys)
         self.setArrayKey(arrayKey)
         self.setInfoKey(infoKey)
-        self.clearFilters()
+        self.__filters = {}
         self.readWriter = JsonReadWriter(filename)
     
     def setFilename(self, filename:str) -> None:
@@ -32,7 +40,7 @@ class Reader:
     def getKeys(self) -> list:
         return self.__keys
     
-    def clearFilters(self) -> None:
+    def resetFilters(self) -> None:
         self.__filters = {}
 
     def addFilter(self, filter:str, values:list) -> None:
@@ -81,13 +89,13 @@ class Reader:
             pass
         return result
     
-    # Prints an object that resides in a JSON object
+    """# Prints an object that resides in a JSON object
     # Can be a dictionary, array, etc. Type agnostic
     def __printObject(self, object) -> None:
         try:
-            print(f"""{object}""")
+            print(f"{object}")
         except Exception as e:
-            pass
+            pass"""
     
     def __printHeader(self) -> None:
         for key in self.__keys:
@@ -110,8 +118,8 @@ class Reader:
         if printed: # then print \n so the next object starts on a newline
             print()
 
-    # Prints objects assigned to given keys
     """
+    Print objects assigned to given keys
     Output should resemble:
 
     ID  Name
@@ -147,8 +155,13 @@ class Reader:
                         normally be unecessary, but certain IDEs (VS Code) may not catch that
                         v is already a string. This second cast is done purely to suppress
                         warnings/errors."""
-                        filterValues = [str(v) for v in self.__filters[vk]]
+                        filterValues = [v for v in self.__filters[vk]]
+                        filterValues = [str(fv) for fv in filterValues]
                         filterValues = [fv.lower() for fv in filterValues]
+
+                        """If objectValue is present in filterValues, the object can be printed.
+                        This doesn't mean that all values in filterValues are present in the object,
+                        just that at least one is."""
                         if objectValue in filterValues:
                             self.printJSONObject(obj, printKey)
                     except KeyError as e:
@@ -157,19 +170,20 @@ class Reader:
                         pass
 
 # Finds values in arguments, given a list of flags.
-def findValues(target:list, flags:list) -> list:
+def findValues(args:list, flags:list) -> list:
     result = []
     i = 0
-    while i < len(target):
+    while i < len(args):
         try:
-            curr = target[i]
+            curr = args[i]
         except IndexError:
             return result
+            # Shouldn't happen, maybe remove the try block.
         
         if curr in flags:
             i += 1
             try:
-                values = [word for word in target[i].split(",")]
+                values = [word for word in args[i].split(",")]
             except Exception as e:
                 print(e)
                 values = []
@@ -202,7 +216,6 @@ def parse(args) -> dict:
         result["keys"] = findValues(args, flags=["--keys", "-k"])
     return result
 
-# def main():
 def test():
     from config import CHARACTER_FILE
     reader = Reader(CHARACTER_FILE)
@@ -232,5 +245,4 @@ def main(argv):
 
 if __name__ == "__main__":
     import sys
-    # main()
     main(sys.argv[1:])

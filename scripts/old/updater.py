@@ -86,13 +86,13 @@ class Updater:
         # Use the defined default value if none is given
         if value == None and not allowNull:
             value = self.__value
-
-        if stop == -1:
-            stop = len(data)
         
         if self.readWriter.getRawData() == None:
             self.__read()
         data = self.__extractArray(self.readWriter.getRawData())
+
+        if stop == -1:
+            stop = len(data)
 
         if insideInfo:
             for i in range(start, stop):
