@@ -1,7 +1,7 @@
 from config import DATA_KEY, INFO_KEY
 from jsonreadwriter import JsonReadWriter
 
-# Class that skims the characters file and outputs basic data on each character
+# Base class that reads the characters file
 class Accessor:
     """
     Args:
