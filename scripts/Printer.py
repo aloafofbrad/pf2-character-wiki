@@ -1,7 +1,7 @@
 from config import DATA_KEY, INFO_KEY
 from Accessor import Accessor
 
-# Class that skims the characters file and outputs basic data on each character
+# Class that reads the characters file and outputs basic data on each character
 class Printer (Accessor):
     """
     Args:
