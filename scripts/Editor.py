@@ -1,7 +1,7 @@
 from config import DATA_KEY, INFO_KEY
 from Accessor import Accessor
 
-# Object that updates objects inside of a json array, inside of a file
+# Base class for updating objects inside of a json array, inside of a file
 class Editor(Accessor):
     """
     Args:
@@ -47,10 +47,9 @@ class Editor(Accessor):
         return self.dryRun
 
     # Grabs the inner, unsorted array from the dict (json object)
-    def extractArray(self, data:dict) -> list:
+    def extractArray(self) -> list:
         array = []
         try:
-            # array = data[self.arrayKey]
             array = self.readWriter.getRawData()[self.getArrayKey()]
         except KeyError as e:
             print(e)
@@ -74,9 +73,9 @@ class Editor(Accessor):
         self.readWriter.write()
     
     """
-    Update all JSON objects to have the same field.
-    Recommended usage: give Editor objects a non-None value object, then call
-    updateJSONObject with no arguments given.
+    Update all JSON objects to have the same key:value pair for a field.
+    A wrapper for Editor.__execute() which handles read/write logic before and after.
+    More of an example of how to extend this base class than a function intended to be used.
 
     args
     value       The value to be written to the object
@@ -85,36 +84,46 @@ class Editor(Accessor):
     insideInfo  If true, update this field inside the info object
     allowNull   If true, allows the field to be given a None/null value
     """
-    def updateJSONObjects(self, value=None, start:int=0, stop:int=-1, insideInfo:bool=True, allowNull:bool=False):
-        # Use the defined default value if none is given
-        if value == None and not allowNull:
-            value = self.value
-        
+    def doMainThing(self, value=None, start:int=0, stop:int=-1, insideInfo:bool=True, allowNull:bool=False):
+        # Boilerplate read code for child classes
         if self.readWriter.getRawData() == None:
             self.read()
-        data = self.extractArray(self.readWriter.getRawData())
+        data = self.extractArray()
 
-        if stop == -1:
-            stop = len(data)
+        """This is where your custom code for child classes should go.
+        It does not all have to be inside a function, but that makes
+        the most sense for a parent class"""
+        data = self.__execute(insideInfo, start, stop, data, value, allowNull)
 
-        if insideInfo:
-            for i in range(start, stop):
-                data[i][self.infoKey][self.key] = value
-        else:
-            for i in range(start, stop):
-                data[i][self.key] = value
-
+        # Boilerplate write/dry run code for child classes
         if self.dryRun:
             self.dryRunPrint(data)
         else:
             self.insertArray(data)
             self.write()
         self.readWriter.clearRawData()
+    
+    # Meant to be called by doMainThing()
+    def __execute(self, insideInfo, start, stop, data, value, allowNull):
+        # Use the defined default value if none is given
+        if value == None and not allowNull:
+            value = self.value
+
+        if stop == -1:
+            stop = len(data)
+            
+        if insideInfo:
+            for i in range(start, stop):
+                data[i][self.infoKey][self.key] = value
+        else:
+            for i in range(start, stop):
+                data[i][self.key] = value
+        return data
 
 def test():
     from config import CHARACTER_FILE
     editor = Editor(CHARACTER_FILE, key="deity", value="Superman", dryRun=True)
-    editor.updateJSONObjects(allowNull=False)
+    editor.doMainThing(allowNull=False)
 
 if __name__ == "__main__":
     test()
