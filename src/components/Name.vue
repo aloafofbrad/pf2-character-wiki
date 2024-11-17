@@ -1,7 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue'
-import Dynalink from './Dynalink.vue'
-import classes from '../data/classes.json'
 
 const props = defineProps({
   name: {
