@@ -8,7 +8,7 @@ import Deity from './Deity.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
 import Picture from './Picture.vue'
-import Tag from './Tag.vue'
+import Tag from '../Tag.vue'
 import { ref, computed } from 'vue'
 
 const props = defineProps({

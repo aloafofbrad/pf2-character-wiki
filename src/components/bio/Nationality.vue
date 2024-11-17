@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
-import countries from '../data/countries.json'
-import nationalities from '../data/nationalities.json'
+import countries from '../../data/countries.json'
+import nationalities from '../../data/nationalities.json'
 
 const props = defineProps({
   nationality: String

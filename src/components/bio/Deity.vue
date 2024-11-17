@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
-import Dynalink from './Dynalink.vue'
-import deities from '../data/deities.json'
+import Dynalink from '../Dynalink.vue'
+import deities from '../../data/deities.json'
 
 const props = defineProps({
   deity: {

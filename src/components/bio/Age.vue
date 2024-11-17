@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-import ancestries from '../data/ancestries.json'
+import ancestries from '../../data/ancestries.json'
 
 const props = defineProps({
   age: {

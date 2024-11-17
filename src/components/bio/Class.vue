@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
-import Dynalink from './Dynalink.vue'
-import classes from '../data/classes.json'
+import Dynalink from '../Dynalink.vue'
+import classes from '../../data/classes.json'
 
 const props = defineProps({
   class: {
@@ -68,7 +68,6 @@ const classParams = computed(() => {
 function renderLink() {
   var key = classKey()
   var value = classes.classes[key]
-  console.log(key + ":" + value)
   return exists(value)
 }
 

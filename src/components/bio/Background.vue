@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
-import Dynalink from './Dynalink.vue';
-import backgrounds from '../data/backgrounds.json'
+import Dynalink from '../Dynalink.vue';
+import backgrounds from '../../data/backgrounds.json'
 
 const props = defineProps({
   background:{
@@ -65,7 +65,6 @@ const backgroundParams = computed(() => {
 function renderLink() {
   var key = bgKey()
   var value = backgrounds.backgrounds[key]
-  console.log(key + ":" + value)
   return exists(value)
   // return (backgroundParams["ID"] !== null && backgroundParams["ID"] !== undefined)
 }

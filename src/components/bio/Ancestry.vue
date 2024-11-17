@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
-import Dynalink from './Dynalink.vue'
-import ancestries from '../data/ancestries.json'
+import Dynalink from '../Dynalink.vue'
+import ancestries from '../../data/ancestries.json'
 
 const props = defineProps({
   ancestry: {
