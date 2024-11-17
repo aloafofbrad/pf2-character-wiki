@@ -81,7 +81,6 @@ function setup(){
     :domain="domain"
     :path="path"
     :params="backgroundParams"
-    :title="tooltip"
   />
   <p v-else>{{ innerText }}</p>
 </template>
