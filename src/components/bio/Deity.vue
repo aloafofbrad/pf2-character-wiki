@@ -51,7 +51,6 @@ const ancestryParams = computed(() => {
 function renderLink() {
   var key = deityKey()
   var value = deities.deities[key]
-  console.log(key + ":" + value)
   return exists(value)
 }
 
