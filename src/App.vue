@@ -1,7 +1,7 @@
 <script setup>
-import ArtContainer from './components/ArtContainer.vue'
-import Bio from './components/Bio.vue'
-import ListContainer from './components/ListContainer.vue'
+import ArtContainer from './components/containers/ArtContainer.vue'
+import Bio from './components/bio/Bio.vue'
+import ListContainer from './components/containers/ListContainer.vue'
 import Navbar from './components/Navbar.vue'
 import { ref, reactive, computed } from 'vue'
 import packageJson from "../package.json"
