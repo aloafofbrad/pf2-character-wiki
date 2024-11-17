@@ -7,6 +7,7 @@ import CharacterType from './CharacterType.vue'
 import Deity from './Deity.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
+import Picture from './Picture.vue'
 import Tag from './Tag.vue'
 import { ref, computed } from 'vue'
 
@@ -16,7 +17,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['deselect-entry', 'select-entry'])
-function imageUrl() { return new URL(`/${props.info.image}`, import.meta.url) }
+// function imageUrl() { return new URL(`/${props.info.image}`, import.meta.url) }
 
 function setup(){
   return {nationalities, imageUrl}
@@ -30,11 +31,8 @@ function setup(){
      This is intended to be the character's picture, name, and so on and so forth. -->
     <div id="leftColumn">
       <!-- Remove this line to remove the image. -->
-      <img id="pic" :src="imageUrl()" alt="img" @click="$emit('deselect-entry')"/>
-      <!-- Custom name logic that needs to be moved to its own dedicated component. -->
-      <!-- <h1 v-if="info.type !== 'Normal'" id="characterName">{{ info.name }} ({{ info.type }})</h1>
-      <h1 v-else id="characterName">{{ info.name }}</h1> -->
-      <Name :name="info.name" :type="info.type" @click="$emit('deselect-entry')"></Name>
+      <Picture :src="info.image" @click="$emit('deselect-entry')"/>
+      <Name :name="info.name" :type="info.type" @click="$emit('deselect-entry')"/>
       <!-- Rest of the character info. -->
       <div class="BasicInfoBox">
           <div class="tagList">
@@ -154,13 +152,6 @@ function setup(){
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
-}
-
-#pic {
-  width: 256px;
-  margin-left: 48px;
-  margin-right: 48px;
-  border-radius: 4px;
 }
 
 #leftColumn {
