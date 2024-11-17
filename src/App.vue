@@ -284,8 +284,19 @@ const arranged = computed(() => {
   </header>
   
   <main>
+    <!-- Containers
+     To change the way the character art or names are shown, alter these lines. If you only want art to
+     be shown, only remove the ListContainer element, and vice versa. The v-show bindings need to be kept
+     for each element, even if one element is removed. To make changes to how these containers and their
+     respective elements are shown, you need to modify the file(s) of whichever container(s) you plan to
+     use. See the top of this file for file locations, in the imports section. -->
     <ArtContainer v-show="showArtContainer()" :entries="arranged" @update-selection="updateSelection"/>
     <ListContainer v-show="showListContainer()" :entries="arranged" @update-selection="updateSelection"/>
+    <!-- end Containers -->
+    <!-- Bio
+     To change data shown in the Bio, or the way that data is show, you'll need to modify the file for
+     the Bio component (again, see the top of this file for its location, in the imports section).
+     Don't change the v-show binding here, regardless of which containers are shown. -->
     <div id="bio" v-show="!noSelectionMade()">
       <Bio
         :ID="selected.value"
@@ -294,6 +305,7 @@ const arranged = computed(() => {
         @select-entry="updateSelection(entry.id)">
       </Bio>
     </div>
+    <!-- end Bio -->
   </main>
 </template>
 
