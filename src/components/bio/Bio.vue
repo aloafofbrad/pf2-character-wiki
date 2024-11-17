@@ -17,11 +17,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['deselect-entry', 'select-entry'])
-// function imageUrl() { return new URL(`/${props.info.image}`, import.meta.url) }
-
-function setup(){
-  return {nationalities, imageUrl}
-}
 </script>
 
 <template class="bio" @keyup.esc="$emit('deselect-entry')">
