@@ -33,6 +33,7 @@ const innerText = computed(() => {
 
 <style>
 #characterName {
+  text-align: center;
   width: 100%;
   margin: 0;
   padding-left: 0.25em;
