@@ -1,5 +1,5 @@
 <script setup>
-import Tile from './Tile.vue';
+import Tag from '../Tag.vue';
 import { ref, computed } from 'vue'
 const props = defineProps({
   entries: {
@@ -17,34 +17,31 @@ function isAValidId(id) {
 </script>
 
 <template>
-  <div id="ArtContainer">
-    <Tile
-      v-show="isAValidId(entry.id)"
-      v-for="entry in props.entries"
-      :key="entry.id"
-      :info="entry.info"
-      @click="$emit('updateSelection', entry.id)">
-    </Tile>
+  <div id="ListContainer">
+    <Tag v-show="isAValidId(entry.id)" v-for="entry in props.entries" @click="$emit('updateSelection', entry.id)">
+      {{ entry.info.name }}
+    </Tag>
   </div>
 </template>
 
 <style scoped>
 
-#ArtContainer {
+#ListContainer {
   max-width: 100vw;
   min-height: 100%;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
   align-items: flex-start;
   justify-content: center;
-  align-content: flex-start;
   scroll-behavior: smooth;
   overflow-y: auto;
   min-height: auto;
-  padding-bottom: 24px;
 
-  .Tile {
-    margin: 2px;
+  .tag {
+    margin-left: 8px;
+    margin-right: 8px;
+    overflow-x: hidden;
+    color: black;
   }
 }
 
