@@ -5,6 +5,7 @@ import Background from './Background.vue'
 import Class from './Class.vue'
 import CharacterType from './CharacterType.vue'
 import Deity from './Deity.vue'
+import Name from './Name.vue'
 import Nationality from './Nationality.vue'
 import Tag from './Tag.vue'
 import { ref, computed } from 'vue'
@@ -23,12 +24,18 @@ function setup(){
 </script>
 
 <template class="bio" @keyup.esc="$emit('deselect-entry')">
-  <div id="deselect" class="prevent-select snappy" @click="$emit('deselect-entry')">❌</div>
+  <div id="deselect" class="prevent-select snappy" @click="$emit('deselect-entry')"><p>❌</p></div>
   <div id="split">
+    <!-- LeftColumn
+     This is intended to be the character's picture, name, and so on and so forth. -->
     <div id="leftColumn">
+      <!-- Remove this line to remove the image. -->
       <img id="pic" :src="imageUrl()" alt="img" @click="$emit('deselect-entry')"/>
-      <h1 v-if="info.type !== 'Normal'" id="characterName">{{ info.name }} ({{ info.type }})</h1>
-      <h1 v-else id="characterName">{{ info.name }}</h1>
+      <!-- Custom name logic that needs to be moved to its own dedicated component. -->
+      <!-- <h1 v-if="info.type !== 'Normal'" id="characterName">{{ info.name }} ({{ info.type }})</h1>
+      <h1 v-else id="characterName">{{ info.name }}</h1> -->
+      <Name :name="info.name" :type="info.type" @click="$emit('deselect-entry')"></Name>
+      <!-- Rest of the character info. -->
       <div class="BasicInfoBox">
           <div class="tagList">
             <Tag v-if="info.type !== 'Normal'"><CharacterType :type="info.type" :customTooltip="''"/></Tag>
@@ -44,6 +51,7 @@ function setup(){
           </div>
         </div>
     </div>
+    <!-- RightColumn -->
     <div id="rightColumn">
       <div id="biography">
         <ul>
@@ -150,15 +158,9 @@ function setup(){
 
 #pic {
   width: 256px;
-  padding-left: 48px;
-  padding-right: 48px;
-}
-
-#characterName {
-  width: 100%;
-  margin: 0;
-  padding-left: 0.25em;
-  word-wrap: break-word;
+  margin-left: 48px;
+  margin-right: 48px;
+  border-radius: 4px;
 }
 
 #leftColumn {
@@ -220,10 +222,6 @@ function setup(){
 
 #deselect {
   position: absolute;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
   z-index: 3;
   font-family: monospace;
   font-weight: bold;
@@ -232,15 +230,19 @@ function setup(){
   color: black;
   padding: 4px 4px 4px 4px;
   margin: 4px 4px 4px 4px;
-  border-radius: 16px;
+  border-radius: 32px;
   filter:grayscale(1.0);
 }
-#deselect:hover {
+#deselect:hover, #deselect:hover > * {
   scale: calc(1.05);
 }
 #deselect, #deselect > * {
-  height: 1.5em;
-  width: 1.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  width: 32px;
 }
 
 </style>
