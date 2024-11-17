@@ -42,6 +42,11 @@ function isAValidId(id) {
     margin-right: 8px;
     overflow-x: hidden;
     color: black;
+    background-color: white;
+  }
+
+  .tag:hover {
+    background-color: #b4dd1e;
   }
 }
 
