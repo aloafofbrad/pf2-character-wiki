@@ -4,7 +4,10 @@ import countries from '../../data/countries.json'
 import nationalities from '../../data/nationalities.json'
 
 const props = defineProps({
-  nationality: String
+  nationality: {
+    Type: String,
+    Default: "?"
+  }
 })
 
 function exists(x) {
@@ -12,19 +15,17 @@ function exists(x) {
 }
 
 const country = computed(() => {
-  try {
-    return countries["countries"][props.nationality]
+  if (!exists(props.nationality)){
+    return countries["countries"]["?"]
   }
-  catch {}
-  return countries["countries"][""]
+  return countries["countries"][props.nationality]
 })
 
 const nationality = computed(() => {
-  try {
-    return nationalities["nationalities"][props.nationality]
+  if (!exists(props.nationality)){
+    return nationalities["nationalities"]["?"]
   }
-  catch {}
-  return nationalities["nationalities"][""]
+  return nationalities["nationalities"][props.nationality]
 })
 
 const innerText = computed(() => {
@@ -36,7 +37,6 @@ function imageUrl() {
   return new URL(`/${country.value}`, import.meta.url).href;
 }
 const hover = ref(false)
-
 </script>
 
 <template>
