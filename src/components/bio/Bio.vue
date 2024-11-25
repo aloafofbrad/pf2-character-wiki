@@ -35,7 +35,7 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
       <!-- Rest of the character info. -->
       <div class="InfoBox">
           <div class="tagList">
-            <Tag v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</Tag>
+            <Tag v-if="info.pronouns !== '?'">Pronouns: {{ info.pronouns }}</Tag>
             <Tag><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></Tag>
             <Tag><Background :background="info.background"/></Tag>
             <Tag><Class :class="info.class" :level="info.level"/></Tag>
