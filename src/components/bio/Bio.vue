@@ -30,11 +30,11 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
       <div class="CharacterBox">
         <Picture :src="info.image" @click="$emit('deselect-entry')"/>
         <Name :name="info.name" :type="info.type" @click="$emit('deselect-entry')"/>
+        <CharacterType :type="info.type" :customTooltip="''"/>
       </div>
       <!-- Rest of the character info. -->
       <div class="InfoBox">
           <div class="tagList">
-            <Tag v-if="info.type !== 'Normal'"><CharacterType :type="info.type" :customTooltip="''"/></Tag>
             <Tag v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</Tag>
             <Tag><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></Tag>
             <Tag><Background :background="info.background"/></Tag>
@@ -188,6 +188,10 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: center;
+
+    * {
+      margin-top: 0.05em;
+    }
   }
   .CharacterBox, .InfoBox {
     width: 100%;

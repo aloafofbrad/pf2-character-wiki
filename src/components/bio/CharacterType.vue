@@ -13,11 +13,10 @@ const props = defineProps({
 })
 
 const innerText = computed(() => {
-  var result = "Type: "
-  if (props.type !== ""){
-    result = result.concat(`${props.type}`)
+  if (props.type === "Normal"){
+    return ""
   }
-  return result
+  return `(${props.type})`
 })
 
 const tooltip = computed(() => {
@@ -38,8 +37,12 @@ const tooltip = computed(() => {
 </script>
 
 <template>
-  <p :title="tooltip">{{ innerText }}</p>
+  <h2 :title="tooltip">{{ innerText }}</h2>
 </template>
 
 <style>
+#characterType {
+  text-align: center;
+  margin-top: 0.1em;
+}
 </style>
