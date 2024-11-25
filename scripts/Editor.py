@@ -48,6 +48,8 @@ class Editor(Accessor):
 
     # Grabs the inner, unsorted array from the dict (json object)
     def extractArray(self) -> list:
+        if self.readWriter.getRawData() == None:
+            self.read()
         array = []
         try:
             array = self.readWriter.getRawData()[self.getArrayKey()]
@@ -86,8 +88,6 @@ class Editor(Accessor):
     """
     def doMainThing(self, value=None, start:int=0, stop:int=-1, insideInfo:bool=True, allowNull:bool=False):
         # Boilerplate read code for child classes
-        if self.readWriter.getRawData() == None:
-            self.read()
         data = self.extractArray()
 
         """This is where your custom code for child classes should go.
