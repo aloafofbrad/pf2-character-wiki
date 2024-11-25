@@ -6,7 +6,7 @@
                 "id": -1,
                 "name": "null",
                 "image": "public/silhouette.jpg",
-                "type": "null",
+                "type": "Normal",
                 "ancestry": "?",
                 "heritage": "?",
                 "background": "?",
@@ -23,7 +23,7 @@
                 "biography": [
                     "?"
                 ],
-                "deity": ""
+                "deity": "?"
             }
         },
         {
@@ -280,7 +280,7 @@
                 "class": "Bard?",
                 "level": "",
                 "pronouns": "He/Him",
-                "nationality": "",
+                "nationality": "?",
                 "age": {
                     "age": "18",
                     "exact": true,
@@ -309,7 +309,7 @@
                 "class": "?",
                 "level": "",
                 "pronouns": "She/Her",
-                "nationality": "",
+                "nationality": "?",
                 "age": {
                     "age": "?",
                     "exact": false,
@@ -335,7 +335,7 @@
                 "class": "?",
                 "level": "?",
                 "pronouns": "None",
-                "nationality": "?",
+                "nationality": "Neutral",
                 "age": {
                     "age": "?",
                     "exact": false,
@@ -602,7 +602,7 @@
                 "class": "?",
                 "level": "?",
                 "pronouns": "None",
-                "nationality": "?",
+                "nationality": "Any",
                 "age": {
                     "age": "?",
                     "exact": false,
@@ -810,7 +810,7 @@
                 "class": "?",
                 "level": "?",
                 "pronouns": "?",
-                "nationality": "?",
+                "nationality": "Kolis",
                 "age": {
                     "age": "?",
                     "exact": false,
