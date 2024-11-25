@@ -8,6 +8,7 @@ import Deity from './Deity.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
 import Picture from './Picture.vue'
+import Status from './Status.vue'
 import Tag from '../Tag.vue'
 import { ref, computed } from 'vue'
 
@@ -20,16 +21,18 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
 </script>
 
 <template class="bio" @keyup.esc="$emit('deselect-entry')">
-  <div id="deselect" class="prevent-select snappy" @click="$emit('deselect-entry')"><p>❌</p></div>
+  <div id="deselect" class="prevent-select" @click="$emit('deselect-entry')"><p>❌</p></div>
   <div id="split">
     <!-- LeftColumn
      This is intended to be the character's picture, name, and so on and so forth. -->
     <div id="leftColumn">
       <!-- Remove this line to remove the image. -->
-      <Picture :src="info.image" @click="$emit('deselect-entry')"/>
-      <Name :name="info.name" :type="info.type" @click="$emit('deselect-entry')"/>
+      <div class="CharacterBox">
+        <Picture :src="info.image" @click="$emit('deselect-entry')"/>
+        <Name :name="info.name" :type="info.type" @click="$emit('deselect-entry')"/>
+      </div>
       <!-- Rest of the character info. -->
-      <div class="BasicInfoBox">
+      <div class="InfoBox">
           <div class="tagList">
             <Tag v-if="info.type !== 'Normal'"><CharacterType :type="info.type" :customTooltip="''"/></Tag>
             <Tag v-if="info.pronouns !== 'None'">Pronouns: {{ info.pronouns }}</Tag>
@@ -39,7 +42,9 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
             <Tag v-if="info.deity !== ''"><Deity :deity="info.deity"/></Tag>
             <Tag><Age :age="info.age" :ancestry="info.ancestry"/></Tag>
             <Tag v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</Tag>
+            <!-- <Tag id="status"><Status :value="info.status", :defaultValue="''"></Status></Tag> -->
             <Tag><Nationality class="tag" v-if="info.nationality" :nationality="info.nationality"/></Tag>
+            <!-- The ID is mainly shown for debugging. It's safe to remove. -->
             <Tag>ID: {{ info.id }}</Tag>
           </div>
         </div>
@@ -97,7 +102,27 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
 @media only screen and (orientation: landscape){
   #split {
     justify-content: flex-start;
+    align-items: flex-start;
     z-index: 1;
+  }
+
+  #leftColumn {
+    border-width: 0 2px 0 0; 
+    border-color: rgba(186, 186, 186, 0.5);
+    border-style: solid;
+    border-radius: 16px;
+
+    .tagList {
+      margin-left: 4px;
+
+      .tag {
+        margin-left: inherit;
+
+        * {
+          margin-left: unset;
+        }
+      }
+    }
   }
 
   .visible-landscape {
@@ -119,7 +144,14 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
     z-index: 1;
   }
 
-  #leftColumn > .BasicInfoBox > .tagList {
+  #leftColumn {
+    .tagList {
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+  }
+
+  #leftColumn > .InfoBox > .tagList {
     flex-direction: row;
     flex-wrap: wrap;
     /* align-items: center; */
@@ -142,7 +174,7 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
 
 /* \/ \/ \/ \/ LEFT COLUMN \/ \/ \/ \/ */
 #leftColumn {
-  width: 352px;
+  min-width: 352px;
   height: 100%;
   display: flex;
   flex-flow: column wrap;
@@ -150,20 +182,14 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
 }
 
 #leftColumn {
-  .BasicInfoBox {
-    width: 100%;
+  .CharacterBox {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
   }
-
-  .tagList {
-    margin-left: 4px;
-
-    .tag {
-      margin-left: inherit;
-
-      * {
-        margin-left: unset;
-      }
-    }
+  .CharacterBox, .InfoBox {
+    width: 100%;
   }
 }
 
@@ -185,12 +211,12 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
   justify-content: flex-start;
 }
 
-.BasicInfoBox {
+.InfoBox {
   padding-right: 2em;
   /* border: 1px dotted; */
 }
 
-.BasicInfoBox > ul {
+.InfoBox > ul {
   margin: 0;
   padding-left: 0;
   padding-right: 1.5em;
@@ -227,6 +253,7 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  text-align: center;
   height: 32px;
   width: 32px;
 }
