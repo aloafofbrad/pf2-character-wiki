@@ -1,6 +1,7 @@
 <script setup>
 import ArtContainer from './components/containers/ArtContainer.vue'
 import Bio from './components/bio/Bio.vue'
+import IndexContainer from './components/containers/IndexContainer.vue'
 import ListContainer from './components/containers/ListContainer.vue'
 import Navbar from './components/Navbar.vue'
 import { ref, reactive, computed } from 'vue'
@@ -291,7 +292,8 @@ const arranged = computed(() => {
      respective elements are shown, you need to modify the file(s) of whichever container(s) you plan to
      use. See the top of this file for file locations, in the imports section. -->
     <ArtContainer v-show="showArtContainer()" :entries="arranged" @update-selection="updateSelection"/>
-    <ListContainer v-show="showListContainer()" :entries="arranged" @update-selection="updateSelection"/>
+    <!-- <ListContainer v-show="showListContainer()" :entries="arranged" @update-selection="updateSelection"/> -->
+    <IndexContainer v-show="showListContainer()" :entries="arranged" @update-selection="updateSelection"/>
     <!-- end Containers -->
     <!-- Bio
      To change data shown in the Bio, or the way that data is show, you'll need to modify the file for
@@ -313,12 +315,6 @@ const arranged = computed(() => {
 
 body, main {
   overflow-y: hidden;
-}
-
-template {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-start;
 }
 
 header {
