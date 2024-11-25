@@ -107,6 +107,7 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
   }
 
   #leftColumn {
+    width: 352px;
     border-width: 0 2px 0 0; 
     border-color: rgba(186, 186, 186, 0.5);
     border-style: solid;
@@ -145,6 +146,7 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
   }
 
   #leftColumn {
+    width: 100%;
     .tagList {
       margin-left: 4px;
       margin-right: 4px;
@@ -174,7 +176,6 @@ const emit = defineEmits(['deselect-entry', 'select-entry'])
 
 /* \/ \/ \/ \/ LEFT COLUMN \/ \/ \/ \/ */
 #leftColumn {
-  min-width: 352px;
   height: 100%;
   display: flex;
   flex-flow: column wrap;
