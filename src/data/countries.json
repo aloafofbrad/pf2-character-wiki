@@ -9,9 +9,8 @@
         "Yeonguk":"public/emblems/Most-Serene-Republic-of-Yeonguk-Emblem.png",
         "Any":"public/emblems/Neutral.png",
         "Neutral":"public/emblems/Neutral.png",
-        "Uknown":"public/emblems/Unknown.png",
+        "Unknown":"public/emblems/Unknown.png",
         "null":"public/emblems/Unknown.png",
-        "?":"public/emblems/Unknown.png",
-        "":"public/emblems/Unknown.png"
+        "?":"public/emblems/Unknown.png"
     }
 }

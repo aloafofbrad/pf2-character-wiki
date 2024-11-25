@@ -9,9 +9,8 @@
         "Yeonguk":"Yeongukish",
         "Any":"Any",
         "Neutral":"Neutral",
-        "Uknown":"Uknown",
-        "null":"Uknown",
-        "?":"Uknown",
-        "":"Uknown"
+        "Unknown":"Unknown",
+        "null":"Unknown",
+        "?":"Unknown"
     }
 }
