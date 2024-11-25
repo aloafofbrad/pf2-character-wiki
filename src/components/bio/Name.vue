@@ -9,19 +9,23 @@ const props = defineProps({
   type: {
     type:String,
     default:"Normal"
+  },
+  defaultNameValue: {
+    type:String,
+    default:""
   }
 })
 
 const innerText = computed(() => {
   var result = ""
-  if (props.name === "" || props.name === undefined || props.name === null){
+  if (props.name === props.defaultNameValue || props.name === undefined || props.name === null){
     result = "?"
   }
   else {
     result = result.concat(`${props.name}`)
   }
   if (props.type !== "Normal"){
-    result = result.concat(` (${props.type})`)
+    result = result.concat(`\n(${props.type})`)
   }
   return result
 })
@@ -35,8 +39,9 @@ const innerText = computed(() => {
 #characterName {
   text-align: center;
   width: 100%;
-  margin: 0;
-  padding-left: 0.25em;
+  /* margin: 0;
+  margin-left: 3em;
+  margin-right: 3em; */
   word-wrap: break-word;
 }
 </style>
