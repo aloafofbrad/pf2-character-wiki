@@ -749,24 +749,26 @@
             "id": 27,
             "info": {
                 "id": 27,
-                "name": "Brain Villagers",
+                "name": "Kruskan Brain Villagers",
                 "image": "public/act1/brain-villager-384.jpg",
                 "type": "Group",
                 "ancestry": "Humanoid",
                 "heritage": "?",
-                "background": "?",
-                "class": "?",
+                "background": "Varies",
+                "class": "Varies",
                 "level": "?",
                 "pronouns": "?",
                 "nationality": "Kolis",
                 "age": {
-                    "age": "?",
+                    "age": "Varies",
                     "exact": false,
                     "calculateHumanYears": false
                 },
                 "status": "?",
                 "biography": [
-                    "?"
+                    "Villagers who were once humanoid, turned into brains by Dr. Fear. They each simply woke up one morning, and they were brains.",
+                    "Though they had only been brains for a year before the party met them, none of them were able to remember what they looked like before they were brains.",
+                    "They were terrorized every night by Dr. Fear's crawling hands."
                 ],
                 "deity": ""
             }
@@ -775,7 +777,7 @@
             "id": 28,
             "info": {
                 "id": 28,
-                "name": "Brana Kotwicz",
+                "name": "Mayor Brana Kotwicz",
                 "image": "public/act1/mayor-brana-kotwicz-384.jpg",
                 "type": "Normal",
                 "ancestry": "Humanoid",
@@ -786,13 +788,13 @@
                 "pronouns": "?",
                 "nationality": "Kolis",
                 "age": {
-                    "age": "?",
+                    "age": "48",
                     "exact": false,
                     "calculateHumanYears": false
                 },
                 "status": "?",
                 "biography": [
-                    "?"
+                    "Mayor of the village of Kruska. She too was turned into a brain by Dr. Fear. It's uncertain whether Kruska's mayoral term limit applies to brains, so she's been mayor ever since."
                 ],
                 "deity": ""
             }
@@ -806,19 +808,72 @@
                 "type": "Normal",
                 "ancestry": "Humanoid",
                 "heritage": "?",
-                "background": "?",
+                "background": "Farmhand",
                 "class": "?",
                 "level": "?",
                 "pronouns": "?",
                 "nationality": "Kolis",
                 "age": {
-                    "age": "?",
+                    "age": "20",
                     "exact": false,
                     "calculateHumanYears": false
                 },
                 "status": "?",
                 "biography": [
-                    "?"
+                    "A young farmhand from the village of Kruska. He too was turned into a brain. Despite this, he still works out, although whether he's made any gains is up for debate."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 30,
+            "info": {
+                "id": 30,
+                "name": "Dr. Fear",
+                "image": "public/silhouette.jpg",
+                "type": "Normal",
+                "ancestry": "Humanoid",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "?",
+                "nationality": "?",
+                "age": {
+                    "age": "Middle-aged",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "A powerful being who turned the entire village of Kruska into brains, and then terrorized them with crawling hands."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 31,
+            "info": {
+                "id": 31,
+                "name": "Crawling Hands",
+                "image": "public/act1/Crawling_Hand-650.jpg",
+                "type": "Generic",
+                "ancestry": "?",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "?",
+                "nationality": "?",
+                "age": {
+                    "age": "Undead",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "Undead",
+                "biography": [
+                    "Hands that terrorized the brain villagers of Kruska.",
+                    "They seem to want to grab, grapple, and strangle whoever they meet."
                 ],
                 "deity": ""
             }

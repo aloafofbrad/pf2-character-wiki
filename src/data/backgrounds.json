@@ -47,6 +47,18 @@
       "name": "Entertainer",
       "rarity": "Common",
       "AoNID": 421
+    },
+    "Farmhand": {
+      "id": 8,
+      "name": "Farmhand",
+      "rarity": "Common",
+      "AoNID": 422
+    },
+    "Noble": {
+      "id": 9,
+      "name": "Noble",
+      "rarity": "Common",
+      "AoNID": 435
     }
   }
 }
