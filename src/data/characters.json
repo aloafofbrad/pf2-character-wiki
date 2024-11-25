@@ -155,7 +155,8 @@
                 },
                 "status": "In Party",
                 "biography": [
-                    "An orphan Basil & Sol saved from the Grandpa attack in Knork, the capitol of Kolis.", "He seems to like berries."
+                    "An orphan Basil & Sol saved from the Grandpa attack in Knork, the capitol of Kolis.",
+                    "He seems to like berries."
                 ],
                 "deity": ""
             }
@@ -740,6 +741,84 @@
                 "status": "?",
                 "biography": [
                     "A foreign wizard hired by Wubbins to look after the village of Kursk."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 27,
+            "info": {
+                "id": 27,
+                "name": "Brain Villagers",
+                "image": "public/act1/brain-villager-384.jpg",
+                "type": "Group",
+                "ancestry": "Humanoid",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "?",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "?"
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 28,
+            "info": {
+                "id": 28,
+                "name": "Brana Kotwicz",
+                "image": "public/act1/mayor-brana-kotwicz-384.jpg",
+                "type": "Normal",
+                "ancestry": "Humanoid",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "?",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "?"
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 29,
+            "info": {
+                "id": 29,
+                "name": "Furnhod",
+                "image": "public/act1/furnhod-384.jpg",
+                "type": "Normal",
+                "ancestry": "Humanoid",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "?",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "?"
                 ],
                 "deity": ""
             }
