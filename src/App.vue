@@ -1,51 +1,120 @@
 <script setup>
-import ArtContainer from './components/containers/ArtContainer.vue'
-import Bio from './components/bio/Bio.vue'
-import IndexContainer from './components/containers/IndexContainer.vue'
-import ListContainer from './components/containers/ListContainer.vue'
+import MainView from './components/MainView.vue'
 import Navbar from './components/Navbar.vue'
 import { ref, reactive, computed } from 'vue'
 import packageJson from "../package.json"
 
-import data from './data/characters.json'
+/* Constants
+    source          URL to your repo. Safe to use the empty string or disable rendering. Rendered in NavBar.
+    DESELECTED      numerical ID that shows components that the user hasn't selected a character, journal
+                    entry, or setting. arbitrary, but should be negative.
+    SORT_ALPHA      Arbitrary; represents sorting an array in alphabetical order
+    SORT_CHRONO     Arbitrary; represents sorting an array in chronological order (by an entry's ID)
+    SEARCH_BLEACH   Used to strip userRegex of illegal characters
 
+    ART_VIEW            Arbitrary; used to determine whether the ArtContainer is shown
+    LIST_VIEW           Arbitrary; used to determine whether the ListContainer is shown
+    DEFAULT_VIEW        Determines the default view. Should either be ART_VIEW or LIST_VIEW
+    MULTI_VIEW_ENABLED  When false, only allows one view (ArtContainer, ListContainer, etc) to render
+*/
 const source = `https://github.com/aloafofbrad/pf2-character-wiki`
-
-var entries = ref([])
-
-for (let i = 0; i < data.data.length; i++){
-  entries.value.push(data.data[i])
-}
-
-console.log("entries:")
-console.log(entries.value)
-
 const DESELECTED = -1
-const SORT_DEFAULT = "default"
 const SORT_ALPHA = "alphabetical"
 const SORT_CHRONO = "chronological"
-const SORT_ALPHA_DESC = "alphabetical_desc"
-const SORT_CHRONO_DESC = "chronological_desc"
-
-const selected = ref(DESELECTED)
-const history = ref([DESELECTED,])
-const index = ref(0)
-const userRegex = ref('')
 const SEARCH_BLEACH = "/[^a-zA-Z0-9 -\?]/g"
 
 const ART_VIEW = 0
 const LIST_VIEW = 1
 const DEFAULT_VIEW = ART_VIEW
 const MULTI_VIEW_ENABLED = true
-const viewMode = ref(DEFAULT_VIEW)
 
-// Comparisons & helpers
+/* Reactive data variables
+    dataMap     This the reactive map for the app. This is the single
+                most important variable in the app. Any data that you
+                want users to be able to view should be added into
+                dataMap.
+                To add data to dataMap, first import it using an import
+                statement.
+                Next, add it to the map using addArrayToReactiveMap().
+    selected    Stores the ID of the entry that the user is currently
+                viewed
+    history     Stores a list of IDs that the user has previously viewed
+    index       ???? Stores the current index of the history ????
+    userRegex   Stores a user's search string
+    viewMode    Stores the currently displayed view
+    
+    sortParadigm    Current sort paradigm. Update this to change the
+                    default sort paradigm.
+    sortParadigms   Mapping of comparison functions used for SORT_ALPHA
+                    & SORT_CHRONO, in sort()
+*/
+const dataMap = ref({})
+const selected = ref(DESELECTED)
+const history = ref([DESELECTED,])
+const index = ref(0)
+const userRegex = ref('')
+const viewMode = ref(DEFAULT_VIEW)
+const sortParadigm = ref(SORT_CHRONO)
+const sortParadigms = reactive({
+  [SORT_ALPHA]: compareNames,
+  [SORT_CHRONO]: compareIDs
+})
+/* Note: I'm not 100% sure why SORT_ALPHA & SORT_CHRONO are in
+[brackets] in the declaration of sortParadigms, but I think it's
+to allow the keys to be set up in a way that matches the string
+values of SORT_ALPHA & SORT_CHRONO */
+
+
+// read the data from the files
+import characters from './data/characters.json'
+import journal from './data/journals.json'
+import settings from './data/settings.json'
+
+/* Adds data to a given reactive map
+    args:
+    data     the data to be added to the reactive map
+    map      the reactive map
+    keyName  the name to use for the key
+  Overwrites map.value[keyName] if it already exists.
+*/
+function addArrayToReactiveMap(data, map, keyName){
+  map.value[keyName] = []
+  for (let i = 0; i < data.length; i++){
+    map.value[keyName].push(data[i])
+  }
+}
+addArrayToReactiveMap(characters.data, dataMap, "characters")
+addArrayToReactiveMap(journal.data, dataMap, "journal")
+addArrayToReactiveMap(settings.data, dataMap, "settings")
+
+/* Prints a given reactive map in the console
+   args:
+   obj   the object to print
+*/
+function consoleLogReactiveMap(obj){
+  for (const key in obj){
+    console.log(`${key}:`)
+    console.log(obj[key].value)
+  }
+}
+consoleLogReactiveMap()
+
+/* Helper function for sorts
+    Returns true if arg is null or undefined
+*/
 function DNE(arg) {
   return arg === null || arg === undefined
 }
 
+/* Helper function for sorts
+    Handles edge cases where a exists and b doesn't,
+    vice versa, or neither exists
+    
+    returns -1 if a exists and b does not
+    returns 1 if b exists and a does not
+    returns 0 if a and b DNE, or if a and b exist
+*/
 function compareAgainstDNE(a, b) {
-  // console.log("CompareAgainstDNE: " + a + ", " + b)
   if (!DNE(a) && DNE(b)) {
     return -1
   }
@@ -55,24 +124,34 @@ function compareAgainstDNE(a, b) {
   return 0
 }
 
+/* Helper function for sorts
+    returns -1 if a is less than b
+    returns 1 if a is greater than b
+    returns 0 if a and b are equal
+*/
 function compareDataByKey(a, b, key) {
   if (DNE(a['info'][key]) || DNE(b['info'][key])) {
     return compareAgainstDNE(a, b)
   }
-  // console.log(a['info'][key] + " < " + b['info'][key] + "?")
-  if (a['info'][key] < b['info'][key]) {
+  var aValue = a['info'][key]
+  var bValue = b['info'][key]
+  if (aValue < bValue) {
     return -1
   }
-  if (a['info'][key] > b['info'][key]) {
+  if (aValue > bValue) {
     return 1
   }
   return 0
 }
 
+/* Helper function for sorts
+*/
 function compareNames(a, b) {
   return compareDataByKey(a, b, 'name')
 }
 
+/* Helper function for sorts
+*/
 function compareIDs(a, b){
   return compareDataByKey(a, b, 'id')
 }
@@ -86,6 +165,7 @@ function sortChronologically() {
   sortParadigm.value = SORT_CHRONO
 }
 
+// Selection helpers
 function deselectEntry() {
   setSelectedEntry(DESELECTED)
 }
@@ -94,14 +174,17 @@ function noSelectionMade() {
   return selected.value === DESELECTED
 }
 
+// container display helper -- move to MainView?
 function showArtContainer() {
   return noSelectionMade() && viewMode.value === ART_VIEW
 }
 
+// container display helper -- move to MainView?
 function showListContainer() {
   return noSelectionMade() && viewMode.value === LIST_VIEW
 }
 
+// container display helper -- move to MainView?
 function toggleView() {
   if (MULTI_VIEW_ENABLED){
     if (viewMode.value === ART_VIEW){
@@ -116,9 +199,39 @@ function toggleView() {
   updateSelection(DESELECTED)
 }
 
+// Helper for data; rewritten as isAValidId(key, id)
 function isAValidId(id) {
-  // console.log("validating id\t" + id + "\tagainst\t" + (entries.value.length - 1))
   return (id >= 0 && id <= (entries.value.length - 1))
+}
+/* Helper for dataMap
+    Tests if an ID is valid based on the given key for dataMap
+    args:
+    key   the key to test
+    id    the id to test
+*/
+function isAValidId(key, id){
+  try {
+    var target = dataMap.value[key]
+    if (target !== null && target !== undefined){
+      return (id >= 0 && id <= (dataMap.value[key].length - 1))
+    }
+  }
+  catch {
+    return false
+  }
+}
+/* Helper for dataMap
+    Tests if a key exists in dataMap
+    args:
+    key   the key to test
+*/
+function isAValidKey(key){
+  for (k in dataMap.value){
+    if (key === k){
+      return true
+    }
+  }
+  return false
 }
 
 function setSelectedEntry(id) {
@@ -135,10 +248,8 @@ function getSelectedEntry() {
   if (noSelectionMade()) {
     return entries.value[0]
   }
-  // console.log("checking " + 0 + " thru " + entries.length + "...")
   for (let i = 0; i < entries.value.length; i++){
     if (selected.value === entries.value[i].id){
-      // console.log("found " + entries[i].info['name'])
       return entries.value[i]
     }
   }
@@ -161,49 +272,55 @@ function goForward() {
 }
 
 function setIndex(value) {
-  // var old = 0 + index.value
-  // console.log(`history index, prev: ${old}`)
   if (!isAValidHistoricalIndex(value)){
     return
   }
   index.value = value
-  // console.log(`history index, curr: ${index.value}`)
 }
 
 function pushHistory(curr) {
   history.value.push(curr)
   setIndex(index.value + 1)
-  // console.log(`history: ${history.value}`)
 }
 
-function cleanHistory() {
-  /* Removes instances of DESELECTED from the history so that
-  when goBack() and goForward() are called, DESELECTED is only
-  shown at the beginning and end of the history. As such,
-  the for loop ignores indices 0 and (n-1)
+/* Removes instances of DESELECTED from the history so that
+    when goBack() and goForward() are called, DESELECTED is only
+    shown at the beginning and end of the history. As such,
+    the for loop ignores indices 0 and (n-1)
   
-  Calling this function in updateSelection() and HandleBioClose() 
-  because those will probably be called much less often than 
-  goBack() and goForward() */
+    Calling this function in updateSelection() and HandleBioClose() 
+    because those will probably be called much less often than 
+    goBack() and goForward()
+*/
+function cleanHistory() {
   var oldLength = history.value.length
   var newHistory = [DESELECTED,]
-  for (let i = 1;i < oldLength - 1;i++){
+  for (let i = 1;i < oldLength;i++){
     var curr = history.value[i]
     if (curr !== DESELECTED){
       newHistory.push(curr)
     }
-    else if (i !== 0 && curr === DESELECTED){
-      setIndex(index.value - 1)
-    }
+    // Fairly sure this is a bug; commented out for now
+    // else if (i !== 0 && curr === DESELECTED){
+    //   setIndex(index.value - 1)
+    // }
   }
-  newHistory.push(history.value[oldLength - 1])
+  // newHistory.push(history.value[oldLength - 1])
   history.value = newHistory
 }
 
+/* Called when *Container components emit update-selection */
 function updateSelection(id) {
+  /* Not actually sure why this is here; is it an edge case I forgot?
+  I think this case should be removed entirely to be consistent with
+  the bug fix in the else if clause in cleanHistory()
+  
+  TODO: test that this edge case ever actually happens*/
   if (id === selected.value){
     pushHistory(DESELECTED)
+    console.log("That edge case ever actually happened")
   }
+  // This *should* be the default case that gets called 99% of the time
   else{
     pushHistory(id)
   }
@@ -212,28 +329,24 @@ function updateSelection(id) {
   console.log(`history.value: ${history.value}`)
 }
 
+/* Called when Bio component emits deselect-entry */
 function handleBioClose(){
-  // pushHistory(DESELECTED)
   deselectEntry()
   cleanHistory()
   console.log(`history.value: ${history.value}`)
 }
 
-// Search
+// Search -- move to NavBar?
 function updateSearch(query) {
   userRegex.value = cleanString(query)
 }
 
+// Helper for search -- move to NavBar?
 function cleanString(s){
   return s.replace(SEARCH_BLEACH, "")
 }
 
-const sortParadigm = ref(SORT_CHRONO)
-const sortParadigms = reactive({
-  [SORT_ALPHA]: compareNames,
-  [SORT_CHRONO]: compareIDs
-})
-
+// Sort -- move this & helpers to MainView?
 function sort(list) {
   var paradigm = sortParadigms[sortParadigm.value]
   if (paradigm === null || paradigm === undefined){
@@ -242,6 +355,7 @@ function sort(list) {
   return list.slice().sort((a, b) => paradigm(a, b))
 }
 
+// Helper for search -- move to NavBar?
 function matchesRegex(s, regex){
   try {
     var result = regex.test(s)
@@ -255,6 +369,7 @@ function matchesRegex(s, regex){
 
 }
 
+// Move to MainView?
 function filter(list){
   if (userRegex.value === "" || userRegex.value === null || userRegex === undefined){
     return list.slice()
@@ -264,6 +379,7 @@ function filter(list){
   return list.filter(entry => matchesRegex(entry['info']['name'].toLowerCase(), regex))
 }
 
+// Could likely move this to MainView?
 const arranged = computed(() => {
   var sorted = sort(entries.value)
   var filtered = filter(sorted)
@@ -284,31 +400,7 @@ const arranged = computed(() => {
     />
   </header>
   
-  <main>
-    <!-- Containers
-     To change the way the character art or names are shown, alter these lines. If you only want art to
-     be shown, only remove the ListContainer element, and vice versa. The v-show bindings need to be kept
-     for each element, even if one element is removed. To make changes to how these containers and their
-     respective elements are shown, you need to modify the file(s) of whichever container(s) you plan to
-     use. See the top of this file for file locations, in the imports section. -->
-    <ArtContainer v-show="showArtContainer()" :entries="arranged" @update-selection="updateSelection"/>
-    <!-- <ListContainer v-show="showListContainer()" :entries="arranged" @update-selection="updateSelection"/> -->
-    <IndexContainer v-show="showListContainer()" :entries="arranged" @update-selection="updateSelection"/>
-    <!-- end Containers -->
-    <!-- Bio
-     To change data shown in the Bio, or the way that data is show, you'll need to modify the file for
-     the Bio component (again, see the top of this file for its location, in the imports section).
-     Don't change the v-show binding here, regardless of which containers are shown. -->
-    <div id="bio" v-show="!noSelectionMade()">
-      <Bio
-        :ID="selected.value"
-        :info="getSelectedEntry().info"
-        @deselect-entry="handleBioClose()"
-        @select-entry="updateSelection(entry.id)">
-      </Bio>
-    </div>
-    <!-- end Bio -->
-  </main>
+  <MainView></MainView>
 </template>
 
 <style scoped>
