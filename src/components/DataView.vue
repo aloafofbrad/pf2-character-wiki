@@ -1,5 +1,6 @@
+<!-- This component displays the appropriate entry for the given category. -->
 <script setup>
-import Bio from './bio/Bio.vue'
+import CharacterEntry from './entries/CharacterEntry.vue'
 import { ref, reactive, computed, inject, watchEffect } from 'vue'
 const DESELECTED = inject('DESELECTED')
 const props = defineProps({
@@ -19,36 +20,6 @@ function showDataFromCategory(category){
   return false
 }
 
-/* Helper for dataMap
-    Tests if a key exists in dataMap
-    args:
-    key   the key to test
-*/
-function isAValidKey(key){
-  for (let i = 0; i < props.validCategories.length; i++){
-    var curr = props.validCategories[i];
-    console.log(curr)
-    if (key === curr){
-      return true
-    }
-  }
-  return false
-}
-
-/* Returns the selected entry. This is expected to be an integer equal to
-or larger than 0, but at most equal to the number of entries in the array */
-// function getSelectedEntry() {
-//   // console.log("getSelectedEntry()")
-//   // console.log("dataMap.value: ", dataMap.value)
-//   // console.log("props.category: ", props.category)
-//   console.log("selected.value: ", selected.value)
-
-//   // var result = dataMap.value[props.category].at(selected.value) // saved as comment for posterity/sanity
-//   var result = dataMap.value[props.category].at(selected.value) // works
-//   // console.log("result: ", result)
-//   return result
-// }
-
 /* Returns true if the selected entry is the deselected value */
 function noSelectionMade() { return selected.value === DESELECTED }
 
@@ -67,21 +38,22 @@ function updateSelection(id, category){
     <div>
       <h3>{{ debug }}</h3>
     </div>
-    <!-- Bio
-     To change data shown in the Bio, or the way that data is shown,
-     you'll need to modify the file for the Bio component (see the top of
-     this file for its location, in the imports section). Don't change
-     the v-show binding here, regardless of which containers are shown.
+    <!-- CharacterEntry
+     To change data shown in the CharacterEntry, or the way that data is 
+     shown, you'll need to modify the file for the CharacterEntry 
+     component (see the top of this file for its location, in the 
+     imports section). Don't change the v-show binding here, regardless 
+     of which containers are shown.
      -->
     <div id="bio" v-show="showDataFromCategory(props.characterData)">
-      <Bio
+      <CharacterEntry
         :ID="selected"
         :info="props.entry.info"
         :category="category"
         @update-selection="updateSelection">
-      </Bio>
+      </CharacterEntry>
     </div>
-    <!-- end Bio -->
+    <!-- end CharacterEntry -->
     <!-- TODO: JOURNAL -->
     <!-- TODO: SETTINGS -->
   </div>
