@@ -10,26 +10,34 @@ import Nationality from './Nationality.vue'
 import Picture from './Picture.vue'
 import Status from './Status.vue'
 import Tag from '../Tag.vue'
-import { ref, computed } from 'vue'
-
+import { ref, computed, inject } from 'vue'
+const DESELECTED = inject('DESELECTED')
+const CATEGORIES = inject('CATEGORIES')
 const props = defineProps({
-  ID: Object,
-  info: Object
+  ID: { type:Number, required: true, default: -1 },
+  info: { type:Object, required: true },
+  category: { type:String, required: true }
 })
+const emit = defineEmits(['updateSelection'])
 
-const emit = defineEmits(['deselect-entry', 'select-entry'])
+function updateSelection(id, category) {
+  emit('updateSelection', id, category)
+}
+
+function close() { updateSelection(DESELECTED, props.category) }
+function goTo(id, category) { updateSelection(id, category) }
 </script>
 
-<template class="bio" @keyup.esc="$emit('deselect-entry')">
-  <div id="deselect" class="prevent-select" @click="$emit('deselect-entry')"><p>❌</p></div>
+<template class="bio" @keyup.esc="close()">
+  <div id="deselect" class="prevent-select" @click="close()"><p>❌</p></div>
   <div id="split">
     <!-- LeftColumn
      This is intended to be the character's picture, name, and so on and so forth. -->
     <div id="leftColumn">
-      <!-- Remove this line to remove the image. -->
       <div class="CharacterBox">
-        <Picture :src="info.image" @click="$emit('deselect-entry')"/>
-        <Name :name="info.name" :type="info.type" @click="$emit('deselect-entry')"/>
+        <!-- Remove the following line to remove the image: -->
+        <Picture :src="info.image" @click="close()"/>
+        <Name :name="info.name" :type="info.type" @click="close()"/>
         <CharacterType :type="info.type" :customTooltip="''"/>
       </div>
       <!-- Rest of the character info. -->
