@@ -2,10 +2,8 @@
 import Tag from '../Tag.vue';
 import { ref, computed } from 'vue'
 const props = defineProps({
-  entries: {
-    Type: Array,
-    default: []
-  }
+  entries: { Type: Array, default: [] },
+  category: { Type: String, required: true }
 })
 
 const emit = defineEmits(['updateSelection'])
@@ -14,11 +12,16 @@ function isAValidId(id) {
   return (id >= 0 && id <= (props.entries.length - 1))
 }
 
+function entryClick(id) {
+  console.log("entry clicked, id: ", id)
+  emit('updateSelection', id)
+}
+
 </script>
 
 <template>
-  <div id="ListContainer">
-    <Tag v-show="isAValidId(entry.id)" v-for="entry in props.entries" @click="$emit('updateSelection', entry.id)">
+  <div class="listContainer">
+    <Tag v-show="isAValidId(entry.id)" v-for="entry in props.entries" @click="entryClick(entry.id)">
       {{ entry.info.name }}
     </Tag>
   </div>
@@ -26,7 +29,7 @@ function isAValidId(id) {
 
 <style scoped>
 
-#ListContainer {
+.listContainer {
   max-width: 100vw;
   min-height: 100%;
   display: flex;

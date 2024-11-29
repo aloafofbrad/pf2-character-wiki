@@ -2,16 +2,19 @@
 import Tag from '../Tag.vue';
 import { ref, computed } from 'vue'
 const props = defineProps({
-  entries: {
-    Type: Array,
-    default: []
-  }
+  entries: { Type: Array, default: [] },
+  category: { Type: String, required: true }
 })
 
 const emit = defineEmits(['updateSelection'])
 
 function isAValidId(id) {
   return (id >= 0 && id <= (props.entries.length - 1))
+}
+
+function entryClick(id) {
+  console.log("entry clicked, id: ", id)
+  emit('updateSelection', id)
 }
 
 const letters = ["A","B","C","D","E","F","G",
@@ -37,7 +40,7 @@ const arranged = computed(() => {
     <div class="section" v-for="letter in letters" v-show="arranged[letter].length > 0">
       <h1>{{ letter }}</h1>
       <div class="indexSectionEntries">
-        <Tag v-show="isAValidId(entry.id)" v-for="entry in arranged[letter]" @click="$emit('updateSelection', entry.id)">
+        <Tag v-show="isAValidId(entry.id)" v-for="entry in arranged[letter]" @click="entryClick(entry.id)">
           {{ entry.info.name }}
         </Tag>
       </div>
