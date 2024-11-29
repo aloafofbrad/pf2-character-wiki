@@ -14,7 +14,7 @@ function isAValidId(id) {
 
 function entryClick(id) {
   console.log("entry clicked, id: ", id)
-  emit('updateSelection', id)
+  emit('updateSelection', id, props.category)
 }
 
 const letters = ["A","B","C","D","E","F","G",
