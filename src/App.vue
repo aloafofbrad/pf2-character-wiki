@@ -1,30 +1,37 @@
 <script setup>
 import MainView from './components/MainView.vue'
 import Navbar from './components/Navbar.vue'
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, watchEffect } from 'vue'
+import { provide } from 'vue'
 import packageJson from "../package.json"
 
 /* Constants
     source          URL to your repo. Safe to use the empty string or disable rendering. Rendered in NavBar.
+    SEARCH_BLEACH   Used to strip userRegex of illegal characters
     DESELECTED      numerical ID that shows components that the user hasn't selected a character, journal
                     entry, or setting. arbitrary, but should be negative.
+
+    props in MainView
     SORT_ALPHA      Arbitrary; represents sorting an array in alphabetical order
     SORT_CHRONO     Arbitrary; represents sorting an array in chronological order (by an entry's ID)
-    SEARCH_BLEACH   Used to strip userRegex of illegal characters
 
     ART_VIEW            Arbitrary; used to determine whether the ArtContainer is shown
+    INDEX_VIEW          Arbitrary; used to determine whether the IndexContainer is shown
     LIST_VIEW           Arbitrary; used to determine whether the ListContainer is shown
     DEFAULT_VIEW        Determines the default view. Should either be ART_VIEW or LIST_VIEW
     MULTI_VIEW_ENABLED  When false, only allows one view (ArtContainer, ListContainer, etc) to render
 */
 const source = `https://github.com/aloafofbrad/pf2-character-wiki`
+const SEARCH_BLEACH = "/[^a-zA-Z0-9 -\?]/g"
 const DESELECTED = -1
+provide('DESELECTED', DESELECTED)
+
+// props in MainView
 const SORT_ALPHA = "alphabetical"
 const SORT_CHRONO = "chronological"
-const SEARCH_BLEACH = "/[^a-zA-Z0-9 -\?]/g"
-
 const ART_VIEW = 0
-const LIST_VIEW = 1
+const INDEX_VIEW = 1
+const LIST_VIEW = 2
 const DEFAULT_VIEW = ART_VIEW
 const MULTI_VIEW_ENABLED = true
 
@@ -48,12 +55,12 @@ const MULTI_VIEW_ENABLED = true
     sortParadigms   Mapping of comparison functions used for SORT_ALPHA
                     & SORT_CHRONO, in sort()
 */
-const dataMap = ref({})
-const selected = ref(DESELECTED)
+const dataMap = reactive({}) // model in MainView
+const selected = ref(DESELECTED) // model in MainView
 const history = ref([DESELECTED,])
 const index = ref(0)
 const userRegex = ref('')
-const viewMode = ref(DEFAULT_VIEW)
+const viewMode = ref(DEFAULT_VIEW) // prop in MainView
 const sortParadigm = ref(SORT_CHRONO)
 const sortParadigms = reactive({
   [SORT_ALPHA]: compareNames,
@@ -78,26 +85,58 @@ import settings from './data/settings.json'
   Overwrites map.value[keyName] if it already exists.
 */
 function addArrayToReactiveMap(data, map, keyName){
-  map.value[keyName] = []
-  for (let i = 0; i < data.length; i++){
-    map.value[keyName].push(data[i])
+  var temp = {
+    [keyName]: data
   }
+  Object.assign(dataMap, temp)
 }
 addArrayToReactiveMap(characters.data, dataMap, "characters")
 addArrayToReactiveMap(journal.data, dataMap, "journal")
 addArrayToReactiveMap(settings.data, dataMap, "settings")
+
+/* Computed & reactive properties re: categories
+    A "category" in this context represents the type of information to be
+    arranged and presented to the user. Initially this was just the
+    characters, but the scope of the project has been expanded to include
+    other information, such as journal entries, and descriptions of
+    settings.
+
+  CATEGORIES        Computed. In short, every key for key in dataMap.
+                    Used for error prevention (validating categories).
+  DEFAULT_CATEGORY  Computed. The first key in dataMap. The first
+                    category shown when the app loads.
+  category          Ref. The currently viewed category. This is used to
+                    set the selected entry from that category.
+  Since these are all either computed or based on computed values,
+  they're all set up automatically for you. You shouldn't need to change
+  anything in the three declarations below.
+*/
+
+function CATEGORIES() {
+  var result;
+  watchEffect(() => { result = Object.keys(dataMap); })
+  return result;
+}
+function DEFAULT_CATEGORY() {
+  return CATEGORIES()[0];
+}
+const category = ref(DEFAULT_CATEGORY()) // prop in MainView
+provide('CATEGORIES', CATEGORIES())
+provide('DEFAULT_CATEGORY', DEFAULT_CATEGORY())
+console.log(`categories: `, CATEGORIES())
+console.log(`default category: `, DEFAULT_CATEGORY())
+console.log(`category: `, category)
 
 /* Prints a given reactive map in the console
    args:
    obj   the object to print
 */
 function consoleLogReactiveMap(obj){
-  for (const key in obj){
-    console.log(`${key}:`)
-    console.log(obj[key].value)
-  }
+  console.log("logging reactive map:")
+  console.log(obj)
+  console.log("done")
 }
-consoleLogReactiveMap()
+consoleLogReactiveMap(dataMap)
 
 /* Helper function for sorts
     Returns true if arg is null or undefined
@@ -166,22 +205,8 @@ function sortChronologically() {
 }
 
 // Selection helpers
-function deselectEntry() {
-  setSelectedEntry(DESELECTED)
-}
-
 function noSelectionMade() {
   return selected.value === DESELECTED
-}
-
-// container display helper -- move to MainView?
-function showArtContainer() {
-  return noSelectionMade() && viewMode.value === ART_VIEW
-}
-
-// container display helper -- move to MainView?
-function showListContainer() {
-  return noSelectionMade() && viewMode.value === LIST_VIEW
 }
 
 // container display helper -- move to MainView?
@@ -190,6 +215,10 @@ function toggleView() {
     if (viewMode.value === ART_VIEW){
       viewMode.value = LIST_VIEW
       sortAlphabetically()
+    }
+    else if (viewMode.value === INDEX_VIEW) {
+      viewMode.value = ART_VIEW
+      sortChronologically()
     }
     else if (viewMode.value === LIST_VIEW) {
       viewMode.value = ART_VIEW
@@ -201,25 +230,9 @@ function toggleView() {
 
 // Helper for data; rewritten as isAValidId(key, id)
 function isAValidId(id) {
-  return (id >= 0 && id <= (entries.value.length - 1))
+  return (id >= 0 && id <= (dataMap[category.value].length - 1))
 }
-/* Helper for dataMap
-    Tests if an ID is valid based on the given key for dataMap
-    args:
-    key   the key to test
-    id    the id to test
-*/
-function isAValidId(key, id){
-  try {
-    var target = dataMap.value[key]
-    if (target !== null && target !== undefined){
-      return (id >= 0 && id <= (dataMap.value[key].length - 1))
-    }
-  }
-  catch {
-    return false
-  }
-}
+
 /* Helper for dataMap
     Tests if a key exists in dataMap
     args:
@@ -235,116 +248,53 @@ function isAValidKey(key){
 }
 
 function setSelectedEntry(id) {
-  if (isAValidId(id) && id !== selected.value){
-    selected.value = id
-  }
-  else{
-    selected.value = DESELECTED
-  }
-  console.log(`NOW VIEWING ENTRY: ${id}`)
+  if (isAValidId(id) && id !== selected.value){ selected.value = id }
+  else{ selected.value = DESELECTED }
 }
 
-function getSelectedEntry() {
-  if (noSelectionMade()) {
-    return entries.value[0]
-  }
-  for (let i = 0; i < entries.value.length; i++){
-    if (selected.value === entries.value[i].id){
-      return entries.value[i]
-    }
-  }
-  return entries.value[0]
+function setSelectedCategory(category){
+  if (isAValidKey(category)) { category.value = category }
 }
+
+function getSelectedCategory(){ return category.value }
 
 // History management
 function isAValidHistoricalIndex(value) {
   return (value >= 0 && value <= (history.value.length - 1))
 }
 
-function goBack() {
-  setIndex(index.value - 1)
-  setSelectedEntry(history.value[index.value])
+function goSomewhere(where) {
+  setIndex(where)
+  const curr = history.value[index.value]
+  setSelectedEntry(curr.id)
+  setSelectedCategory(curr.category)
 }
-
-function goForward() {
-  setIndex(index.value + 1)
-  setSelectedEntry(history.value[index.value])
-}
+function goBack() { goSomewhere(index.value - 1) }
+function goForward() { goSomewhere(index.value + 1) }
 
 function setIndex(value) {
-  if (!isAValidHistoricalIndex(value)){
-    return
-  }
+  if (!isAValidHistoricalIndex(value)){ return }
   index.value = value
 }
 
-function pushHistory(curr) {
-  history.value.push(curr)
+function pushHistory(id, category) {
+  history.value.push({ id:id, category:category })
   setIndex(index.value + 1)
 }
 
-/* Removes instances of DESELECTED from the history so that
-    when goBack() and goForward() are called, DESELECTED is only
-    shown at the beginning and end of the history. As such,
-    the for loop ignores indices 0 and (n-1)
-  
-    Calling this function in updateSelection() and HandleBioClose() 
-    because those will probably be called much less often than 
-    goBack() and goForward()
-*/
-function cleanHistory() {
-  var oldLength = history.value.length
-  var newHistory = [DESELECTED,]
-  for (let i = 1;i < oldLength;i++){
-    var curr = history.value[i]
-    if (curr !== DESELECTED){
-      newHistory.push(curr)
-    }
-    // Fairly sure this is a bug; commented out for now
-    // else if (i !== 0 && curr === DESELECTED){
-    //   setIndex(index.value - 1)
-    // }
-  }
-  // newHistory.push(history.value[oldLength - 1])
-  history.value = newHistory
-}
-
 /* Called when *Container components emit update-selection */
-function updateSelection(id) {
-  /* Not actually sure why this is here; is it an edge case I forgot?
-  I think this case should be removed entirely to be consistent with
-  the bug fix in the else if clause in cleanHistory()
-  
-  TODO: test that this edge case ever actually happens*/
-  if (id === selected.value){
-    pushHistory(DESELECTED)
-    console.log("That edge case ever actually happened")
-  }
-  // This *should* be the default case that gets called 99% of the time
-  else{
-    pushHistory(id)
-  }
+function updateSelection(id, category) {
+  pushHistory(id, category)
   setSelectedEntry(id)
-  cleanHistory()
-  console.log(`history.value: ${history.value}`)
-}
-
-/* Called when Bio component emits deselect-entry */
-function handleBioClose(){
-  deselectEntry()
-  cleanHistory()
-  console.log(`history.value: ${history.value}`)
+  setSelectedCategory(category)
+  // console.log(`history.value: ${history.value}`)
 }
 
 // Search -- move to NavBar?
-function updateSearch(query) {
-  userRegex.value = cleanString(query)
-}
+function updateSearch(query) { userRegex.value = cleanString(query) }
 
 // Helper for search -- move to NavBar?
-function cleanString(s){
-  return s.replace(SEARCH_BLEACH, "")
-}
+function cleanString(s){ return s.replace(SEARCH_BLEACH, "") }
 
 // Sort -- move this & helpers to MainView?
 function sort(list) {
@@ -369,7 +319,7 @@ function matchesRegex(s, regex){
 
 }
 
-// Move to MainView?
+// Filters / searches for specific entries
 function filter(list){
   if (userRegex.value === "" || userRegex.value === null || userRegex === undefined){
     return list.slice()
@@ -392,7 +342,8 @@ const arranged = computed(() => {
   <header>
     <Navbar :searchQuery="userRegex" :version="packageJson.version"
       :history="history" :index="index" :source="source"
-      :view="viewMode" :art_view="ART_VIEW" :list_view="LIST_VIEW" :multi_view_enabled="MULTI_VIEW_ENABLED"
+      :view="viewMode" :art_view="ART_VIEW" :list_view="LIST_VIEW"
+      :multi_view_enabled="MULTI_VIEW_ENABLED"
       @go-back="goBack" @go-forward="goForward"
       @sort-alphabetically="sortAlphabetically" @sort-chronologically="sortChronologically"
       @toggle-view="toggleView"
@@ -400,7 +351,39 @@ const arranged = computed(() => {
     />
   </header>
   
-  <MainView></MainView>
+  <!-- correct usage should be v-model:dataMap="dataMap" -->
+  <!-- For each type of view you're using, there must be a binding for
+   it, which must take its constant value. If MULTI_VIEW_ENABLED is
+   false, there still must be a binding for the one type of view that
+   will be used.
+  
+   For each category of data you want to show, there must be a binding
+   for it, which must take its index from CATEGORIES(), or a hard-coded
+   value. 
+   
+   What order the view and category bindings are declared in should not
+   matter.
+   
+   See also the props in MainView.vue. -->
+  <MainView v-model:dataMap="dataMap"
+    v-model:selected="selected"
+    v-model:category="category"
+    :view-mode="viewMode"
+    :art_view="ART_VIEW"
+    :index_view="INDEX_VIEW"
+    :list_view="LIST_VIEW"
+    :default_view="DEFAULT_VIEW"
+    :multi_view_enabled="MULTI_VIEW_ENABLED"
+    @update-selection="updateSelection"
+    :characterData="CATEGORIES()[0]"
+    :journalData="CATEGORIES()[1]"
+    :settingData="CATEGORIES()[2]"
+  />
+
+  <!-- <DataView :dataMap="dataMap" v-model:selected="selected"
+    v-model:category="category" :valid-categories="CATEGORIES()"
+    :deselected="DESELECTED">
+  </DataView> -->
 </template>
 
 <style scoped>
