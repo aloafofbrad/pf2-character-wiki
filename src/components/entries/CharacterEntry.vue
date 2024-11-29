@@ -1,3 +1,4 @@
+<!-- This component displays information for characters. The main way to change what info is shown (and how) is to modify the components that are shown; rearrange/rewite/delete them; or create new ones entirely. -->
 <script setup>
 import Age from './Age.vue'
 import Ancestry from './Ancestry.vue'
@@ -32,7 +33,8 @@ function goTo(id, category) { updateSelection(id, category) }
   <div id="deselect" class="prevent-select" @click="close()"><p>❌</p></div>
   <div id="split">
     <!-- LeftColumn
-     This is intended to be the character's picture, name, and so on and so forth. -->
+     This is intended to be the character's picture, name, and so on and 
+     so forth. -->
     <div id="leftColumn">
       <div class="CharacterBox">
         <!-- Remove the following line to remove the image: -->
@@ -52,7 +54,8 @@ function goTo(id, category) { updateSelection(id, category) }
             <Tag v-if="(info.type === 'Player' || info.type === 'Normal') || ((info.type !== 'Generic' && info.type !== 'Group') && info.status !== '?')">Status: {{ info.status }}</Tag>
             <!-- <Tag id="status"><Status :value="info.status", :defaultValue="''"></Status></Tag> -->
             <Tag><Nationality class="tag" v-if="info.nationality" :nationality="info.nationality"/></Tag>
-            <!-- The ID is mainly shown for debugging. It's safe to remove. -->
+            <!-- The ID is mainly shown for debugging. It's safe to 
+            remove. -->
             <Tag>ID: {{ info.id }}</Tag>
           </div>
         </div>
