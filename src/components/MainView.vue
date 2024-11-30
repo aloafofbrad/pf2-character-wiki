@@ -1,3 +1,4 @@
+<!-- This component displays containers for different categories when no entry is selected. When an entry is selected, it displays that entry via DataView. -->
 <script setup>
 import ArtContainer from './containers/ArtContainer.vue'
 import DataView from './DataView.vue'
@@ -7,6 +8,7 @@ import { ref, reactive, computed, inject, watchEffect } from 'vue'
 const DESELECTED = inject('DESELECTED')
 const CATEGORIES = inject('CATEGORIES')
 const props = defineProps({
+  maxID: { type: Number, required:true },
   sort_alpha: { type: String, default: "alphabetical" },
   sort_chrono: { type: String, default: "chronological" },
   art_view: { type: Number, default: 0, required: true },
@@ -59,13 +61,20 @@ function isAValidKey(key) {
 }
 
 function isAValidId(id, category) {
-  return id === DESELECTED || (id >= 0 && id < dataMap.value[category].length);
+  // return id === DESELECTED || (id >= 0 && id < dataMap.value[category].length);
+  return id === DESELECTED || (id >= 0 && id < props.maxID);
 }
 
 function getSelectedEntry() {
   // var result = dataMap.value[props.category].at(selected.value + 1) // works; saved as comment for posterity/sanity
-  var result = dataMap.value[props.category].at(selected.value + 1) // works
-  return result
+  // var result = dataMap.value[props.category].at(selected.value + 1) // works, but based on index, which can cause bugs when in different containers/sort paradigms
+  for (let i = 0; i < dataMap.value[props.category].length; i++){
+    var currID = dataMap.value[props.category].at(i).id
+    if (selected.value === currID){
+      return dataMap.value[props.category].at(i)
+    }
+  }
+  return undefined
 }
 
 const arranged = computed(() => {
@@ -78,6 +87,7 @@ const arranged = computed(() => {
 })
 
 const debug = computed(() => {
+  return
   var result = `MainView Stats: | viewMode: ${props.viewMode} | selected.value: ${selected.value} | noSelectionMade(): ${noSelectionMade()}`
   result = result.concat(` | showArt(): ${showArt()} | showIndex(): ${showIndex()} | showList(): ${showList()}`)
   return result
@@ -92,28 +102,41 @@ function updateSelection(id, category) {
   }
   // if id or category isn't valid, there's no need to update!
 }
+
+const title = computed(() => { return props.category[0].toUpperCase().concat(props.category.slice(1).toLowerCase()) })
 </script>
 
 <template>  
   <div class="mainView">
     <!-- Containers
-     To change the way the character art or names are shown, alter these lines. If you only want art to
-     be shown, only remove the ListContainer element, and vice versa. The v-show bindings need to be kept
-     for each element, even if one element is removed. To make changes to how these containers and their
-     respective elements are shown, you need to modify the file(s) of whichever container(s) you plan to
-     use. See the top of this file for file locations, in the imports section. -->
-    <div>
-      <h3>{{ debug }}</h3>
-    </div>
-    <ArtContainer v-show="showArt()" :entries="arranged" :category="category" @update-selection="updateSelection"></ArtContainer>
-    <IndexContainer v-show="showIndex()" :entries="arranged" @update-selection="updateSelection"></IndexContainer>
-    <ListContainer v-show="showList()" :entries="arranged" @update-selection="updateSelection"></ListContainer>
+     To change the way the character art or names are shown, alter these 
+     lines. If you only want art to be shown, only remove the 
+     ListContainer element, and vice versa. The v-if and v-else-if 
+     bindings need to be kept for each element, even if one element is 
+     removed. To make changes to how these containers and their 
+     respective elements are shown, you need to modify the file(s) of 
+     whichever container(s) you plan to use.
+     See the top of this file for file locations, in the imports section. -->
+    <h3 v-if="debug">{{ debug }}</h3>    
+    <h1>{{ title }}</h1>
+    <ArtContainer v-if="showArt()" :entries="arranged" 
+    :category="category" :maxID="maxID" 
+    @update-selection="updateSelection">
+    </ArtContainer>
+    <IndexContainer v-else-if="showIndex()" :entries="arranged"
+    :category="category" :maxID="maxID" 
+    @update-selection="updateSelection">
+    </IndexContainer>
+    <ListContainer v-else-if="showList()" :entries="arranged"
+    :category="category" :maxID="maxID"
+    @update-selection="updateSelection">
+    </ListContainer>
     <!-- end Containers -->
     <!-- DataView
       This component is in charge of displaying data.
       For each category of data you have (characters, etc), you need to
       write a binding for it and pass the  -->
-    <DataView v-show="!noSelectionMade()"
+    <DataView v-if="!noSelectionMade()"
       v-model:selected="selected" v-model:category="category"
       :entry="getSelectedEntry()"
       :characterData="props.characterData"
