@@ -177,7 +177,7 @@ const viewData = {
 var keys = Object.keys(viewData)
 for (let i = 0; i < keys.length; i++){
   // viewData.keys()[i].defaultView = viewData.keys()[i].validViews[0]
-  viewData[keys[i]].default_view = viewData[keys[i]].validViews[0]
+  viewData[keys[i]].defaultView = viewData[keys[i]].validViews[0]
 }
 
 /* displayKey (computed)    Used by containers to determine which entry
@@ -202,6 +202,10 @@ const currentViews = computed(() => {
   var result = viewData[category.value].validViews
   console.log("currentViews: ", result)
   return result
+})
+
+const currentDefaultView = computed(() => {
+  return viewData[category.value].defaultView
 })
 
 /* Prints a given reactive map in the console
@@ -278,12 +282,17 @@ function noSelectionMade() {
 
 // container display helper -- move to MainView?
 function goToView(num) {
-  if (!MULTI_VIEW_ENABLED){ return }
   viewMode.value = num
-  if (viewMode.value >= currentViews.length){ viewMode.value = 0 }
-  if (viewMode.value === ART_VIEW){ sortChronologically() }
-  else { sortAlphabetically() }
-  updateSelection(DESELECTED)
+  // if (viewMode.value >= currentViews.length){ viewMode.value = 0 }
+  var found = false
+  for (let i = 0; i < currentViews.length && !found; i++){
+    if (num === currentViews[i]) { found = true }
+  }
+  if (found){
+    if (viewMode.value === ART_VIEW){ sortChronologically() }
+    else { sortAlphabetically() }
+    // updateSelection(DESELECTED, category.value, false)
+  }
 }
 
 // Helper for data; rewritten as isAValidId(key, id)
@@ -297,10 +306,10 @@ function isAValidId(id) {
     key   the key to test
 */
 function isAValidKey(key){
-  for (k in dataMap.value){
-    if (key === k){
-      return true
-    }
+  // for (k in dataMap.value){
+  const categories = CATEGORIES()
+  for (let i = 0; i < categories.length; i++){
+    if (key === categories[i]){ return true }
   }
   return false
 }
@@ -308,10 +317,15 @@ function isAValidKey(key){
 function setSelectedEntry(id) {
   if (isAValidId(id) && id !== selected.value){ selected.value = id }
   else{ selected.value = DESELECTED }
+  return true
 }
 
-function setSelectedCategory(category){
-  if (isAValidKey(category)) { category.value = category }
+function setSelectedCategory(newCategory){
+  if (isAValidKey(newCategory)) {
+    category.value = newCategory
+    return true
+  }
+  return false
 }
 
 function getSelectedCategory(){ return category.value }
@@ -341,10 +355,26 @@ function pushHistory(id, category) {
 }
 
 /* Called when *Container components emit update-selection */
-function updateSelection(id, category) {
-  pushHistory(id, category)
-  setSelectedEntry(id)
-  setSelectedCategory(category)
+function updateSelection(id, cat, push=true) {
+  const old = { "id":selected.value, "category":category.value }
+  var updatedEntry = setSelectedEntry(id)
+  var updatedCategory = setSelectedCategory(cat)
+  if (!(updatedEntry && updatedCategory)){
+    push = false
+    console.log(`updatedEntry: ${updatedEntry}\tupdatedCategory: ${updatedCategory}`)
+  }
+  else if (cat !== category.value){
+    goToView(currentDefaultView)
+  }
+  if (push) {
+    pushHistory(id, cat)
+    console.log(`now viewing [${id}:${cat}]`)
+  }
+  else {
+    selected.value = old.id
+    category.value = old.category
+    console.log(`still at [${selected.value}:${category.value}]`)
+  }
   // console.log(`history.value: ${history.value}`)
 }
 
@@ -445,6 +475,7 @@ const maxID = computed(() => {
       @sort-chronologically="sortChronologically"
       @goToView="goToView"
       @update-search="updateSearch"
+      @update-selection="updateSelection"
     />
   </header>
   
