@@ -6,20 +6,38 @@ import { provide } from 'vue'
 import packageJson from "../package.json"
 
 /* Constants
-    source          URL to your repo. Safe to use the empty string or disable rendering. Rendered in NavBar.
+    source          URL to your repo. Safe to use the empty string or 
+                    disable rendering. Rendered in NavBar.
     SEARCH_BLEACH   Used to strip userRegex of illegal characters
-    DESELECTED      numerical ID that shows components that the user hasn't selected a character, journal
+    DESELECTED      numerical ID that shows components that the user 
+                    hasn't selected a character, journal
                     entry, or setting. arbitrary, but should be negative.
 
-    props in MainView
-    SORT_ALPHA      Arbitrary; represents sorting an array in alphabetical order
-    SORT_CHRONO     Arbitrary; represents sorting an array in chronological order (by an entry's ID)
+    The following are props in MainView:
+    SORT_ALPHA      Arbitrary; represents sorting an array in 
+                    alphabetical order (by an entry's name or title)
+    SORT_CHRONO     Arbitrary; represents sorting an array in
+                    chronological order (by an entry's ID)
 
-    ART_VIEW            Arbitrary; used to determine whether the ArtContainer is shown
-    INDEX_VIEW          Arbitrary; used to determine whether the IndexContainer is shown
-    LIST_VIEW           Arbitrary; used to determine whether the ListContainer is shown
-    DEFAULT_VIEW        Determines the default view. Should either be ART_VIEW or LIST_VIEW
-    MULTI_VIEW_ENABLED  When false, only allows one view (ArtContainer, ListContainer, etc) to render
+    ART_VIEW        Arbitrary; determines whether the
+                    ArtContainer is shown
+    INDEX_VIEW      Arbitrary; determines whether the 
+                    IndexContainer is shown
+    LIST_VIEW       Arbitrary; determines whether the 
+                    ListContainer is shown
+    VIEWS           Array of all views, in arbitrary order. Does not 
+                    affect DEFAULT_VIEW. When changing the view, the
+                    default behavior is to increment viewMode.value,
+                    switching to the next view in VIEWS, and eventually
+                    cycling back to the first view.
+    DEFAULT_VIEW    Determines the default view. Should either be 
+                    ART_VIEW, INDEX_VIEW, or LIST_VIEW. This must still
+                    be set even if MULTI_VIEW_ENABLED is false.
+
+    MULTI_VIEW_ENABLED    When true, enables switching between 
+                          containers (ArtContainer, IndexContainer,
+                          ListContainer, etc). Does not mean more than
+                          one will be shown at a time.
 */
 const source = `https://github.com/aloafofbrad/pf2-character-wiki`
 const SEARCH_BLEACH = "/[^a-zA-Z0-9 -\?]/g"
@@ -32,6 +50,7 @@ const SORT_CHRONO = "chronological"
 const ART_VIEW = 0
 const INDEX_VIEW = 1
 const LIST_VIEW = 2
+const VIEWS = [ART_VIEW, INDEX_VIEW, LIST_VIEW]
 const DEFAULT_VIEW = ART_VIEW
 const MULTI_VIEW_ENABLED = true
 
@@ -84,15 +103,13 @@ import settings from './data/settings.json'
     keyName  the name to use for the key
   Overwrites map.value[keyName] if it already exists.
 */
-function addArrayToReactiveMap(data, map, keyName){
-  var temp = {
-    [keyName]: data
-  }
+function addArrayToReactiveMap(data, keyName){
+  var temp = { [keyName]: data }
   Object.assign(dataMap, temp)
 }
-addArrayToReactiveMap(characters.data, dataMap, "characters")
-addArrayToReactiveMap(journal.data, dataMap, "journal")
-addArrayToReactiveMap(settings.data, dataMap, "settings")
+addArrayToReactiveMap(characters.data, "characters")
+addArrayToReactiveMap(journal.data, "journal")
+addArrayToReactiveMap(settings.data, "settings")
 
 /* Computed & reactive properties re: categories
     A "category" in this context represents the type of information to be
@@ -101,15 +118,17 @@ addArrayToReactiveMap(settings.data, dataMap, "settings")
     other information, such as journal entries, and descriptions of
     settings.
 
-  CATEGORIES        Computed. In short, every key for key in dataMap.
+  CATEGORIES        Function. In short, every key for key in dataMap.
                     Used for error prevention (validating categories).
-  DEFAULT_CATEGORY  Computed. The first key in dataMap. The first
+  DEFAULT_CATEGORY  Constant. The first key in dataMap. The first
                     category shown when the app loads.
   category          Ref. The currently viewed category. This is used to
                     set the selected entry from that category.
-  Since these are all either computed or based on computed values,
-  they're all set up automatically for you. You shouldn't need to change
-  anything in the three declarations below.
+  Since CATEGORIES and DEFAULT_CATEGORY are functions, they're both set
+  up automatically for you. You shouldn't need to change anything in the
+  three declarations below. The default category is always the first
+  category of data are added to dataMap using addArrayToReactiveMap
+  above.
 */
 
 function CATEGORIES() {
@@ -117,15 +136,73 @@ function CATEGORIES() {
   watchEffect(() => { result = Object.keys(dataMap); })
   return result;
 }
-function DEFAULT_CATEGORY() {
-  return CATEGORIES()[0];
-}
-const category = ref(DEFAULT_CATEGORY()) // prop in MainView
-provide('CATEGORIES', CATEGORIES())
-provide('DEFAULT_CATEGORY', DEFAULT_CATEGORY())
-console.log(`categories: `, CATEGORIES())
-console.log(`default category: `, DEFAULT_CATEGORY())
+const categories = CATEGORIES()
+const DEFAULT_CATEGORY = categories[0]
+const category = ref(DEFAULT_CATEGORY) // prop in MainView
+provide('CATEGORIES', categories)
+provide('DEFAULT_CATEGORY', DEFAULT_CATEGORY)
+console.log(`categories: `, categories)
+console.log(`default category: `, DEFAULT_CATEGORY)
 console.log(`category: `, category)
+
+/* viewData     Constant. Must be configured manually. Maps each category
+                to a displayKey and an array of validViews.
+  displayKey    Map each category to the key you want displayed in 
+                whatever container(s) you're using. Each key:value pair
+                here should look like one of the following:
+                [categories[0]]:"name"
+                [categories[1]]:"title"
+                etc
+                The value should be a key in the entry's info object.
+  validViews    Constant. Must be configured manually. Views that can 
+                be shown for each category. Each value should be an 
+                array, even if there's only one view for that category.
+                If all views are valid for a given category, you can
+                use the constant VIEWS here instead.
+*/
+const viewData = {
+  [categories[0]]:{ // characters
+    displayKey: "name",
+    validViews: VIEWS
+  },
+  [categories[1]]:{ // journals
+    displayKey: "title",
+    validViews: [LIST_VIEW, INDEX_VIEW]
+  },
+  [categories[2]]:{ // settings
+    displayKey: "name",
+    validViews: [LIST_VIEW, INDEX_VIEW]
+  },
+}
+var keys = Object.keys(viewData)
+for (let i = 0; i < keys.length; i++){
+  // viewData.keys()[i].defaultView = viewData.keys()[i].validViews[0]
+  viewData[keys[i]].default_view = viewData[keys[i]].validViews[0]
+}
+
+/* displayKey (computed)    Used by containers to determine which entry
+                            info to display. ArtContainer will always 
+                            use the entry's image key to display images 
+                            regardless of the displayKey.
+  currentViews (computed)   Returns the array of validViews for 
+                            the current category. */
+// const displayKey = computed(() => {
+//   var result = viewData[category].displayKey
+//   console.log("displayKey: ", result)
+//   return result
+// })
+function displayKey() {
+  var result = viewData[category.value].displayKey
+  console.log("displayKey: ", result)
+  return result
+}
+provide('displayKey', displayKey())
+
+const currentViews = computed(() => {
+  var result = viewData[category.value].validViews
+  console.log("currentViews: ", result)
+  return result
+})
 
 /* Prints a given reactive map in the console
    args:
@@ -141,9 +218,7 @@ consoleLogReactiveMap(dataMap)
 /* Helper function for sorts
     Returns true if arg is null or undefined
 */
-function DNE(arg) {
-  return arg === null || arg === undefined
-}
+function DNE(arg) { return arg === null || arg === undefined }
 
 /* Helper function for sorts
     Handles edge cases where a exists and b doesn't,
@@ -154,12 +229,8 @@ function DNE(arg) {
     returns 0 if a and b DNE, or if a and b exist
 */
 function compareAgainstDNE(a, b) {
-  if (!DNE(a) && DNE(b)) {
-    return -1
-  }
-  if (DNE(a) && !DNE(b)) {
-    return 1
-  }
+  if (!DNE(a) && DNE(b)) { return -1 }
+  if (DNE(a) && !DNE(b)) { return 1 }
   return 0
 }
 
@@ -174,12 +245,8 @@ function compareDataByKey(a, b, key) {
   }
   var aValue = a['info'][key]
   var bValue = b['info'][key]
-  if (aValue < bValue) {
-    return -1
-  }
-  if (aValue > bValue) {
-    return 1
-  }
+  if (aValue < bValue) { return -1 }
+  if (aValue > bValue) { return 1 }
   return 0
 }
 
@@ -210,21 +277,12 @@ function noSelectionMade() {
 }
 
 // container display helper -- move to MainView?
-function toggleView() {
-  if (MULTI_VIEW_ENABLED){
-    if (viewMode.value === ART_VIEW){
-      viewMode.value = LIST_VIEW
-      sortAlphabetically()
-    }
-    else if (viewMode.value === INDEX_VIEW) {
-      viewMode.value = ART_VIEW
-      sortChronologically()
-    }
-    else if (viewMode.value === LIST_VIEW) {
-      viewMode.value = ART_VIEW
-      sortChronologically()
-    }
-  }
+function goToView(num) {
+  if (!MULTI_VIEW_ENABLED){ return }
+  viewMode.value = num
+  if (viewMode.value >= currentViews.length){ viewMode.value = 0 }
+  if (viewMode.value === ART_VIEW){ sortChronologically() }
+  else { sortAlphabetically() }
   updateSelection(DESELECTED)
 }
 
@@ -320,33 +378,72 @@ function matchesRegex(s, regex){
 }
 
 // Filters / searches for specific entries
-function filter(list){
+function filter(list, category) {
+  var sortKey = ""
+  const categories = CATEGORIES()
+  if (category === categories[0] || category === categories[2]) {
+    sortKey = "name"
+  }
+  else {
+    sortKey = "title"
+  }
   if (userRegex.value === "" || userRegex.value === null || userRegex === undefined){
     return list.slice()
   }
   var regex = new RegExp(userRegex.value.toLowerCase())
   console.log("regex\t" + regex)
-  return list.filter(entry => matchesRegex(entry['info']['name'].toLowerCase(), regex))
+  console.log("sortKey: ", sortKey)
+  // return list.filter(entry => matchesRegex(entry['info']['name'].toLowerCase(), regex))
+  return list.filter(entry => matchesRegex(entry['info'][sortKey].toLowerCase(), regex))
 }
 
-// Could likely move this to MainView?
+// const arranged = computed(() => {
+//   var sorted = sort(entries.value)
+//   var filtered = filter(sorted)
+//   console.log(filtered.slice())
+//   return filtered.slice()
+// })
+
+function sortAndFilter(category) {
+  var filtered = filter(dataMap[category], category)
+  var sorted = sort(filtered)
+  console.log(sorted.slice())
+  return sorted.slice()
+}
+
 const arranged = computed(() => {
-  var sorted = sort(entries.value)
-  var filtered = filter(sorted)
-  console.log(filtered.slice())
-  return filtered.slice()
+  const categories = CATEGORIES()
+  var result = {}
+  for (let i = 0; i < categories.length; i++){
+    result[categories[i]] = sortAndFilter(categories[i])
+  }
+  return result
 })
+
+const maxID = computed(() => {
+  var result = dataMap[category.value].length
+  console.log("maxID: ", result)
+  return result
+})
+
 </script>
 
 <template>
   <header>
-    <Navbar :searchQuery="userRegex" :version="packageJson.version"
-      :history="history" :index="index" :source="source"
-      :view="viewMode" :art_view="ART_VIEW" :list_view="LIST_VIEW"
-      :multi_view_enabled="MULTI_VIEW_ENABLED"
+    <Navbar :version="packageJson.version"
+      v-model:category="category"
+      :searchQuery="userRegex"
+      :history="history" :index="index"
+      :source="source"
+      :view="viewMode"
+      :art_view="ART_VIEW"
+      :index_view="INDEX_VIEW"
+      :list_view="LIST_VIEW"
+      :validViews="currentViews"
       @go-back="goBack" @go-forward="goForward"
-      @sort-alphabetically="sortAlphabetically" @sort-chronologically="sortChronologically"
-      @toggle-view="toggleView"
+      @sort-alphabetically="sortAlphabetically" 
+      @sort-chronologically="sortChronologically"
+      @goToView="goToView"
       @update-search="updateSearch"
     />
   </header>
@@ -365,9 +462,10 @@ const arranged = computed(() => {
    matter.
    
    See also the props in MainView.vue. -->
-  <MainView v-model:dataMap="dataMap"
+  <MainView v-model:dataMap="arranged"
     v-model:selected="selected"
     v-model:category="category"
+    :maxID="maxID"
     :view-mode="viewMode"
     :art_view="ART_VIEW"
     :index_view="INDEX_VIEW"
