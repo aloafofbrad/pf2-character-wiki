@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed } from 'vue'
-
+import { ref, computed, inject } from 'vue'
+const DESELECTED = inject('DESELECTED')
+const CATEGORIES = inject('CATEGORIES')
 const props = defineProps({
   history: { Type: Array, Default: [], Required: false },
   index: { Type: Number, Default: -1 },
@@ -13,8 +14,8 @@ const props = defineProps({
   index_view: { Type: Number, required: true },
   validViews: { Type: Array, required: true }
 })
-const emit = defineEmits(['goBack', 'goForward', 'goToView', 'sortAlphabetically', 'sortChronologically', 'updateSearch'])
-const category = defineModel({ Type: String, required: true })
+const emit = defineEmits(['goBack', 'goForward', 'goToView', 'sortAlphabetically', 'sortChronologically', 'updateSearch', 'updateSelection'])
+const category = defineModel('category', { Type: String, required: true })
 
 const searchQuery = ref('')
 const debug = true
@@ -106,18 +107,34 @@ function isAValidView(num){
 }
 
 const showArtButton = computed(() => {
-  return isAValidView(props.art_view) && props.view !== props.art_view
+  return isAValidView(props.art_view)
 })
 const showIndexButton = computed(() => {
-  return isAValidView(props.index_view) && props.view !== props.index_view
+  return isAValidView(props.index_view)
 })
 const showListButton = computed(() => {
-  return isAValidView(props.list_view) && props.view !== props.list_view
+  return isAValidView(props.list_view)
 })
 function goToView(view) { emit('goToView', view) }
 function goToArt() { goToView(props.art_view) }
 function goToIndex() { goToView(props.index_view) }
 function goToList() { goToView(props.list_view) }
+
+function updateSelection(cat){
+  var valid = false
+  for (let i = 0; i < CATEGORIES.length && !valid; i++){
+    if (cat === CATEGORIES[i]){ valid = true }
+  }
+  if (valid){ 
+    // console.log(`found category ${cat}`)
+    console.log(`NavBar updateSelection(${DESELECTED}, ${cat})`)
+    emit('updateSelection', DESELECTED, cat)
+    goToView(props.view)
+  }
+}
+function capitalize(str){
+  return str[0].toUpperCase().concat(str.slice(1).toLowerCase())
+}
 </script>
 
 <template>
@@ -138,6 +155,7 @@ function goToList() { goToView(props.list_view) }
     <div class="NavButton prevent-select historyButton" id="forwardButton" @click="move('forward')">
       ■Next ⏩
     </div>
+    <div class="NavButton prevent-select" v-for="cat in CATEGORIES" @click="updateSelection(cat)">■{{ capitalize(cat) }}</div>
     <div class="NavButton prevent-select" v-if="showArtButton" @click="goToArt()">■Art</div>
     <div class="NavButton prevent-select" v-if="showIndexButton" @click="goToIndex()">■Index</div>
     <div class="NavButton prevent-select" v-if="showListButton" @click="goToList()">■List</div>
