@@ -1,6 +1,7 @@
 <script setup>
 import Subtitle from './Subtitle.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
+const displayKey = inject('displayKey')
 
 const props = defineProps({
   id: Number,
@@ -10,6 +11,12 @@ const props = defineProps({
 const imageUrl = computed(() => {
   return new URL(`/${props.info.image}`, import.meta.url).href
 })
+
+const displayValue = computed(() => {
+  console.log(displayKey)
+  return props.info[displayKey]
+})
+
 const hover = ref(false)
 </script>
 
@@ -19,7 +26,7 @@ const hover = ref(false)
     @mouseenter="hover = true" @mouseleave="hover = false"
   >
     <Subtitle v-show="hover"
-        :name="info.name"
+        :name="displayValue"
         :type="info.type">
     </Subtitle>
   </div>
