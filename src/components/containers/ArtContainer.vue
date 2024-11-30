@@ -1,15 +1,16 @@
 <script setup>
 import Tile from '../Tile.vue';
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 const props = defineProps({
   entries: { Type: Array, default: [] },
-  category: { Type: String, required: true }
+  category: { Type: String, required: true },
+  maxID: { type: Number, required: true }
 })
 
 const emit = defineEmits(['updateSelection'])
 
 function isAValidId(id) {
-  return (id >= 0 && id <= (props.entries.length - 1))
+  return (id >= 0 && id < props.maxID)
 }
 
 function entryClick(id) {
