@@ -96,7 +96,7 @@ const debug = computed(() => {
 function updateSelection(id, category) {
   if (isAValidKey(category)){
     if (isAValidId(id, category)){
-      console.log("updateSelection()", id, ", ", category)
+      console.log(`MainView updateSelection(${id}, ${category})`)
       emit('updateSelection', id, category)
     }
   }

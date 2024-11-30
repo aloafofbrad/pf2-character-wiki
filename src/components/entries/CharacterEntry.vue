@@ -22,6 +22,7 @@ const props = defineProps({
 const emit = defineEmits(['updateSelection'])
 
 function updateSelection(id, category) {
+  console.log(`CharacterEntry updateSelection(${id}, ${category})`)
   emit('updateSelection', id, category)
 }
 

@@ -29,6 +29,7 @@ const debug = computed(() => {
 })
 
 function updateSelection(id, category){
+  console.log(`DataView updateSelection(${id}, ${category})`)
   emit('updateSelection', id, category)
 }
 </script>
