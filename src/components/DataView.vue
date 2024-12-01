@@ -1,30 +1,33 @@
 <!-- This component displays the appropriate entry for the given category. -->
 <script setup>
 import CharacterEntry from './entries/CharacterEntry.vue'
+import JournalEntry from './entries/JournalEntry.vue';
 import { ref, reactive, computed, inject, watchEffect } from 'vue'
 const DESELECTED = inject('DESELECTED')
 const props = defineProps({
   characterData: { type: String, required: true },
   journalData: { type: String, required: true },
   settingData: { type: String, required: true },
-  entry: { type:Object }
+  entry: { type:Object, required: true },
 })
 const selected = defineModel('selected', { type:Number, required: true })
 const category = defineModel('category', { type:String, required: true })
 const emit = defineEmits(['updateSelection'])
 
-function showDataFromCategory(category){
-  if (!noSelectionMade()){
-    return props.category === category
-  }
-  return false
+function showDataFromCategory(cat){
+  // if (!noSelectionMade()){
+  //   return cat === category.value
+  // }
+  // return false
+  if (noSelectionMade()) { return false }
+  return cat === category.value
 }
 
 /* Returns true if the selected entry is the deselected value */
 function noSelectionMade() { return selected.value === DESELECTED }
 
 const debug = computed(() => {
-  var result = `DataView Stats: | viewMode: ${props.viewMode} | selected.value: ${selected.value} | props.category: ${props.category}`
+  var result = `DataView Stats: | selected.value: ${selected.value} | props.category: ${props.category} | showDataFromCategory(props.category): ${showDataFromCategory(props.category)}`
   return result
 })
 
@@ -46,16 +49,25 @@ function updateSelection(id, category){
      imports section). Don't change the v-show binding here, regardless 
      of which containers are shown.
      -->
-    <div id="bio" v-show="showDataFromCategory(props.characterData)">
+    <div class="bio" v-if="showDataFromCategory(props.characterData)">
       <CharacterEntry
-        :ID="selected"
+        :ID="props.entry.id"
         :info="props.entry.info"
         :category="category"
         @update-selection="updateSelection">
       </CharacterEntry>
     </div>
     <!-- end CharacterEntry -->
-    <!-- TODO: JOURNAL -->
+    <!-- JournalEntry -->
+    <div class="bio" v-else-if="showDataFromCategory(props.journalData)">
+      <JournalEntry
+        :ID="props.entry.id"
+        :info="props.entry.info"
+        :category="category"
+        @update-selection="updateSelection"
+      ></JournalEntry>
+    </div>
+    <!-- end JournalEntry -->
     <!-- TODO: SETTINGS -->
   </div>
 </template>
