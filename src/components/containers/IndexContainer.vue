@@ -1,17 +1,18 @@
 <script setup>
 import Tag from '../Tag.vue';
-import { ref, computed, inject } from 'vue'
-const displayKey = inject('displayKey')
+import { ref, computed, onMounted } from 'vue'
 const props = defineProps({
   entries: { Type: Array, default: [] },
   category: { Type: String, required: true },
-  maxID: { type: Number, required: true }
+  maxID: { type: Number, required: true },
+  displayKey: { type: String, required: true },
 })
-
 const emit = defineEmits(['updateSelection'])
+const arranged = defineModel({ type: Object, default: {}, required: false })
 
 function isAValidId(id) {
   // return (id >= 0 && id <= (props.entries.length - 1))
+  console.log(`id (${id}) < props.maxID (${props.maxID})`)
   return (id >= 0 && id < props.maxID)
 }
 
@@ -19,6 +20,8 @@ function entryClick(id) {
   console.log("entry clicked, id: ", id)
   emit('updateSelection', id, props.category)
 }
+
+function display(entry) { return entry.info[props.displayKey] }
 
 const letters = ["A","B","C","D","E","F","G",
                  "H","I","J","K","L","M","N",
@@ -32,27 +35,36 @@ function arrange() {
   for (let i = 0; i < letters.length; i++){
     var curr = letters.at(i)
     try{
-      result[curr] = props.entries.filter((element) => element.info[displayKey].startsWith(curr))
+      result[curr] = props.entries.filter(entry => entry.info[props.displayKey].startsWith(curr))
+      console.log(result[curr])
     }
-    catch (e) {
-      result[curr] = []
-    }
+    catch (e) {}
+    if (result[curr] === undefined) { result[curr] = [] }
   }
-  return result
+  arranged.value = result
 }
 
-const arranged = arrange()
+const showableLetters = computed(() => {
+  var result = []
+  const keys = Object.keys(arranged.value)
+  for (let i = 0; i < keys.length; i++){
+    if (arranged.value[keys[i]].length > 0) { result.push(keys[i]) }
+  }
+  return result
+})
 
-function display(entry) { return entry.info[displayKey] }
-
+onMounted(() => {
+  arrange()
+})
 </script>
 
 <template>
   <div class="indexContainer">
-    <div class="section" v-for="letter in letters" v-show="arranged[letter].length > 0">
+    <div class="section" v-for="letter in showableLetters">
       <h3>{{ letter }}</h3>
       <div class="indexSectionEntries">
-        <Tag v-show="isAValidId(entry.id)" v-for="entry in arranged[letter]" @click="entryClick(entry.id)">
+        <Tag  v-for="entry in arranged[letter]" v-show="isAValidId(entry.id)"
+          @click="entryClick(entry.id)">
           {{ display(entry) }}
         </Tag>
       </div>
