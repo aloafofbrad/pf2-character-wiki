@@ -1,11 +1,11 @@
 <script setup>
 import Subtitle from './Subtitle.vue'
-import { ref, computed, inject } from 'vue'
-const displayKey = inject('displayKey')
+import { ref, computed } from 'vue'
 
 const props = defineProps({
-  id: Number,
-  info: Object
+  id: { type: Number, required: true },
+  info: { type: Object, required: true },
+  displayKey: { type: String, required: true }
 })
 
 const imageUrl = computed(() => {
@@ -13,8 +13,8 @@ const imageUrl = computed(() => {
 })
 
 const displayValue = computed(() => {
-  console.log(displayKey)
-  return props.info[displayKey]
+  console.log("Tile displayKey: ", props.displayKey)
+  return props.info[props.displayKey]
 })
 
 const hover = ref(false)
