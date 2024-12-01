@@ -159,6 +159,7 @@ function capitalize(str){
       ■Next ⏩
     </div>
     <div class="NavButton prevent-select" v-for="cat in CATEGORIES" @click="updateSelection(cat)">■{{ capitalize(cat) }}</div>
+    <!-- TODO: put the view changing buttons into a v-for -->
     <div class="NavButton prevent-select" v-if="showArtButton" @click="goToArt()">■Art</div>
     <div class="NavButton prevent-select" v-if="showIndexButton" @click="goToIndex()">■Index</div>
     <div class="NavButton prevent-select" v-if="showListButton" @click="goToList()">■List</div>
@@ -175,15 +176,13 @@ function capitalize(str){
   min-height: 24px;
   overflow-y: hidden;
   font-family: monospace;
-  overflow-y: hidden;
   width: 100%;
+  /* display: flex;
+  flex-flow: row wrap; */
   justify-content: space-between;
+  align-items: center;
   padding: unset;
   backdrop-filter: blur(8px);
-
-  a {
-    text-decoration: none;
-  }
 
   .NavButton {
     display: flex;
@@ -231,6 +230,12 @@ function capitalize(str){
         color: #fff;
         opacity: 1;
       }
+    }
+
+    a, a:visited {
+      text-decoration: none;
+      color: inherit;
+      opacity: 1.0;
     }
   }
 
