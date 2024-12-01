@@ -1,7 +1,7 @@
 <script setup>
 import MainView from './components/MainView.vue'
 import Navbar from './components/Navbar.vue'
-import { ref, reactive, computed, watchEffect } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { provide } from 'vue'
 import packageJson from "../package.json"
 
@@ -30,9 +30,6 @@ import packageJson from "../package.json"
                     default behavior is to increment viewMode.value,
                     switching to the next view in VIEWS, and eventually
                     cycling back to the first view.
-    DEFAULT_VIEW    Determines the default view. Should either be 
-                    ART_VIEW, INDEX_VIEW, or LIST_VIEW. This must still
-                    be set even if MULTI_VIEW_ENABLED is false.
 
     MULTI_VIEW_ENABLED    When true, enables switching between 
                           containers (ArtContainer, IndexContainer,
@@ -51,7 +48,6 @@ const ART_VIEW = 0
 const INDEX_VIEW = 1
 const LIST_VIEW = 2
 const VIEWS = [ART_VIEW, INDEX_VIEW, LIST_VIEW]
-const DEFAULT_VIEW = ART_VIEW
 const MULTI_VIEW_ENABLED = true
 
 /* Reactive data variables
@@ -67,7 +63,6 @@ const MULTI_VIEW_ENABLED = true
     history     Stores a list of IDs that the user has previously viewed
     index       ???? Stores the current index of the history ????
     userRegex   Stores a user's search string
-    viewMode    Stores the currently displayed view
     
     sortParadigm    Current sort paradigm. Update this to change the
                     default sort paradigm.
@@ -79,7 +74,6 @@ const selected = ref(DESELECTED) // model in MainView
 const history = ref([DESELECTED,])
 const index = ref(0)
 const userRegex = ref('')
-const viewMode = ref(DEFAULT_VIEW) // prop in MainView
 const sortParadigm = ref(SORT_CHRONO)
 const sortParadigms = reactive({
   [SORT_ALPHA]: compareNames,
@@ -107,8 +101,8 @@ function addArrayToReactiveMap(data, keyName){
   var temp = { [keyName]: data }
   Object.assign(dataMap, temp)
 }
-addArrayToReactiveMap(characters.data, "characters")
 addArrayToReactiveMap(journal.data, "journal")
+addArrayToReactiveMap(characters.data, "characters")
 addArrayToReactiveMap(settings.data, "settings")
 
 /* Computed & reactive properties re: categories
@@ -131,11 +125,7 @@ addArrayToReactiveMap(settings.data, "settings")
   above.
 */
 
-function CATEGORIES() {
-  var result;
-  watchEffect(() => { result = Object.keys(dataMap); })
-  return result;
-}
+function CATEGORIES() { return Object.keys(dataMap) }
 const categories = CATEGORIES()
 const DEFAULT_CATEGORY = categories[0]
 const category = ref(DEFAULT_CATEGORY) // prop in MainView
@@ -159,19 +149,24 @@ console.log(`category: `, category)
                 array, even if there's only one view for that category.
                 If all views are valid for a given category, you can
                 use the constant VIEWS here instead.
+
+  DEFAULT_VIEW    Automatic. Determines the default view. Initial value
+                  is the default category's default view.
+  viewMode        Automatic, reactive. Stores the currently displayed 
+                  view. Initial value is DEFAULT_VIEW.
 */
 const viewData = {
-  [categories[0]]:{ // characters
-    displayKey: "name",
-    validViews: VIEWS
-  },
-  [categories[1]]:{ // journals
+  [categories[0]]:{ // JOURNALS
     displayKey: "title",
     validViews: [LIST_VIEW, INDEX_VIEW]
   },
+  [categories[1]]:{ // CHARACTERS
+    displayKey: "name",
+    validViews: VIEWS
+  },
   [categories[2]]:{ // settings
     displayKey: "name",
-    validViews: [LIST_VIEW, INDEX_VIEW]
+    validViews: [INDEX_VIEW, LIST_VIEW]
   },
 }
 var keys = Object.keys(viewData)
@@ -179,6 +174,8 @@ for (let i = 0; i < keys.length; i++){
   // viewData.keys()[i].defaultView = viewData.keys()[i].validViews[0]
   viewData[keys[i]].defaultView = viewData[keys[i]].validViews[0]
 }
+const DEFAULT_VIEW = viewData[DEFAULT_CATEGORY].defaultView
+const viewMode = ref(DEFAULT_VIEW)
 
 /* displayKey (computed)    Used by containers to determine which entry
                             info to display. ArtContainer will always 
@@ -186,17 +183,11 @@ for (let i = 0; i < keys.length; i++){
                             regardless of the displayKey.
   currentViews (computed)   Returns the array of validViews for 
                             the current category. */
-// const displayKey = computed(() => {
-//   var result = viewData[category].displayKey
-//   console.log("displayKey: ", result)
-//   return result
-// })
-function displayKey() {
+const displayKey = computed(() => {
   var result = viewData[category.value].displayKey
   console.log("displayKey: ", result)
   return result
-}
-provide('displayKey', displayKey())
+})
 
 const currentViews = computed(() => {
   var result = viewData[category.value].validViews
@@ -210,10 +201,7 @@ const currentDefaultView = computed(() => {
   return result
 })
 
-function defaultViews(cat) {
-  var result = viewData[cat].defaultView
-  return result
-}
+function defaultViews(cat) { return viewData[cat].defaultView }
 
 /* Prints a given reactive map in the console
    args:
@@ -310,6 +298,7 @@ function goToDefaultView(cat) {
 
 // Helper for data; rewritten as isAValidId(key, id)
 function isAValidId(id) {
+  if (DNE(id)) { return false }
   return (id >= 0 && id <= (dataMap[category.value].length - 1))
 }
 
@@ -328,6 +317,7 @@ function isAValidKey(key){
 }
 
 function setSelectedEntry(id) {
+  selected.value = DESELECTED
   if (isAValidId(id) && id !== selected.value){ selected.value = id }
   else{ selected.value = DESELECTED }
   return true
@@ -517,10 +507,11 @@ const maxID = computed(() => {
     :list_view="LIST_VIEW"
     :default_view="DEFAULT_VIEW"
     :multi_view_enabled="MULTI_VIEW_ENABLED"
+    :displayKey="displayKey"
     @update-selection="updateSelection"
-    :characterData="CATEGORIES()[0]"
-    :journalData="CATEGORIES()[1]"
-    :settingData="CATEGORIES()[2]"
+    :characterData="categories[1]"
+    :journalData="categories[0]"
+    :settingData="categories[2]"
   />
 
   <!-- <DataView :dataMap="dataMap" v-model:selected="selected"
