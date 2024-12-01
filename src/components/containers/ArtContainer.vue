@@ -1,10 +1,11 @@
 <script setup>
 import Tile from '../Tile.vue';
-import { ref, computed, inject } from 'vue'
+import { ref, computed } from 'vue'
 const props = defineProps({
   entries: { Type: Array, default: [] },
   category: { Type: String, required: true },
-  maxID: { type: Number, required: true }
+  maxID: { type: Number, required: true },
+  displayKey: { type: String, required: true },
 })
 
 const emit = defineEmits(['updateSelection'])
@@ -25,8 +26,9 @@ function entryClick(id) {
     <Tile
       v-show="isAValidId(entry.id)"
       v-for="entry in props.entries"
-      :key="entry.id"
+      :id="entry.id"
       :info="entry.info"
+      :displayKey="props.displayKey"
       @click="entryClick(entry.id)">
     </Tile>
   </div>
