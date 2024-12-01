@@ -4,15 +4,11 @@ import countries from '../../data/countries.json'
 import nationalities from '../../data/nationalities.json'
 
 const props = defineProps({
-  nationality: {
-    Type: String,
-    Default: "?"
-  }
+  nationality: { Type: String, Default: "?" },
+  showCountryName: { Type: Boolean, Default: false }
 })
 
-function exists(x) {
-  return x !== null && x !== undefined
-}
+function exists(x) { return x !== null && x !== undefined }
 
 const country = computed(() => {
   if (!exists(props.nationality)){
@@ -29,6 +25,9 @@ const nationality = computed(() => {
 })
 
 const innerText = computed(() => {
+  if (props.showCountryName){
+    return country.value
+  }
   var result = "Nationality: "
   return result.concat(`${nationality.value}`)
 })
