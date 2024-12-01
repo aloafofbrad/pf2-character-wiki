@@ -16,6 +16,7 @@ const props = defineProps({
   list_view: { type: Number, default: 2, required: true },
   multi_view_enabled: { type: Boolean, default: false },
   viewMode: { type: Number, required: true },
+  displayKey: { type: String, required: true },
 
   /* Add a prop for each category name here. Each one just needs to be a
   required string. See also the MainView element in the App.vue
@@ -29,9 +30,7 @@ const selected = defineModel('selected', { type:Number, required: true })
 const category = defineModel('category', { type:String, required: true })
 const emit = defineEmits(['updateSelection'])
 
-function noSelectionMade() {
-  return selected.value === DESELECTED
-}
+function noSelectionMade() { return selected.value === DESELECTED }
 function showArt(){
   return props.viewMode === props.art_view && noSelectionMade()
 }
@@ -87,7 +86,7 @@ const arranged = computed(() => {
 })
 
 const debug = computed(() => {
-  return
+  // return
   var result = `MainView Stats: | viewMode: ${props.viewMode} | selected.value: ${selected.value} | noSelectionMade(): ${noSelectionMade()}`
   result = result.concat(` | showArt(): ${showArt()} | showIndex(): ${showIndex()} | showList(): ${showList()}`)
   return result
@@ -121,14 +120,17 @@ const title = computed(() => { return props.category[0].toUpperCase().concat(pro
     <h1>{{ title }}</h1>
     <ArtContainer v-if="showArt()" :entries="arranged" 
     :category="category" :maxID="maxID" 
+    :displayKey="props.displayKey"
     @update-selection="updateSelection">
     </ArtContainer>
     <IndexContainer v-else-if="showIndex()" :entries="arranged"
     :category="category" :maxID="maxID" 
+    :displayKey="props.displayKey"
     @update-selection="updateSelection">
     </IndexContainer>
     <ListContainer v-else-if="showList()" :entries="arranged"
     :category="category" :maxID="maxID"
+    :displayKey="props.displayKey"
     @update-selection="updateSelection">
     </ListContainer>
     <!-- end Containers -->
