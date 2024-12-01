@@ -4,10 +4,7 @@ import Dynalink from '../Dynalink.vue';
 import backgrounds from '../../data/backgrounds.json'
 
 const props = defineProps({
-  background:{
-    Type:String,
-    Default:""
-  }
+  background:{ Type:String, Default:"" }
 })
 
 const addendum = computed (() => {
