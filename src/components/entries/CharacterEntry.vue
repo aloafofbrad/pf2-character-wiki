@@ -1,23 +1,27 @@
 <!-- This component displays information for characters. The main way to change what info is shown (and how) is to modify the components that are shown; rearrange/rewite/delete them; or create new ones entirely. -->
 <script setup>
+// Components designed for multiple types of entries
+import Deselect from './Deselect.vue'
+import Name from './Name.vue'
+import Nationality from './Nationality.vue'
+import Tag from '../Tag.vue'
+
+// Components specific to characters
 import Age from './Age.vue'
 import Ancestry from './Ancestry.vue'
 import Background from './Background.vue'
 import Class from './Class.vue'
 import CharacterType from './CharacterType.vue'
 import Deity from './Deity.vue'
-import Name from './Name.vue'
-import Nationality from './Nationality.vue'
 import Picture from './Picture.vue'
 import Status from './Status.vue'
-import Tag from '../Tag.vue'
-import { ref, computed, inject } from 'vue'
+import { inject } from 'vue'
 const DESELECTED = inject('DESELECTED')
 const CATEGORIES = inject('CATEGORIES')
 const props = defineProps({
   ID: { type:Number, required: true, default: -1 },
   info: { type:Object, required: true },
-  category: { type:String, required: true }
+  category: { type:String, required: true },
 })
 const emit = defineEmits(['updateSelection'])
 
@@ -28,22 +32,26 @@ function updateSelection(id, category) {
 
 function close() { updateSelection(DESELECTED, props.category) }
 function goTo(id, category) { updateSelection(id, category) }
+function debug() {
+  console.log("CharacterEntry with ID", props.ID)
+}
+debug()
 </script>
 
-<template class="bio" @keyup.esc="close()">
-  <div id="deselect" class="prevent-select" @click="close()"><p>❌</p></div>
-  <div id="split">
+<template>
+  <Deselect :category="props.category" @updateSelection="close()"/>
+  <div class="split">
     <!-- LeftColumn
      This is intended to be the character's picture, name, and so on and 
      so forth. -->
-    <div id="leftColumn">
-      <div class="CharacterBox">
+    <div class="leftColumn">
+      <div class="TitleBox">
         <!-- Remove the following line to remove the image: -->
         <Picture :src="info.image" @click="close()"/>
         <Name :name="info.name" :type="info.type" @click="close()"/>
         <CharacterType :type="info.type" :customTooltip="''"/>
       </div>
-      <!-- Rest of the character info. -->
+      <!-- Rest of the info. -->
       <div class="InfoBox">
           <div class="tagList">
             <Tag v-if="info.pronouns !== '?'">Pronouns: {{ info.pronouns }}</Tag>
@@ -62,8 +70,8 @@ function goTo(id, category) { updateSelection(id, category) }
         </div>
     </div>
     <!-- RightColumn -->
-    <div id="rightColumn">
-      <div id="biography">
+    <div class="rightColumn">
+      <div class="story">
         <ul>
           <p v-for="bi in info.biography" :key="bi.id">{{ bi }}</p>
         </ul>
@@ -74,30 +82,8 @@ function goTo(id, category) { updateSelection(id, category) }
 </template>
 
 <style>
-/* \/ \/ \/ \/ DEBUG \/ \/ \/ \/ */
-/* #basics {
-  border: 2px dotted #f00;
-}
-
-#bio {
-  border: 2px dotted #fff;
-}
-
-#biography {
-  border: 2px dotted #00f;
-}
-
-#leftColumn, #rightColumn {
-  border: 2px dotted #0f0;
-}
-
-#characterName {
-  border: 2px dotted #ff0;
-} */
-/* /\ /\ /\ /\ DEBUG /\ /\ /\ /\ */
-
-/* Contains #split */
-#bio {
+/* Contains .split */
+.bio {
   flex-direction: column;
   flex-wrap: wrap;
   z-index: 2;
@@ -112,13 +98,13 @@ function goTo(id, category) { updateSelection(id, category) }
 
 /* CONTAINS leftColumn, rightColumn */
 @media only screen and (orientation: landscape){
-  #split {
+  .split {
     justify-content: flex-start;
     align-items: flex-start;
     z-index: 1;
   }
 
-  #leftColumn {
+  .leftColumn {
     width: 352px;
     border-width: 0 2px 0 0; 
     border-color: rgba(186, 186, 186, 0.5);
@@ -148,7 +134,7 @@ function goTo(id, category) { updateSelection(id, category) }
 }
 
 @media only screen and (orientation: portrait){
-  #split {
+  .split {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
@@ -157,7 +143,7 @@ function goTo(id, category) { updateSelection(id, category) }
     z-index: 1;
   }
 
-  #leftColumn {
+  .leftColumn {
     width: 100%;
     .tagList {
       margin-left: 4px;
@@ -165,7 +151,7 @@ function goTo(id, category) { updateSelection(id, category) }
     }
   }
 
-  #leftColumn > .InfoBox > .tagList {
+  .leftColumn > .InfoBox > .tagList {
     flex-direction: row;
     flex-wrap: wrap;
     /* align-items: center; */
@@ -180,22 +166,22 @@ function goTo(id, category) { updateSelection(id, category) }
   }
 }
 
-#bio, #split {
+.bio, .split {
   display: flex;
   position: absolute;
   font-family: serif;
 }
 
 /* \/ \/ \/ \/ LEFT COLUMN \/ \/ \/ \/ */
-#leftColumn {
+.leftColumn {
   height: 100%;
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
 }
 
-#leftColumn {
-  .CharacterBox {
+.leftColumn {
+  .TitleBox {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
@@ -205,7 +191,7 @@ function goTo(id, category) { updateSelection(id, category) }
       margin-top: 0.05em;
     }
   }
-  .CharacterBox, .InfoBox {
+  .TitleBox, .InfoBox {
     width: 100%;
   }
 }
@@ -213,7 +199,7 @@ function goTo(id, category) { updateSelection(id, category) }
 /* /\ /\ /\ /\ LEFT COLUMN /\ /\ /\ /\ */
 
 /* \/ \/ \/ \/ RIGHT COLUMN \/ \/ \/ \/ */
-#rightColumn {
+.rightColumn {
   width: 100%;
   height: 100%;
   display: flex;
@@ -221,7 +207,7 @@ function goTo(id, category) { updateSelection(id, category) }
   align-items: flex-start;
 }
 
-#basics {
+.basics {
   width: 100%;
   display: flex;
   flex-flow: row wrap;
@@ -239,7 +225,7 @@ function goTo(id, category) { updateSelection(id, category) }
   padding-right: 1.5em;
 }
 
-#biography {
+.story {
   width: calc(100% - 2em);
   display: flex;
   flex-flow: row wrap;
@@ -248,31 +234,5 @@ function goTo(id, category) { updateSelection(id, category) }
 }
 
 /* /\ /\ /\ /\ RIGHT COLUMN /\ /\ /\ /\ */
-
-#deselect {
-  position: absolute;
-  z-index: 3;
-  font-family: monospace;
-  font-weight: bold;
-  text-align: center;
-  background-color: white;
-  color: black;
-  padding: 4px 4px 4px 4px;
-  margin: 4px 4px 4px 4px;
-  border-radius: 32px;
-  filter:grayscale(1.0);
-}
-#deselect:hover, #deselect:hover > * {
-  scale: calc(1.05);
-}
-#deselect, #deselect > * {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 32px;
-  width: 32px;
-}
 
 </style>
