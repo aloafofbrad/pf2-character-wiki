@@ -205,8 +205,15 @@ const currentViews = computed(() => {
 })
 
 const currentDefaultView = computed(() => {
-  return viewData[category.value].defaultView
+  var result = viewData[category.value].defaultView
+  console.log("defaultView: ", result)
+  return result
 })
+
+function defaultViews(cat) {
+  var result = viewData[cat].defaultView
+  return result
+}
 
 /* Prints a given reactive map in the console
    args:
@@ -293,6 +300,12 @@ function goToView(num) {
     else { sortAlphabetically() }
     // updateSelection(DESELECTED, category.value, false)
   }
+}
+
+function goToDefaultView(cat) {
+  // var default = currentDefaultView
+  var view = defaultViews(cat)
+  goToView(view)
 }
 
 // Helper for data; rewritten as isAValidId(key, id)
@@ -474,6 +487,7 @@ const maxID = computed(() => {
       @sort-alphabetically="sortAlphabetically" 
       @sort-chronologically="sortChronologically"
       @goToView="goToView"
+      @goToDefaultView="goToDefaultView"
       @update-search="updateSearch"
       @update-selection="updateSelection"
     />

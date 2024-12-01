@@ -14,7 +14,7 @@ const props = defineProps({
   index_view: { Type: Number, required: true },
   validViews: { Type: Array, required: true }
 })
-const emit = defineEmits(['goBack', 'goForward', 'goToView', 'sortAlphabetically', 'sortChronologically', 'updateSearch', 'updateSelection'])
+const emit = defineEmits(['goBack', 'goForward', 'goToView', 'goToDefaultView', 'sortAlphabetically', 'sortChronologically', 'updateSearch', 'updateSelection'])
 const category = defineModel('category', { Type: String, required: true })
 
 const searchQuery = ref('')
@@ -119,6 +119,7 @@ function goToView(view) { emit('goToView', view) }
 function goToArt() { goToView(props.art_view) }
 function goToIndex() { goToView(props.index_view) }
 function goToList() { goToView(props.list_view) }
+function goToDefaultView(cat) { emit('goToDefaultView', cat) }
 
 function updateSelection(cat){
   var valid = false
@@ -129,9 +130,11 @@ function updateSelection(cat){
     // console.log(`found category ${cat}`)
     console.log(`NavBar updateSelection(${DESELECTED}, ${cat})`)
     emit('updateSelection', DESELECTED, cat)
-    goToView(props.view)
+    // goToView(props.view)
+    goToDefaultView(cat)
   }
 }
+
 function capitalize(str){
   return str[0].toUpperCase().concat(str.slice(1).toLowerCase())
 }
