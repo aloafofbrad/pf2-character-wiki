@@ -84,4 +84,159 @@ function updateSelection(id, category){
   align-items: center;
   flex-grow: 1;
 }
+
+/* \/ \/ \/ CSS for CharacterEntry, JournalEntry, SettingEntry \/ \/ */
+/* Contains .split */
+.bio {
+  flex-direction: column;
+  flex-wrap: wrap;
+  z-index: 2;
+  top: 24px;
+  width: 100vw;
+  height: 100%;
+  min-height: calc(100vh - 24px);
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(16px);
+  overflow-y: auto;
+}
+
+/* CONTAINS leftColumn, rightColumn */
+@media only screen and (orientation: landscape){
+  .split {
+    justify-content: flex-start;
+    align-items: flex-start;
+    z-index: 1;
+  }
+
+  .leftColumn {
+    width: 352px;
+    border-width: 0 2px 0 0; 
+    border-color: rgba(186, 186, 186, 0.5);
+    border-style: solid;
+    border-radius: 16px;
+
+    .tagList {
+      margin-left: 4px;
+
+      .tag {
+        margin-left: inherit;
+
+        * {
+          margin-left: unset;
+        }
+      }
+    }
+  }
+
+  .visible-landscape {
+    display: inherit;
+  }
+
+  .visible-mobile {
+    display: none;
+  }
+}
+
+@media only screen and (orientation: portrait){
+  .split {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+
+    z-index: 1;
+  }
+
+  .leftColumn {
+    width: 100%;
+    .tagList {
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+  }
+
+  .leftColumn > .InfoBox > .tagList {
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* align-items: center; */
+  }
+
+  .visible-landscape {
+    display: none;
+  }
+
+  .visible-mobile {
+    display: inherit;
+  }
+}
+
+.bio, .split {
+  display: flex;
+  position: absolute;
+  font-family: serif;
+}
+
+/* \/ \/ LEFT COLUMN \/ \/ */
+.leftColumn {
+  height: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-start;
+}
+
+.leftColumn {
+  .TitleBox {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    * {
+      margin-top: 0.05em;
+    }
+  }
+  .TitleBox, .InfoBox {
+    width: 100%;
+  }
+}
+
+/* /\ /\ LEFT COLUMN /\ /\ */
+
+/* \/ \/ RIGHT COLUMN \/ \/ */
+.rightColumn {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-start;
+}
+
+.basics {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.InfoBox {
+  padding-right: 2em;
+  /* border: 1px dotted; */
+}
+
+.InfoBox > ul {
+  margin: 0;
+  padding-left: 0;
+  padding-right: 1.5em;
+}
+
+.story {
+  width: calc(100% - 2em);
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* /\ /\ RIGHT COLUMN /\ /\ */
+/* /\ /\ /\ CSS for CharacterEntry, JournalEntry, SettingEntry /\ /\ */
 </style>
