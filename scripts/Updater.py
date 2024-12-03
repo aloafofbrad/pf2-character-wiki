@@ -30,6 +30,9 @@ class Updater(Editor):
         self.setCondition(condition)
         self.setArguments(arguments)
     
+    def dummyCondition(self, value):
+        return True
+    
     def setCondition(self, condition:Callable=None) -> None:
         self.condition = condition
         self.setValidation(self.validation)
@@ -50,6 +53,7 @@ class Updater(Editor):
     
     # Call self.condition() 
     def validate(self, value) -> bool:
+        return True
         # if not self.validation or self.condition == None:
         #     return True
         # return self.condition(arg for arg in [value] + self.arguments)
@@ -81,7 +85,10 @@ class Updater(Editor):
         the most sense for a parent class"""
         try:
             # data = func(self, insideInfo, start, stop, data, value, allowNull)
-            data = func(self, insideInfo, data, value)
+            if func == Updater.__delete:
+                data = func(self, insideInfo, data)
+            else:
+                data = func(self, insideInfo, data, value)
         except Exception as e:
             # print(e)
             print(traceback.format_exc(e))
@@ -124,22 +131,16 @@ class Updater(Editor):
 
     # Do not call this, call delete()
     # def __delete(self, insideInfo, start, stop, data, value):
-    def __delete(self, insideInfo, data, value):
+    def __delete(self, insideInfo, data):
         try:
             if insideInfo:
                 for i in range(0, len(data)):
-                    curr = data[i][self.infoKey][self.key]
-                    if self.validate(curr):
-                        data[i][self.infoKey].pop(self.key)
+                    data[i][self.infoKey].pop(self.key)
             else:
                 for i in range(0, len(data)):
-                    curr = data[i][self.key]
-                    if self.validate(curr):
-                        data[i].pop(self.key)
-        # In case somehow data[i] or data[i][self.infoKey] isn't a dict,
-        # causing pop() to fail
+                    data[i].pop(self.key)
         except Exception as e:
-            print(e)
+            print(f"Could not delete key {e} at index {i}")
         return data
 
     def create(self, value=None, insideInfo:bool=True, allowNull:bool=False):
@@ -149,7 +150,7 @@ class Updater(Editor):
         self.__manipulateFields(Updater.__update, value, insideInfo, allowNull)
 
     def delete(self, insideInfo:bool=True, allowNull:bool=False):
-        self.__manipulateFields(Updater.__delete, insideInfo, allowNull)
+        self.__manipulateFields(Updater.__delete, value=None, insideInfo=insideInfo, allowNull=allowNull)
 
     # Returns the largest ID found in the array, or -999 if none was found.
     def getLargestID(self) -> int:
@@ -216,6 +217,93 @@ class Updater(Editor):
             self.insertArray(data)
             self.write()
         self.readWriter.clearRawData()
+
+    """
+    Transplant data from one field into a new one.
+    
+    source      The key(s) from which the data will be sourced
+    dest        The key(s) to which the data will be transplanted
+    insideInfo  If true, adds INFO_KEY to the start of the list
+
+    While source and dest were originally intended to be used as lists
+    of keys for dictionaries, getNestedValue() and setNestedValue() also
+    support the use of lists. To read/write all values in a list stored
+    in a dictionary, pass a 0 for the key. For example, if myDict looks
+    like this: myDict = {'one':{'two':['some strings', 'that i want']}}
+    Then source or dest should look like this: ['one', 'two', 0]
+    The 0 will force all values in the list to be returned or written to,
+    depending on the function you call.
+    """
+    def transplantField(self, source:list=[], dest:list=[], insideInfo:bool=True):
+        # Boilerplate read code for child classes
+        data = self.extractArray()
+
+        if insideInfo:
+            source = [INFO_KEY] + source
+            dest = [INFO_KEY] + dest
+
+        for i in range(0, len(data)):
+            try:
+                # Get the value to transplant
+                transplantData = self.getNestedValue(source, data[i])
+                # Transplant the value
+                self.setNestedValue(transplantData, dest, data[i])
+            except Exception as e:
+                print(f"transplantField: Error during transplant {e}")
+                print(f"\tdata: {transplantData}")
+                print(f"\tindex: {i}")
+                print()
+
+        # Boilerplate write/dry run code for child classes
+        if self.dryRun:
+            self.dryRunPrint(data)
+        else:
+            self.insertArray(data)
+            self.write()
+        self.readWriter.clearRawData()
+
+    # def transplantField(self, source:str, dest:str):
+    #     self.transplantField([source,], [dest,])
+
+    """
+    Recursively access values in a dictionary.
+    keys        The keys to be accessed. Used like a queue.
+    target      The dictionary to retrieve a value from.
+
+    Since this uses keys as a queue, if you have some value x stored in
+    myDictionary['one']['two']['three'], your function call should look 
+    like: getNestedValue(['one','two','three'], myDictionary)
+    """
+    def getNestedValue(self, keys:list, target):
+        try:
+            # Base case
+            if len(keys) == 1:
+                # print(f"getNestedValue: Found nested value {target[keys[0]]}")
+                if type(keys[0]) == int:
+                    return target
+                return target[keys[0]]
+            # Recursive case
+            return self.getNestedValue(keys[1:], target[keys[0]])
+        except KeyError as e:
+            print(f"getNestedValue: Could not find key {e} from object \"{target}\"")
+        return None
+    
+    def setNestedValue(self, value, keys:list, target):
+        try:
+            # Base case
+            if len(keys) == 1:
+                if type(value) == list and type(keys[0]) == int:
+                    for i in range(0, len(value)):
+                        target[keys[i]] = value[i]
+                else:
+                    target[keys[0]] = value
+                # print(f"setNestedValue: wrote {value} to {target}")
+                return target
+            # Recursive case
+            return self.setNestedValue(value, keys[1:], target[keys[0]])
+        except KeyError as e:
+            print(f"setNestedValue: Could not find key {e} from object \"{target}\"")
+        return None
 
 def test():
     from config import CHARACTER_FILE
