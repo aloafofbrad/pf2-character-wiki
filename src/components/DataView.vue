@@ -72,19 +72,7 @@ function updateSelection(id, category){
   </div>
 </template>
 
-<style scoped>
-.dataView {
-  top: auto;
-  z-index: 1;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  flex-grow: 1;
-}
-
+<style>
 /* \/ \/ \/ CSS for CharacterEntry, JournalEntry, SettingEntry \/ \/ */
 /* Contains .split */
 .bio {
@@ -239,4 +227,19 @@ function updateSelection(id, category){
 
 /* /\ /\ RIGHT COLUMN /\ /\ */
 /* /\ /\ /\ CSS for CharacterEntry, JournalEntry, SettingEntry /\ /\ */
+</style>
+
+<style scoped>
+/* \/ \/ \/ \/ CSS for DataView \/ \/ \/ \/ */
+.dataView {
+  top: auto;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+}
 </style>
