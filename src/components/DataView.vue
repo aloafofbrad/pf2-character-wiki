@@ -9,6 +9,7 @@ const props = defineProps({
   journalData: { type: String, required: true },
   settingData: { type: String, required: true },
   entry: { type:Object, required: true },
+  maxID: { type:Number, required: true },
 })
 const selected = defineModel('selected', { type:Number, required: true })
 const category = defineModel('category', { type:String, required: true })
@@ -27,20 +28,20 @@ function showDataFromCategory(cat){
 function noSelectionMade() { return selected.value === DESELECTED }
 
 const debug = computed(() => {
+  return
   var result = `DataView Stats: | selected.value: ${selected.value} | props.category: ${props.category} | showDataFromCategory(props.category): ${showDataFromCategory(props.category)}`
   return result
 })
 
-function updateSelection(id, category){
-  console.log(`DataView updateSelection(${id}, ${category})`)
-  emit('updateSelection', id, category)
+function updateSelection(id, category, caller="DataView"){
+  emit('updateSelection', id, category, caller)
 }
 </script>
 
 <template>  
   <div class="dataView">
     <div>
-      <h3>{{ debug }}</h3>
+      <h3 v-if="debug">{{ debug }}</h3>
     </div>
     <!-- CharacterEntry
      To change data shown in the CharacterEntry, or the way that data is 
@@ -54,6 +55,7 @@ function updateSelection(id, category){
         :ID="props.entry.id"
         :info="props.entry.info"
         :category="category"
+        :maxID="props.maxID"
         @update-selection="updateSelection">
       </CharacterEntry>
     </div>
@@ -64,6 +66,7 @@ function updateSelection(id, category){
         :ID="props.entry.id"
         :info="props.entry.info"
         :category="category"
+        :maxID="props.maxID"
         @update-selection="updateSelection"
       ></JournalEntry>
     </div>
@@ -79,7 +82,7 @@ function updateSelection(id, category){
   flex-direction: column;
   flex-wrap: wrap;
   z-index: 2;
-  top: 24px;
+  /* top: 24px; */
   width: 100vw;
   height: 100%;
   min-height: calc(100vh - 24px);
@@ -217,6 +220,15 @@ function updateSelection(id, category){
   padding-right: 1.5em;
 }
 
+.stories {
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 2em;
+
+  width: 100%;
+}
+
 .story {
   width: calc(100% - 2em);
   display: flex;
@@ -232,7 +244,7 @@ function updateSelection(id, category){
 <style scoped>
 /* \/ \/ \/ \/ CSS for DataView \/ \/ \/ \/ */
 .dataView {
-  top: auto;
+  /* top: auto; */
   z-index: 1;
   margin: 0;
   padding: 0;
@@ -240,6 +252,6 @@ function updateSelection(id, category){
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  flex-grow: 1;
+  background-color: #f0f;
 }
 </style>
