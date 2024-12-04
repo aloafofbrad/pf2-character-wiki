@@ -56,7 +56,7 @@ const classParams = computed(() => {
   var result = null
   try{
     var key = classKey()
-    console.log(classes.classes[key]['AoNID'])
+    // console.log(classes.classes[key]['AoNID'])
     result = {"ID":`${classes.classes[key]['AoNID']}`}
   }
   catch (e){

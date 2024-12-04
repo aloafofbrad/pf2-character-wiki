@@ -39,7 +39,7 @@ const ancestryParams = computed(() => {
   var result = null
   try{
     var key = deityKey()
-    console.log(deities.deities[key]['AoNID'])
+    // console.log(deities.deities[key]['AoNID'])
     result = {"ID":`${deities.deities[key]['AoNID']}`}
   }
   catch (e){
