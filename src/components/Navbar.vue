@@ -121,15 +121,13 @@ function goToIndex() { goToView(props.index_view) }
 function goToList() { goToView(props.list_view) }
 function goToDefaultView(cat) { emit('goToDefaultView', cat) }
 
-function updateSelection(cat){
+function updateSelection(cat, caller="Navbar"){
   var valid = false
   for (let i = 0; i < CATEGORIES.length && !valid; i++){
     if (cat === CATEGORIES[i]){ valid = true }
   }
   if (valid){ 
-    // console.log(`found category ${cat}`)
-    console.log(`NavBar updateSelection(${DESELECTED}, ${cat})`)
-    emit('updateSelection', DESELECTED, cat)
+    emit('updateSelection', DESELECTED, cat, caller)
     // goToView(props.view)
     goToDefaultView(cat)
   }
