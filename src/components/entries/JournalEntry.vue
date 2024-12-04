@@ -4,9 +4,10 @@
 import Deselect from './Deselect.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
+import Story from './Story.vue'
 import Tag from '../Tag.vue'
 
-// Components specific to characters
+// Components specific to journals
 import { inject } from 'vue'
 const DESELECTED = inject('DESELECTED')
 const CATEGORIES = inject('CATEGORIES')
@@ -14,12 +15,12 @@ const props = defineProps({
   ID: { type:Number, required: true, default: -1 },
   info: { type:Object, required: true },
   category: { type:String, required: true },
+  maxID: { type:Number, required: true },
 })
 const emit = defineEmits(['updateSelection'])
 
-function updateSelection(id, category) {
-  console.log(`CharacterEntry updateSelection(${id}, ${category})`)
-  emit('updateSelection', id, category)
+function updateSelection(id, category, caller="JournalEntry") {
+  emit('updateSelection', id, category, caller)
 }
 
 function close() { updateSelection(DESELECTED, props.category) }
@@ -31,32 +32,34 @@ debug()
 </script>
 
 <template>
-  <Deselect :category="props.category" @updateSelection="close()"/>
-  <div class="split">
-    <!-- LeftColumn -->
-    <div class="leftColumn">
-      <div class="TitleBox">
-        <Name :name="info.title" :type="info.type" @click="close()"/>
-      </div>
-      <!-- Rest of the info. -->
-      <div class="InfoBox">
-          <div class="tagList">
-            <!-- The ID is mainly shown for debugging. It's safe to 
-            remove. -->
-            <Tag>ID: {{ info.id }}</Tag>
-          </div>
+  <div>
+    <Deselect :category="props.category" @updateSelection="close()"/>
+    <div class="split">
+      <!-- LeftColumn -->
+      <div class="leftColumn">
+        <div class="TitleBox">
+          <Name :name="info.title" :type="info.type" @click="close()"/>
         </div>
-    </div>
-    <!-- RightColumn -->
-    <div class="rightColumn">
-      <div class="story">
-        <ul>
-          <p v-for="bi in info.contents" :key="bi.id">{{ bi }}</p>
-        </ul>
+        <!-- Rest of the info. -->
+        <div class="InfoBox">
+            <div class="tagList">
+              <!-- The ID is mainly shown for debugging. It's safe to 
+              remove. -->
+              <Tag>ID: {{ info.id }}</Tag>
+            </div>
+          </div>
+      </div>
+      <!-- RightColumn -->
+      <div class="rightColumn">
+        <div class="stories">
+          <Story class="story" v-for="story in props.info.contents" 
+            :contents="story">
+          </Story>
+        </div>
       </div>
     </div>
+    <div></div>
   </div>
-  <div></div>
 </template>
 
 <style>
