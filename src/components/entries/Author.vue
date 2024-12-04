@@ -10,13 +10,14 @@ const props = defineProps({
   addendum: { type:String, default: "" }
 })
 
-function isNotEmptyString(str){ return str !== "" }
+function isEmptyString(str){ return str === "" }
 function exists(x){ return x !== undefined && x !== null }
-function stringExists(str){ return isNotEmptyString(str) && exists(str) }
+function stringExists(str){ return !isEmptyString(str) && exists(str) }
 
 const innerText = computed(() => {
+  if (isEmptyString(props.name)) { return "" }
   var result = props.emdash
-  if (props.name === props.defaultNameValue || props.name === undefined || props.name === null){
+  if (props.name === props.defaultNameValue || !exists(props.name)){
     result = result.concat(props.defaultNameValue)
   }
   else { result = result.concat(props.name) }
