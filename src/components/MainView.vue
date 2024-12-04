@@ -86,17 +86,16 @@ const arranged = computed(() => {
 })
 
 const debug = computed(() => {
-  // return
+  return
   var result = `MainView Stats: | viewMode: ${props.viewMode} | selected.value: ${selected.value} | noSelectionMade(): ${noSelectionMade()}`
   result = result.concat(` | showArt(): ${showArt()} | showIndex(): ${showIndex()} | showList(): ${showList()}`)
   return result
 })
 
-function updateSelection(id, category) {
+function updateSelection(id, category, caller="MainView") {
   if (isAValidKey(category)){
     if (isAValidId(id, category)){
-      console.log(`MainView updateSelection(${id}, ${category})`)
-      emit('updateSelection', id, category)
+      emit('updateSelection', id, category, caller)
     }
   }
   // if id or category isn't valid, there's no need to update!
@@ -117,7 +116,7 @@ const title = computed(() => { return props.category[0].toUpperCase().concat(pro
      whichever container(s) you plan to use.
      See the top of this file for file locations, in the imports section. -->
     <h3 v-if="debug">{{ debug }}</h3>    
-    <h1>{{ title }}</h1>
+    <h1 v-if="noSelectionMade()">{{ title }}</h1>
     <ArtContainer v-if="showArt()" :entries="arranged" 
     :category="category" :maxID="maxID" 
     :displayKey="props.displayKey"
@@ -144,6 +143,7 @@ const title = computed(() => { return props.category[0].toUpperCase().concat(pro
       :characterData="props.characterData"
       :journalData="props.journalData"
       :settingData="props.settingData"
+      :maxID="props.maxID"
       @update-selection="updateSelection">
     </DataView>
   </div>
@@ -151,7 +151,7 @@ const title = computed(() => { return props.category[0].toUpperCase().concat(pro
 
 <style scoped>
 .mainView {
-  top: auto;
+  /* top: auto; */
   z-index: 0;
   margin: 0;
   padding: 0;
@@ -159,6 +159,5 @@ const title = computed(() => { return props.category[0].toUpperCase().concat(pro
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  flex-grow: 1;
 }
 </style>
