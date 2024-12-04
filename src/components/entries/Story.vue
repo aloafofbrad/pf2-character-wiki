@@ -2,13 +2,14 @@
 import Author from './Author.vue';
 
 const props = defineProps({
-  contents: { type:Array, default:[] }
+  contents: { type:Object, required: true }
 })
 </script>
 
 <template>
   <div class="story">
     <p v-for="rawtext in props.contents.text">{{ rawtext }}</p>
+    <!-- <MDRenderer v-for="rawtext in props.contents.text" :value="rawtext"></MDRenderer> -->
     <Author :name="props.contents.author.name"
       :id="props.contents.author.id"
       :date="props.contents.author.date"
