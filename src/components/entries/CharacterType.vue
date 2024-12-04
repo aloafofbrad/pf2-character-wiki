@@ -2,14 +2,8 @@
 import { ref, computed } from 'vue'
 
 const props = defineProps({
-  type: {
-    type:String,
-    default:""
-  },
-  customTooltip: {
-    type:String,
-    default:""
-  }
+  type: { type:String, default:"" },
+  customTooltip: { type:String, default:"" }
 })
 
 const innerText = computed(() => {
