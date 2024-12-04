@@ -15,8 +15,7 @@ function isAValidId(id) {
 }
 
 function entryClick(id) {
-  // console.log("entry clicked, id: ", id)
-  emit('updateSelection', id, props.category)
+  emit('updateSelection', id, props.category, "ArtContainer")
 }
 
 </script>
