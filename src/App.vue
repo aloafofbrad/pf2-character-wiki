@@ -202,6 +202,7 @@ const currentDefaultView = computed(() => {
 })
 
 function defaultViews(cat) { return viewData[cat].defaultView }
+function getSortKey(cat){ return viewData[cat].displayKey }
 
 /* Prints a given reactive map in the console
    args:
@@ -354,31 +355,53 @@ function setIndex(value) {
 
 function pushHistory(id, category) {
   history.value.push({ id:id, category:category })
-  setIndex(index.value + 1)
+  if (history.value.length === 101){
+    history.value = history.value.slice(-99)
+  }
+  else{ setIndex(index.value + 1) }
 }
 
-/* Called when *Container components emit update-selection */
-function updateSelection(id, cat, push=true) {
+/* Called when *Container components emit update-selection
+  id        ID of the entry to switch to
+  cat       ID of the category to switch to. Note that this might not be
+            different from the current category.
+  caller    The component that originally called this
+  push      If true, pushes id and cat to history.value
+  debug     .
+ */
+function updateSelection(id, cat, caller="App", push=true, debug=true) {
+  if (debug){
+    console.log('updateSelection(', id, ', \'', cat, '\', \'', caller, '\', ', push, ', ', debug, ')') 
+  }
   const old = { "id":selected.value, "category":category.value }
   var updatedEntry = setSelectedEntry(id)
   var updatedCategory = setSelectedCategory(cat)
   if (!(updatedEntry && updatedCategory)){
     push = false
-    console.log(`updatedEntry: ${updatedEntry}\tupdatedCategory: ${updatedCategory}`)
+    if (debug){
+      console.log("updatedEntry: ", updatedEntry, "\tupdatedCategory: ", updatedCategory)
+    }
   }
-  else if (cat !== category.value){
+  if (cat !== category.value){
     goToView(currentDefaultView)
   }
   if (push) {
     pushHistory(id, cat)
-    console.log(`now viewing [${id}:${cat}]`)
   }
   else {
     selected.value = old.id
     category.value = old.category
-    console.log(`still at [${selected.value}:${category.value}]`)
   }
-  // console.log(`history.value: ${history.value}`)
+  if (debug){
+    const curr = history.value[index.value]
+    if (!DNE(curr)){
+      const currID = curr.id
+      const currCategory = curr.category
+      var debugMessage = "still at:"
+      if (push){ debugMessage = "now viewing:" }
+      console.log(`${debugMessage} {${currID}, ${currCategory}}`)
+    }
+  }
 }
 
 // Search -- move to NavBar?
@@ -396,46 +419,25 @@ function sort(list) {
   return list.slice().sort((a, b) => paradigm(a, b))
 }
 
-// Helper for search -- move to NavBar?
 function matchesRegex(s, regex){
-  try {
-    var result = regex.test(s)
-    return result
-  }
+  var result = false
+  try { result = regex.test(s) }
   catch (e){
     console.log("Expected error in matchesRegex")
     console.log(e)
   }
-  return false
-
+  return result
 }
 
 // Filters / searches for specific entries
-function filter(list, category) {
-  var sortKey = ""
-  const categories = CATEGORIES()
-  if (category === categories[0] || category === categories[2]) {
-    sortKey = "name"
-  }
-  else {
-    sortKey = "title"
-  }
-  if (userRegex.value === "" || userRegex.value === null || userRegex === undefined){
-    return list.slice()
-  }
+function filter(list, cat) {
+  if (userRegex.value==="" || DNE(userRegex.value)){return list.slice()}
+  var sortKey = getSortKey(cat)
   var regex = new RegExp(userRegex.value.toLowerCase())
-  console.log("regex\t" + regex)
-  console.log("sortKey: ", sortKey)
-  // return list.filter(entry => matchesRegex(entry['info']['name'].toLowerCase(), regex))
+  console.log(`regex\t\t${regex}`)
+  console.log(`sortKey\t${sortKey}`)
   return list.filter(entry => matchesRegex(entry['info'][sortKey].toLowerCase(), regex))
 }
-
-// const arranged = computed(() => {
-//   var sorted = sort(entries.value)
-//   var filtered = filter(sorted)
-//   console.log(filtered.slice())
-//   return filtered.slice()
-// })
 
 function sortAndFilter(category) {
   var filtered = filter(dataMap[category], category)
@@ -497,22 +499,24 @@ const maxID = computed(() => {
    matter.
    
    See also the props in MainView.vue. -->
-  <MainView v-model:dataMap="arranged"
-    v-model:selected="selected"
-    v-model:category="category"
-    :maxID="maxID"
-    :view-mode="viewMode"
-    :art_view="ART_VIEW"
-    :index_view="INDEX_VIEW"
-    :list_view="LIST_VIEW"
-    :default_view="DEFAULT_VIEW"
-    :multi_view_enabled="MULTI_VIEW_ENABLED"
-    :displayKey="displayKey"
-    @update-selection="updateSelection"
-    :characterData="categories[1]"
-    :journalData="categories[0]"
-    :settingData="categories[2]"
-  />
+  <main>
+    <MainView v-model:dataMap="arranged"
+      v-model:selected="selected"
+      v-model:category="category"
+      :maxID="maxID"
+      :view-mode="viewMode"
+      :art_view="ART_VIEW"
+      :index_view="INDEX_VIEW"
+      :list_view="LIST_VIEW"
+      :default_view="DEFAULT_VIEW"
+      :multi_view_enabled="MULTI_VIEW_ENABLED"
+      :displayKey="displayKey"
+      @update-selection="updateSelection"
+      :characterData="categories[1]"
+      :journalData="categories[0]"
+      :settingData="categories[2]"
+    />
+  </main>
 
   <!-- <DataView :dataMap="dataMap" v-model:selected="selected"
     v-model:category="category" :valid-categories="CATEGORIES()"
@@ -529,14 +533,19 @@ body, main {
 header {
   position: sticky;
   z-index: 2;
-  top: 0vh;
+  top: 0;
   left: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
   overflow-y: hidden;
   width: 100%;
 }
 
 main {
-  top: auto;
+  position: sticky;
+  min-height: 100vh;
+  top: 0;
+  left: 0;
   z-index: 0;
   margin: 0;
   padding: 0;
@@ -544,7 +553,6 @@ main {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  flex-grow: 1;
 }
 
 #listContainer > ul > .Tag {
