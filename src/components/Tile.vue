@@ -13,7 +13,7 @@ const imageUrl = computed(() => {
 })
 
 const displayValue = computed(() => {
-  console.log("Tile displayKey: ", props.displayKey)
+  // console.log("Tile displayKey: ", props.displayKey)
   return props.info[props.displayKey]
 })
 
