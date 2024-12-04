@@ -10,9 +10,15 @@ const props = defineProps({
 const addendum = computed (() => {
   var result = ""
   var key = bgKey()
-  var rarity = backgrounds.backgrounds[key]["rarity"]
-  if (rarity !== "Common") {
-    result = `${rarity}!`
+  var rarity = "Common"
+  try{
+    rarity = backgrounds.backgrounds[key]["rarity"]
+    if (rarity !== "Common") {
+      result = `${rarity}!`
+    }
+  }
+  catch (e){
+    rarity = "Common"
   }
   return result
 })
