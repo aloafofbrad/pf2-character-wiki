@@ -1,4 +1,4 @@
-from config import DATA_KEY, INFO_KEY
+from config import DATA_KEY, INFO_KEY, INDENT
 from Accessor import Accessor
 
 # Base class for updating objects inside of a json array, inside of a file
@@ -69,7 +69,7 @@ class Editor(Accessor):
         import json
         rawdata = dict()
         rawdata[self.getArrayKey()] = data
-        print(json.dumps(rawdata, indent=2))    
+        print(json.dumps(rawdata, indent=INDENT))    
     
     def write(self) -> None:
         self.readWriter.write()

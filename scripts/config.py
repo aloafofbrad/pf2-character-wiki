@@ -9,3 +9,4 @@ SETTINGS_FILE = f"{DATA_DIR}/settings.json"
 DATA_KEY = "data"
 INFO_KEY = "info"
 ID_KEY = "id"
+INDENT = 2
