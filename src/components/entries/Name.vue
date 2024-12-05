@@ -24,7 +24,7 @@ const entryName = computed(() => {
 <style>
 .entryName {
   text-align: center;
-  width: 100%;
+  width: 352px;
   margin: 0;
   /* margin-left: 3em;
   margin-right: 3em; */
