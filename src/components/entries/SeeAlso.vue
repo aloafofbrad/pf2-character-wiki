@@ -4,6 +4,7 @@ import { computed, inject } from 'vue'
 const DESELECTED = inject('DESELECTED')
 const props = defineProps({
   contents: { type:Array, default:[] },
+  titleString: { type:String, default: "See also:", required: false },
   unrenderable: { type:Object, required: false, default: {
     "id":-1,
     "category":".",
@@ -29,8 +30,8 @@ const arranged = computed(() => {
     console.log(curr)
     if (isRenderable(curr)){ result.push(curr) }
   }
-  console.log("See Also (below):")
-  console.log(result)
+  // console.log("See Also (below):")
+  // console.log(result)
   return result
 })
 
@@ -42,6 +43,7 @@ function goTo(id, category){ updateSelection(id, category) }
 
 <template>
   <div class="seeAlso">
+    <h3 v-if="arranged.length > 0">{{ props.titleString }}</h3>
     <Tag v-for="obj in arranged" @click="goTo(obj.id, obj.category)">
       <p>{{ obj.displayValue }}</p>
     </Tag>
@@ -50,19 +52,28 @@ function goTo(id, category){ updateSelection(id, category) }
 
 <style scoped>
 .seeAlso {
-  flex-flow: column wrap;
+  display: flex;
+  flex-flow: row wrap;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   margin-top: 1.5em;
 
-  p {
-    margin-top: unset;
-    margin-bottom: 0.25em;
-    text-indent: 1.5em;
+  h3 {
+    margin-right: 0.5em;
   }
-  
-  p:first-of-type {
-    text-indent: 0;
+
+  .tag {
+    background-color: white;
+    color: black;
+
+    &:hover {
+      background-color: #b4dd1e;
+    }
+
+    p, p:hover {
+      background-color: inherit;
+      color: inherit;
+    }
   }
 }
 </style>
