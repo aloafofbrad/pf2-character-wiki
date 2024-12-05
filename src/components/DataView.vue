@@ -102,10 +102,7 @@ function updateSelection(id, category, caller="DataView"){
 
   .leftColumn {
     width: 352px;
-    border-width: 0 2px 0 0; 
-    border-color: rgba(186, 186, 186, 0.5);
-    border-style: solid;
-    border-radius: 16px;
+    border-width: 0 2px 0 0;
 
     .tagList {
       margin-left: 4px;
@@ -139,6 +136,8 @@ function updateSelection(id, category, caller="DataView"){
 
   .leftColumn {
     width: 100%;
+    border-width: 0 0 2px 0;
+    padding-bottom: 1em;
     .tagList {
       margin-left: 4px;
       margin-right: 4px;
@@ -172,6 +171,9 @@ function updateSelection(id, category, caller="DataView"){
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
+  border-color: rgba(186, 186, 186, 0.5);
+  border-style: solid;
+  border-radius: 16px;
 }
 
 .leftColumn {
@@ -199,6 +201,7 @@ function updateSelection(id, category, caller="DataView"){
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
+  margin-left: 2em;
 }
 
 .basics {
@@ -220,20 +223,19 @@ function updateSelection(id, category, caller="DataView"){
 }
 
 .stories {
+  display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-left: 2em;
-
-  width: 100%;
+  width: calc(100% - 2em);
 }
 
 .story {
-  width: calc(100% - 2em);
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
   justify-content: flex-start;
+  width: calc(100% - 2em);
 }
 
 /* /\ /\ RIGHT COLUMN /\ /\ */
