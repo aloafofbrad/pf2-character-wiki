@@ -10,6 +10,7 @@ const props = defineProps({
   settingData: { type: String, required: true },
   entry: { type:Object, required: true },
   maxID: { type:Number, required: true },
+  seeAlso: { type:Array, default: [], required: false}
 })
 const selected = defineModel('selected', { type:Number, required: true })
 const category = defineModel('category', { type:String, required: true })
@@ -56,6 +57,7 @@ function updateSelection(id, category, caller="DataView"){
         :info="props.entry.info"
         :category="category"
         :maxID="props.maxID"
+        :seeAlso="props.seeAlso"
         @update-selection="updateSelection">
       </CharacterEntry>
     </div>
@@ -67,6 +69,7 @@ function updateSelection(id, category, caller="DataView"){
         :info="props.entry.info"
         :category="category"
         :maxID="props.maxID"
+        :seeAlso="props.seeAlso"
         @update-selection="updateSelection"
       ></JournalEntry>
     </div>
@@ -82,7 +85,6 @@ function updateSelection(id, category, caller="DataView"){
   flex-direction: column;
   flex-wrap: wrap;
   z-index: 2;
-  /* top: 24px; */
   width: 100vw;
   height: 100%;
   min-height: calc(100vh - 24px);
@@ -96,7 +98,6 @@ function updateSelection(id, category, caller="DataView"){
   .split {
     justify-content: flex-start;
     align-items: flex-start;
-    z-index: 1;
   }
 
   .leftColumn {
@@ -134,8 +135,6 @@ function updateSelection(id, category, caller="DataView"){
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-
-    z-index: 1;
   }
 
   .leftColumn {
