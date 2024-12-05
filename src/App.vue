@@ -203,6 +203,8 @@ const currentDefaultView = computed(() => {
 
 function defaultViews(cat) { return viewData[cat].defaultView }
 function getSortKey(cat){ return viewData[cat].displayKey }
+provide('viewData', viewData)
+provide('getSortKey', getSortKey)
 
 /* Prints a given reactive map in the console
    args:
