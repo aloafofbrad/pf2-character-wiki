@@ -26,7 +26,13 @@ const props = defineProps({
   margin-top: 1.5em;
 
   p {
+    margin-top: unset;
     margin-bottom: 0.25em;
+    text-indent: 1.5em;
+  }
+  
+  p:first-of-type {
+    text-indent: 0;
   }
 }
 </style>
