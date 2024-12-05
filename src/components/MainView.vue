@@ -7,6 +7,8 @@ import ListContainer from './containers/ListContainer.vue'
 import { ref, reactive, computed, inject, watchEffect } from 'vue'
 const DESELECTED = inject('DESELECTED')
 const CATEGORIES = inject('CATEGORIES')
+const viewData = inject('viewData')
+const getSortKey = inject('getSortKey')
 const props = defineProps({
   maxID: { type: Number, required:true },
   sort_alpha: { type: String, default: "alphabetical" },
@@ -81,8 +83,68 @@ const arranged = computed(() => {
     console.log("props.category is valid")
     console.log(dataMap.value[props.category])
     return dataMap.value[props.category]
-    // return dataMap.value[props.category].filter(entry => matchesRegex(entry['info']['name']).toLowerCase(), regex);
   }
+})
+
+function exists(x){ return x !== undefined && x !== null }
+
+function getSeeAlsoEntry(seeAlso={
+  "id":DESELECTED, "category":"."
+}){
+  /* Get the displayValue for the "seeAlso" entry
+  This is the part of the code that gets the name of the "seeAlso" entry.
+  So if seeAlso is supposed to represent an arbitrary character Alice
+  with an ID n, the object that gets pushed to the result will look like:
+  {id:n, category:"characters", displayValue:"Alice"} */
+  var displayKey = ""
+  var displayValue = ""
+  if (!exists(seeAlso.id)){ seeAlso.id = DESELECTED }
+  if (!exists(seeAlso.category)){ seeAlso.category = props.category }
+  if (seeAlso.id !== DESELECTED){
+    if (seeAlso.category === "."){
+      seeAlso.category = props.category
+    }
+    displayKey = getSortKey(seeAlso.category)
+
+    // Get the displayValue
+    try{
+      for (let i = 0; i < dataMap.value[seeAlso.category].length; i++){
+        if (seeAlso.id === dataMap.value[seeAlso.category].at(i).id){
+          displayValue = dataMap.value[seeAlso.category].at(i).info[displayKey]
+        }
+      }
+    }
+    catch(e){ displayValue = "" }
+  }
+
+  return {
+    id: seeAlso.id,
+    category: seeAlso.category,
+    displayValue: displayValue
+  }
+}
+
+// Self-documenting. No need for comments
+const seeAlso = computed(() => {
+  var result = [];
+  // Check that the category exists
+  if (isAValidKey(props.category)){
+    const entry = getSelectedEntry()
+
+    if (exists(entry.info.seeAlso)){
+      /* Get each "see also" from the entry
+      These are objects that look like {"id":-1, "category":"."}
+      Any category with a value of "." is a wildcard, which should be
+      used to represent the same category that the entry belongs to. */
+      for (let i = 0; i < entry.info.seeAlso.length; i++){
+        var curr = getSeeAlsoEntry(entry.info.seeAlso[i])
+        result.push(curr)
+      }
+    }
+  }
+  console.log("See Also (below):")
+  console.log(result)
+  return result
 })
 
 const debug = computed(() => {
@@ -144,6 +206,7 @@ const title = computed(() => { return props.category[0].toUpperCase().concat(pro
       :journalData="props.journalData"
       :settingData="props.settingData"
       :maxID="props.maxID"
+      :seeAlso="seeAlso"
       @update-selection="updateSelection">
     </DataView>
   </div>
