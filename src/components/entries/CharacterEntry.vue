@@ -1,10 +1,10 @@
 <!-- This component displays information for characters. The main way to change what info is shown (and how) is to modify the components that are shown; rearrange/rewite/delete them; or create new ones entirely. -->
 <script setup>
 // Components designed for multiple types of entries
-import Deselect from './Deselect.vue'
 import EntryChanger from './EntryChanger.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
+import SeeAlso from './SeeAlso.vue'
 import Tag from '../Tag.vue'
 
 // Components specific to characters
@@ -26,7 +26,8 @@ const props = defineProps({
   info: { type:Object, required: true },
   category: { type:String, required: true },
   maxID: { type:Number, required: true },
-  debug: { type:Boolean, required: false, default: false }
+  debug: { type:Boolean, required: false, default: false },
+  seeAlso: { type:Array, default: [], required: false}
 })
 const emit = defineEmits(['updateSelection'])
 
@@ -45,7 +46,6 @@ if (props.debug){ debug() }
 
 <template>
   <div>
-    <Deselect :category="props.category" @updateSelection="close()"/>
     <div class="split">
       <!-- LeftColumn
       This is intended to be the character's picture, name, and so on and 
@@ -83,7 +83,7 @@ if (props.debug){ debug() }
             :contents="story">
           </Story>
         </div>
-        
+        <SeeAlso :contents="props.seeAlso" @updateSelection="updateSelection"/>
       </div>
     </div>
     <div></div>

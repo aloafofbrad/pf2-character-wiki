@@ -1,7 +1,7 @@
 <!-- This component displays information for characters. The main way to change what info is shown (and how) is to modify the components that are shown; rearrange/rewite/delete them; or create new ones entirely. -->
 <script setup>
 // Components designed for multiple types of entries
-import Deselect from './Deselect.vue'
+import EntryChanger from './EntryChanger.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
 import Story from './Story.vue'
@@ -16,6 +16,7 @@ const props = defineProps({
   info: { type:Object, required: true },
   category: { type:String, required: true },
   maxID: { type:Number, required: true },
+  seeAlso: { type:Array, default: [], required: false}
 })
 const emit = defineEmits(['updateSelection'])
 
@@ -33,10 +34,11 @@ debug()
 
 <template>
   <div>
-    <Deselect :category="props.category" @updateSelection="close()"/>
     <div class="split">
       <!-- LeftColumn -->
       <div class="leftColumn">
+        <EntryChanger :id="info.id" :category="props.category"
+        :maxID="props.maxID" @updateSelection="goTo"></EntryChanger>
         <div class="TitleBox">
           <Name :name="info.title" :type="info.type" @click="close()"/>
         </div>
