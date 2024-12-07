@@ -1,39 +1,42 @@
 <script setup>
-import { computed } from 'vue'
-
+import { computed, inject } from 'vue'
+const exists = inject('exists')
 const props = defineProps({
   name: { type:String, default:"" },
   id: { type:Number, default:"" },
-  defaultNameValue: { type:String, default:"?" },
+  defaultNameValue: { type:String, default:"Ezuldor the Archivist" },
   emdash: { type:String, default: "―" },
   date: { type:String, default: "" },
-  addendum: { type:String, default: "" }
+  addendum: { type:String, default: "" },
+  useDefaultName: { type:Boolean, default: true }
 })
 
 function isEmptyString(str){ return str === "" }
-function exists(x){ return x !== undefined && x !== null }
 function stringExists(str){ return !isEmptyString(str) && exists(str) }
 
-const innerText = computed(() => {
-  if (isEmptyString(props.name)) { return "" }
-  var result = props.emdash
-  if (props.name === props.defaultNameValue || !exists(props.name)){
-    result = result.concat(props.defaultNameValue)
+function chooseName() {
+  if (props.useDefaultName && isEmptyString(props.name)){
+    return props.defaultNameValue
   }
-  else { result = result.concat(props.name) }
+  return props.name
+}
+
+const innerText = computed(() => {
+  var result = props.emdash
+  result = result.concat(chooseName())
 
   if (stringExists(props.date)){
     result = result.concat(`, ${props.date}`)
+    result = result.concat(". ")
   }
 
-  result = result.concat(". ")
   if (stringExists(props.addendum)){
-    result = result.concat(props.addendum)
+    result = result.concat(`, ${props.addendum}`)
   }
+  result = result.concat(". ")
 
   return result
 })
-
 </script>
 
 <template>
