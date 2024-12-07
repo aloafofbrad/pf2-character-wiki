@@ -90,12 +90,11 @@ import characters from './data/characters.json'
 import journal from './data/journals.json'
 import settings from './data/settings.json'
 
-/* Adds data to a given reactive map
+/* Adds data to dataMap
     args:
     data     the data to be added to the reactive map
-    map      the reactive map
     keyName  the name to use for the key
-  Overwrites map.value[keyName] if it already exists.
+  Overwrites dataMap.value[keyName] if it already exists.
 */
 function addArrayToReactiveMap(data, keyName){
   var temp = { [keyName]: data }
@@ -171,9 +170,9 @@ const viewData = {
 }
 var keys = Object.keys(viewData)
 for (let i = 0; i < keys.length; i++){
-  // viewData.keys()[i].defaultView = viewData.keys()[i].validViews[0]
   viewData[keys[i]].defaultView = viewData[keys[i]].validViews[0]
 }
+provide('viewData', viewData)
 const DEFAULT_VIEW = viewData[DEFAULT_CATEGORY].defaultView
 const viewMode = ref(DEFAULT_VIEW)
 
@@ -203,7 +202,6 @@ const currentDefaultView = computed(() => {
 
 function defaultViews(cat) { return viewData[cat].defaultView }
 function getSortKey(cat){ return viewData[cat].displayKey }
-provide('viewData', viewData)
 provide('getSortKey', getSortKey)
 
 /* Prints a given reactive map in the console
@@ -220,7 +218,9 @@ consoleLogReactiveMap(dataMap)
 /* Helper function for sorts
     Returns true if arg is null or undefined
 */
-function DNE(arg) { return arg === null || arg === undefined }
+function DNE(arg) { return arg === undefined || arg === null }
+function exists(arg) { return arg !== undefined && arg !== null }
+provide('exists', exists)
 
 /* Helper function for sorts
     Handles edge cases where a exists and b doesn't,
@@ -311,7 +311,6 @@ function isAValidId(id) {
     key   the key to test
 */
 function isAValidKey(key){
-  // for (k in dataMap.value){
   const categories = CATEGORIES()
   for (let i = 0; i < categories.length; i++){
     if (key === categories[i]){ return true }
@@ -333,8 +332,6 @@ function setSelectedCategory(newCategory){
   }
   return false
 }
-
-function getSelectedCategory(){ return category.value }
 
 // History management
 function isAValidHistoricalIndex(value) {
