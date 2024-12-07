@@ -46,3 +46,4 @@ output.txt
 # Campaign-specific character data & Instance-specific assets
 src/data
 public
+local-backup.sh
