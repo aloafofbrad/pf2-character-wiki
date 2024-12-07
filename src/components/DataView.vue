@@ -105,7 +105,7 @@ function updateSelection(id, category, caller="DataView"){
     border-width: 0 2px 0 0;
 
     .tagList {
-      margin-left: 4px;
+      margin-left: 0.25em;
 
       .tag {
         margin-left: inherit;
@@ -182,12 +182,15 @@ function updateSelection(id, category, caller="DataView"){
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: center;
+    width: 100%;
 
     * {
       margin-top: 0.05em;
     }
   }
-  .TitleBox, .InfoBox {
+
+  .InfoBox {
+    padding-right: 2em;
     width: 100%;
   }
 }
@@ -202,40 +205,16 @@ function updateSelection(id, category, caller="DataView"){
   flex-flow: column wrap;
   align-items: flex-start;
   margin-left: 2em;
-}
-
-.basics {
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-}
-
-.InfoBox {
-  padding-right: 2em;
-  /* border: 1px dotted; */
-}
-
-.InfoBox > ul {
-  margin: 0;
-  padding-left: 0;
-  padding-right: 1.5em;
+  margin-right: 2em;
+  margin-bottom: 4em;
 }
 
 .stories {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  align-items: flex-start;
-  width: calc(100% - 2em);
-}
-
-.story {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: calc(100% - 2em);
+  align-items: center;
+  width: inherit;
 }
 
 /* /\ /\ RIGHT COLUMN /\ /\ */
