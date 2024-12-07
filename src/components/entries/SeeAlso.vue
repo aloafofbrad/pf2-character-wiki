@@ -2,6 +2,7 @@
 import Tag from '../Tag.vue';
 import { computed, inject } from 'vue'
 const DESELECTED = inject('DESELECTED')
+const exists = inject('exists')
 const props = defineProps({
   contents: { type:Array, default:[] },
   titleString: { type:String, default: "See also:", required: false },
@@ -13,7 +14,6 @@ const props = defineProps({
 })
 const emit = defineEmits(['updateSelection'])
 
-function exists(x) { return x !== undefined && x !== null }
 function isRenderable(entry){
   if (!exists(entry.id)){ return false }
   if (!exists(entry.category)){ return false }
@@ -21,6 +21,12 @@ function isRenderable(entry){
   if (entry.id === DESELECTED){ return false }
   if (entry.displayValue === ""){ return false }
   return true
+}
+
+function compareDisplayValues(a, b){
+  if (a.displayValue > b.displayValue){ return 1 }
+  if (a.displayValue < b.displayValue){ return -1 }
+  return 0
 }
 
 const arranged = computed(() => {
@@ -32,7 +38,7 @@ const arranged = computed(() => {
   }
   // console.log("See Also (below):")
   // console.log(result)
-  return result
+  return result.sort(compareDisplayValues)
 })
 
 function updateSelection(id, category, caller="SeeAlso"){
@@ -63,6 +69,7 @@ function goTo(id, category){ updateSelection(id, category) }
   }
 
   .tag {
+    /* border-radius: unset; */
     background-color: white;
     color: black;
 
@@ -74,6 +81,16 @@ function goTo(id, category){ updateSelection(id, category) }
       background-color: inherit;
       color: inherit;
     }
+
+    /* &:first-of-type {
+      border-top-left-radius: 16px;
+      border-bottom-left-radius: 16px;
+    }
+
+    &:last-of-type {
+      border-top-right-radius: 16px;
+      border-bottom-right-radius: 16px;
+    } */
   }
 }
 </style>
