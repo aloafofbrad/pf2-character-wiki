@@ -19,8 +19,6 @@ import Status from './Status.vue'
 import { inject } from 'vue'
 import Story from './Story.vue'
 const DESELECTED = inject('DESELECTED')
-const CATEGORIES = inject('CATEGORIES')
-const TRUE = true
 const props = defineProps({
   ID: { type:Number, required: true, default: -1 },
   info: { type:Object, required: true },
@@ -64,14 +62,14 @@ if (props.debug){ debug() }
         <div class="InfoBox">
             <div class="tagList">
               <Tag v-if="info.pronouns !== '?'">Pronouns: {{ info.pronouns }}</Tag>
+              <Status :value="info.status" :type="info.type"
+                :checkType="true" :renderTag="true"
+              ></Status>
               <Tag><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></Tag>
               <Tag><Background :background="info.background"/></Tag>
               <Tag><Class :class="info.class" :level="info.level"/></Tag>
               <Tag v-if="info.deity !== ''"><Deity :deity="info.deity"/></Tag>
               <Tag><Age :age="info.age" :ancestry="info.ancestry"/></Tag>
-              <Status :value="info.status" :type="info.type"
-                :checkType="true" :renderTag="true"
-              ></Status>
               <Tag><Nationality class="tag" v-if="info.nationality" :nationality="info.nationality"/></Tag>
             </div>
           </div>
@@ -79,7 +77,7 @@ if (props.debug){ debug() }
       <!-- RightColumn -->
       <div class="rightColumn">
         <div class="stories">
-          <Story class="story" v-for="story in props.info.contents"   
+          <Story v-for="story in props.info.contents"   
             :contents="story">
           </Story>
         </div>
