@@ -9,6 +9,7 @@ const DESELECTED = inject('DESELECTED')
 const CATEGORIES = inject('CATEGORIES')
 const viewData = inject('viewData')
 const getSortKey = inject('getSortKey')
+const exists = inject('exists')
 const props = defineProps({
   maxID: { type: Number, required:true },
   sort_alpha: { type: String, default: "alphabetical" },
@@ -86,7 +87,6 @@ const arranged = computed(() => {
   }
 })
 
-function exists(x){ return x !== undefined && x !== null }
 
 function getSeeAlsoEntry(seeAlso={
   "id":DESELECTED, "category":"."
@@ -142,16 +142,16 @@ const seeAlso = computed(() => {
       }
     }
   }
-  console.log("See Also (below):")
-  console.log(result)
+  // console.log("See Also (below):")
+  // console.log(result)
   return result
 })
 
 const debug = computed(() => {
   return
-  var result = `MainView Stats: | viewMode: ${props.viewMode} | selected.value: ${selected.value} | noSelectionMade(): ${noSelectionMade()}`
-  result = result.concat(` | showArt(): ${showArt()} | showIndex(): ${showIndex()} | showList(): ${showList()}`)
-  return result
+  // var result = `MainView Stats: | viewMode: ${props.viewMode} | selected.value: ${selected.value} | noSelectionMade(): ${noSelectionMade()}`
+  // result = result.concat(` | showArt(): ${showArt()} | showIndex(): ${showIndex()} | showList(): ${showList()}`)
+  // return result
 })
 
 function updateSelection(id, category, caller="MainView") {
