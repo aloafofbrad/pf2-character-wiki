@@ -1,7 +1,7 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import ancestries from '../../data/ancestries.json'
-
+const exists = inject('exists')
 const props = defineProps({
   age: {
     type: Object,
@@ -19,10 +19,6 @@ const props = defineProps({
     default:false
   }
 })
-
-function exists(x) {
-  return x !== null && x !== undefined
-}
 
 function anKey() {
   if (!exists(props.ancestry)){

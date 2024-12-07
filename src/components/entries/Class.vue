@@ -1,8 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import Dynalink from '../Dynalink.vue'
 import classes from '../../data/classes.json'
-
+const exists = inject('exists')
 const props = defineProps({
   class: {
     type:String,
@@ -13,10 +13,6 @@ const props = defineProps({
     default:""
   }
 })
-
-function exists(x) {
-  return x !== null && x !== undefined
-}
 
 function classKey() {
   if (!exists(props.class)){

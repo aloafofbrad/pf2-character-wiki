@@ -1,18 +1,14 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import Dynalink from '../Dynalink.vue'
 import deities from '../../data/deities.json'
-
+const exists = inject('exists')
 const props = defineProps({
   deity: {
     type:String,
     default:""
   }
 })
-
-function exists(x) {
-  return x !== null && x !== undefined
-}
 
 function deityKey() {
   if (!exists(props.deity)){

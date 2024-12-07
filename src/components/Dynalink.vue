@@ -1,6 +1,7 @@
 <script setup>
 // Dynamic links. Each one constructs a URL dynamically from the props given
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
+const exists = inject('exists')
 
 /* Props
   innerText   Text to be rendered inside the a tag
@@ -18,7 +19,6 @@ const props = defineProps({
   params:{ type: Object, default: {} }
 })
 
-function exists(x){ return x !== undefined && x !== null }
 function allPropsExist(){
   return exists(props.innerText) && exists(props.domain) &&
          exists(props.path) && exists(props.params)

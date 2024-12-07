@@ -1,8 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import Dynalink from '../Dynalink.vue';
 import backgrounds from '../../data/backgrounds.json'
-
+const exists = inject('exists')
 const props = defineProps({
   background:{ Type:String, Default:"" }
 })
@@ -36,10 +36,6 @@ const innerText = computed(() => {
 
 const domain = ref('https://2e.aonprd.com/')
 const path = ref('Backgrounds.aspx')
-
-function exists(x) {
-  return x !== null && x !== undefined
-}
 
 function bgKey() {
   if (!exists(props.background)){

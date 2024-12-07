@@ -1,14 +1,12 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import countries from '../../data/countries.json'
 import nationalities from '../../data/nationalities.json'
-
+const exists = inject('exists')
 const props = defineProps({
   nationality: { Type: String, Default: "?" },
   showCountryName: { Type: Boolean, Default: false }
 })
-
-function exists(x) { return x !== null && x !== undefined }
 
 const country = computed(() => {
   if (!exists(props.nationality)){
