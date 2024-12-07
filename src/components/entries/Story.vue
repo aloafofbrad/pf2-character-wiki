@@ -20,15 +20,18 @@ const props = defineProps({
 
 <style scoped>
 .story {
+  display: flex;
   flex-flow: column wrap;
   justify-content: flex-start;
   align-items: flex-start;
+  width: inherit;
   margin-top: 1.5em;
 
   p {
     margin-top: unset;
     margin-bottom: 0.25em;
     text-indent: 1.5em;
+    text-align: justify;
   }
   
   p:first-of-type {
