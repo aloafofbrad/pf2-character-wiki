@@ -31,8 +31,8 @@ body {
 }
 
 ::selection {
-  color: white;
-  background: black;
+  color: black;
+  background: #bababa;
 }
 
 .tagList {
@@ -41,11 +41,6 @@ body {
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: flex-start;
-}
-
-.tagList > .tag {
-  background-color: white;
-  color: black;
 }
 
 .snappy {
