@@ -175,8 +175,6 @@ function capitalize(str){
   overflow-y: hidden;
   font-family: monospace;
   width: 100%;
-  /* display: flex;
-  flex-flow: row wrap; */
   justify-content: space-between;
   align-items: center;
   padding: unset;
@@ -198,7 +196,7 @@ function capitalize(str){
       font-family: inherit;
     }
 
-    &:hover {
+    &:hover, input:hover {
       background-color: white;
       opacity: 1.0;
       color: black;
@@ -214,9 +212,6 @@ function capitalize(str){
       outline: none;
 
       &:hover {
-        background-color: white;
-        opacity: 1.0;
-        color: black;
         border: 1px solid black;
       }
 
@@ -258,7 +253,8 @@ function capitalize(str){
 .Navbar {
   color: white;
   background-color: black;
-  opacity: 0.75;
+  opacity: 0.8;
+  border-bottom: 1px white solid;
 
   .NavButton {
     color: inherit;
