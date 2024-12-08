@@ -63,9 +63,13 @@ function goTo(id, category){ updateSelection(id, category) }
   justify-content: flex-start;
   align-items: center;
   margin-top: 1.5em;
+  padding-top: 0;
+  padding-bottom: 0;
 
   h3 {
     margin-right: 0.5em;
+    margin-bottom: 0;
+    margin-top: 0;
   }
 
   .tag {
