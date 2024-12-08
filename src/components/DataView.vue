@@ -2,12 +2,12 @@
 <script setup>
 import CharacterEntry from './entries/CharacterEntry.vue'
 import JournalEntry from './entries/JournalEntry.vue';
-import { ref, reactive, computed, inject, watchEffect } from 'vue'
+import { computed, inject } from 'vue'
 const DESELECTED = inject('DESELECTED')
 const props = defineProps({
-  characterData: { type: String, required: true },
-  journalData: { type: String, required: true },
-  settingData: { type: String, required: true },
+  characterKey: { type: String, required: true },
+  journalKey: { type: String, required: true },
+  settingKey: { type: String, required: true },
   entry: { type:Object, required: true },
   maxID: { type:Number, required: true },
   seeAlso: { type:Array, default: [], required: false}
@@ -16,21 +16,16 @@ const selected = defineModel('selected', { type:Number, required: true })
 const category = defineModel('category', { type:String, required: true })
 const emit = defineEmits(['updateSelection'])
 
-function showDataFromCategory(cat){
-  // if (!noSelectionMade()){
-  //   return cat === category.value
-  // }
-  // return false
-  if (noSelectionMade()) { return false }
-  return cat === category.value
-}
-
 /* Returns true if the selected entry is the deselected value */
 function noSelectionMade() { return selected.value === DESELECTED }
 
+function isCurrentCategory(cat){
+  return !noSelectionMade() && cat === category.value
+}
+
 const debug = computed(() => {
   return
-  var result = `DataView Stats: | selected.value: ${selected.value} | props.category: ${props.category} | showDataFromCategory(props.category): ${showDataFromCategory(props.category)}`
+  var result = `DataView Stats: | selected.value: ${selected.value} | props.category: ${props.category} | isCurrentCategory(props.category): ${isCurrentCategory(props.category)}`
   return result
 })
 
@@ -51,7 +46,7 @@ function updateSelection(id, category, caller="DataView"){
      imports section). Don't change the v-show binding here, regardless 
      of which containers are shown.
      -->
-    <div class="entry" v-if="showDataFromCategory(props.characterData)">
+    <div class="entry" v-if="isCurrentCategory(props.characterKey)">
       <CharacterEntry
         :ID="props.entry.id"
         :info="props.entry.info"
@@ -63,7 +58,7 @@ function updateSelection(id, category, caller="DataView"){
     </div>
     <!-- end CharacterEntry -->
     <!-- JournalEntry -->
-    <div class="entry" v-else-if="showDataFromCategory(props.journalData)">
+    <div class="entry" v-else-if="isCurrentCategory(props.journalKey)">
       <JournalEntry
         :ID="props.entry.id"
         :info="props.entry.info"
