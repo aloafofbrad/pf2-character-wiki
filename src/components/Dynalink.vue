@@ -54,6 +54,7 @@ const url = computed (() => {
 .dynalink {
   /* color: #aaccff; */
   color: darkblue;
+  background-color: inherit;
 
   &:visited {
     /* color: #ffccff; */
