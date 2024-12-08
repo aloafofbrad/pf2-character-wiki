@@ -42,6 +42,11 @@
     transition-duration: inherit;
   }
 
+  *:hover {
+    background-color: inherit;
+    transition-duration: inherit;
+  }
+
   div:hover, div > *:hover {
     /* prevent divs and div contents from
     scaling on hover; without this they scale
