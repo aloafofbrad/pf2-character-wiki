@@ -4,6 +4,7 @@
 import EntryChanger from './EntryChanger.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
+import Status from './Status.vue'
 import Story from './Story.vue'
 import Tag from '../Tag.vue'
 
@@ -11,6 +12,8 @@ import Tag from '../Tag.vue'
 import { inject } from 'vue'
 const DESELECTED = inject('DESELECTED')
 const CATEGORIES = inject('CATEGORIES')
+const showables = ['Ongoing', 'Ended']
+const hideables = ['Mythological']
 const props = defineProps({
   ID: { type:Number, required: true, default: -1 },
   info: { type:Object, required: true },
@@ -45,9 +48,11 @@ debug()
         <!-- Rest of the info. -->
         <div class="InfoBox">
             <div class="tagList">
-              <!-- The ID is mainly shown for debugging. It's safe to 
-              remove. -->
-              <Tag>ID: {{ info.id }}</Tag>
+              <Status :value="info.status" :type="info.type"
+                :checkType="true" :renderTag="true"
+                :showables="showables"
+                :hideables="hideables"
+              ></Status>
             </div>
           </div>
       </div>

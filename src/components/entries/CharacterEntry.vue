@@ -19,6 +19,8 @@ import Status from './Status.vue'
 import { inject } from 'vue'
 import Story from './Story.vue'
 const DESELECTED = inject('DESELECTED')
+const showables = ['Player', 'Normal', 'Dead', 'In Party']
+const hideables = ['Generic', 'Mythological']
 const props = defineProps({
   ID: { type:Number, required: true, default: -1 },
   info: { type:Object, required: true },
@@ -64,6 +66,8 @@ if (props.debug){ debug() }
               <Tag v-if="info.pronouns !== '?'">Pronouns: {{ info.pronouns }}</Tag>
               <Status :value="info.status" :type="info.type"
                 :checkType="true" :renderTag="true"
+                :showables="showables"
+                :hideables="hideables"
               ></Status>
               <Tag><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></Tag>
               <Tag><Background :background="info.background"/></Tag>
