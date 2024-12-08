@@ -17,16 +17,17 @@ const props = defineProps({
   art_view: { type: Number, default: 0, required: true },
   index_view: { type: Number, default: 1, required: true },
   list_view: { type: Number, default: 2, required: true },
-  multi_view_enabled: { type: Boolean, default: false },
   viewMode: { type: Number, required: true },
   displayKey: { type: String, required: true },
 
-  /* Add a prop for each category name here. Each one just needs to be a
-  required string. See also the MainView element in the App.vue
-  template. */
-  characterData: { type: String, required: true },
-  journalData: { type: String, required: true },
-  settingData: { type: String, required: true },
+  /* Add a prop for each category name here, named "{category}Key". Each 
+  one just needs to be a required string. See also the MainView element 
+  in the App.vue template. Also, for each of these props, add a 
+  corresponding prop to DataView.vue's props. These are used to determine 
+  which component DataView renders. */
+  characterKey: { type: String, required: true },
+  journalKey: { type: String, required: true },
+  settingKey: { type: String, required: true },
 })
 const dataMap = defineModel('dataMap', { type:Object, required: true })
 const selected = defineModel('selected', { type:Number, required: true })
@@ -50,11 +51,8 @@ function showList(){
     key   the key to test
 */
 function isAValidKey(key) {
-  // const result = CATEGORIES().find((k) => k === key);
-  // return result
   for (let i = 0; i < CATEGORIES.length; i++){
     var curr = CATEGORIES[i];
-    // console.log(curr)
     if (key === curr){
       return true
     }
@@ -63,15 +61,14 @@ function isAValidKey(key) {
 }
 
 function isAValidId(id, category) {
-  // return id === DESELECTED || (id >= 0 && id < dataMap.value[category].length);
   return id === DESELECTED || (id >= 0 && id < props.maxID);
 }
 
 function getSelectedEntry() {
-  // var result = dataMap.value[props.category].at(selected.value + 1) // works; saved as comment for posterity/sanity
-  // var result = dataMap.value[props.category].at(selected.value + 1) // works, but based on index, which can cause bugs when in different containers/sort paradigms
+  // Iterate through the category's data
   for (let i = 0; i < dataMap.value[props.category].length; i++){
     var currID = dataMap.value[props.category].at(i).id
+    // Return the data when the selected ID is found
     if (selected.value === currID){
       return dataMap.value[props.category].at(i)
     }
@@ -142,8 +139,6 @@ const seeAlso = computed(() => {
       }
     }
   }
-  // console.log("See Also (below):")
-  // console.log(result)
   return result
 })
 
@@ -202,9 +197,9 @@ const title = computed(() => { return props.category[0].toUpperCase().concat(pro
     <DataView v-if="!noSelectionMade()"
       v-model:selected="selected" v-model:category="category"
       :entry="getSelectedEntry()"
-      :characterData="props.characterData"
-      :journalData="props.journalData"
-      :settingData="props.settingData"
+      :characterKey="props.characterKey"
+      :journalKey="props.journalKey"
+      :settingKey="props.settingKey"
       :maxID="props.maxID"
       :seeAlso="seeAlso"
       @update-selection="updateSelection">
