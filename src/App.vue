@@ -525,10 +525,6 @@ const maxID = computed(() => {
 
 <style scoped>
 
-body, main {
-  overflow-y: hidden;
-}
-
 header {
   position: sticky;
   z-index: 2;
@@ -552,11 +548,6 @@ main {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-}
-
-#listContainer > ul > .Tag {
-  background-color: white;
-  color: black;
 }
 
 </style>

@@ -90,7 +90,6 @@ function updateSelection(id, category, caller="DataView"){
   min-height: calc(100vh - 24px);
   background-color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(16px);
-  overflow-y: auto;
 }
 
 /* CONTAINS leftColumn, rightColumn */
