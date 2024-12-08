@@ -50,16 +50,21 @@ const hover = ref(false)
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-}
-
-.Nationality > * {
+  background-color: inherit;
   color: black;
-}
 
-.Nationality > img {
-  /* border-radius: 16px; */
-  width: 1.25em;
-  height: 1.25em;
-  margin-left: 4px;
+  * {
+    color: inherit;
+  }
+
+  p, img {
+    background-color: inherit;
+  }
+
+  img {
+    width: 1.25em;
+    height: 1.2em;
+    margin-left: 4px;
+  }
 }
 </style>
