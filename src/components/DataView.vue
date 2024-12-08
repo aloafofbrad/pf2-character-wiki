@@ -51,7 +51,7 @@ function updateSelection(id, category, caller="DataView"){
      imports section). Don't change the v-show binding here, regardless 
      of which containers are shown.
      -->
-    <div class="bio" v-if="showDataFromCategory(props.characterData)">
+    <div class="entry" v-if="showDataFromCategory(props.characterData)">
       <CharacterEntry
         :ID="props.entry.id"
         :info="props.entry.info"
@@ -63,7 +63,7 @@ function updateSelection(id, category, caller="DataView"){
     </div>
     <!-- end CharacterEntry -->
     <!-- JournalEntry -->
-    <div class="bio" v-else-if="showDataFromCategory(props.journalData)">
+    <div class="entry" v-else-if="showDataFromCategory(props.journalData)">
       <JournalEntry
         :ID="props.entry.id"
         :info="props.entry.info"
@@ -81,7 +81,13 @@ function updateSelection(id, category, caller="DataView"){
 <style>
 /* \/ \/ \/ CSS for CharacterEntry, JournalEntry, SettingEntry \/ \/ */
 /* Contains .split */
-.bio {
+.entry, .split {
+  display: flex;
+  position: absolute;
+  font-family: serif;
+}
+
+.entry {
   flex-direction: column;
   flex-wrap: wrap;
   z-index: 2;
@@ -156,12 +162,6 @@ function updateSelection(id, category, caller="DataView"){
   .visible-mobile {
     display: inherit;
   }
-}
-
-.bio, .split {
-  display: flex;
-  position: absolute;
-  font-family: serif;
 }
 
 /* \/ \/ LEFT COLUMN \/ \/ */
