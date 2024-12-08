@@ -3,17 +3,14 @@ import { ref, computed, inject } from 'vue'
 import Dynalink from '../Dynalink.vue'
 import deities from '../../data/deities.json'
 const exists = inject('exists')
+const domain = ref('https://2e.aonprd.com/')
+const path = ref('Deities.aspx')
 const props = defineProps({
-  deity: {
-    type:String,
-    default:""
-  }
+  deity: { type:String, default:"" }
 })
 
 function deityKey() {
-  if (!exists(props.deity)){
-    return ""
-  }
+  if (!exists(props.deity)){ return "" }
   var key = "".concat(props.deity)
   if (props.deity.length > 0){
     if (key[key.length - 1] === "?"){
@@ -27,9 +24,6 @@ const innerText = computed(() => {
   var result = "Deity: "
   return result.concat(`${props.deity}`)
 })
-
-const domain = ref('https://2e.aonprd.com/')
-const path = ref('Deities.aspx')
 
 const ancestryParams = computed(() => {
   var result = null
@@ -48,10 +42,6 @@ function renderLink() {
   var key = deityKey()
   var value = deities.deities[key]
   return exists(value)
-}
-
-function setup(){
-  return {key, renderLink}
 }
 </script>
 

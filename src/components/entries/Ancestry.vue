@@ -3,21 +3,16 @@ import { ref, computed, inject } from 'vue'
 import Dynalink from '../Dynalink.vue'
 import ancestries from '../../data/ancestries.json'
 const exists = inject('exists')
+const domain = ref('https://2e.aonprd.com/')
+const path = ref('Ancestries.aspx')
 const props = defineProps({
-  ancestry: {
-    type:String,
-    default:""
-  },
-  heritage: {
-    type:String,
-    default:""
-  }
+  ancestry: { type:String, default:"" },
+  heritage: { type:String, default:"" },
+  invalidHeritages: { type:Array, default:["", "?"], required:false }
 })
 
 function anKey() {
-  if (!exists(props.ancestry)){
-    return ""
-  }
+  if (!exists(props.ancestry)){ return "" }
   var key = "".concat(props.ancestry)
   if (props.ancestry.length > 0){
     if (key[key.length - 1] === "?"){
@@ -27,16 +22,17 @@ function anKey() {
   return key
 }
 
+function heritageIsValid(){
+  return !props.invalidHeritages.includes(props.heritage)
+}
+
 const innerText = computed(() => {
   var result = "Ancestry: "
-  if (props.heritage === "" || props.heritage === "?"){
-    return result.concat(`${props.ancestry}`)
+  if (heritageIsValid()){
+    return result.concat(`${props.ancestry} (${props.heritage})`)
   }
-  return result.concat(`${props.ancestry} (${props.heritage})`)
+  return result.concat(`${props.ancestry}`)
 })
-
-const domain = ref('https://2e.aonprd.com/')
-const path = ref('Ancestries.aspx')
 
 const ancestryParams = computed(() => {
   var result = null
@@ -55,10 +51,6 @@ function renderLink() {
   var key = anKey()
   var value = ancestries.ancestries[key]
   return exists(value)
-}
-
-function setup(){
-  return {key, renderLink}
 }
 </script>
 

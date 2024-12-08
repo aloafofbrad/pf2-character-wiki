@@ -3,8 +3,11 @@ import { ref, computed, inject } from 'vue'
 import Dynalink from '../Dynalink.vue';
 import backgrounds from '../../data/backgrounds.json'
 const exists = inject('exists')
+const domain = ref('https://2e.aonprd.com/')
+const path = ref('Backgrounds.aspx')
 const props = defineProps({
-  background:{ Type:String, Default:"" }
+  background:{ Type:String, default:"" },
+  invalidBackgrounds: { Type:Array, default:["", "?"], required: false}
 })
 
 const addendum = computed (() => {
@@ -23,19 +26,20 @@ const addendum = computed (() => {
   return result
 })
 
+function stringIsValid(s){
+  return !props.invalidBackgrounds.includes(s)
+}
+
 const innerText = computed(() => {
   var result = "Background: "
-  if (props.background === "" || props.background === "?"){
+  if (!stringIsValid(props.background)){
     return result.concat("?")
   }
-  if (addendum.value !== "" && addendum.value !== "?") {
+  if (stringIsValid(addendum.value)) {
     return result.concat(`${props.background} (${addendum.value})`)
   }
   return result.concat(`${props.background}`)
 })
-
-const domain = ref('https://2e.aonprd.com/')
-const path = ref('Backgrounds.aspx')
 
 function bgKey() {
   if (!exists(props.background)){
@@ -66,10 +70,6 @@ function renderLink() {
   var value = backgrounds.backgrounds[key]
   return exists(value)
   // return (backgroundParams["ID"] !== null && backgroundParams["ID"] !== undefined)
-}
-
-function setup(){
-  return {renderLink}
 }
 </script>
 
