@@ -10,11 +10,7 @@
 }
 
 body {
-  height: 100%;
   overflow-y: auto;
-}
-
-body {
   margin: 0;
   background-image: url('/public/act1/background.png');
   backdrop-filter: blur(8px) brightness(50%) sepia(85%);
