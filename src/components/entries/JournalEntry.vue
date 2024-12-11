@@ -4,6 +4,7 @@
 import EntryChanger from './EntryChanger.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
+import SeeAlso from './SeeAlso.vue'
 import Status from './Status.vue'
 import Story from './Story.vue'
 import Tag from '../Tag.vue'
@@ -28,7 +29,9 @@ function updateSelection(id, category, caller="JournalEntry") {
 }
 
 function close() { updateSelection(DESELECTED, props.category) }
-function goTo(id, category) { updateSelection(id, category) }
+function goTo(id, category, caller="JournalEntry"){
+  updateSelection(id, category, caller)
+}
 function debug() {
   console.log("JournalEntry with ID", props.ID)
 }
@@ -63,6 +66,7 @@ debug()
             :contents="story">
           </Story>
         </div>
+        <SeeAlso :contents="props.seeAlso" @updateSelection="updateSelection"/>
       </div>
     </div>
     <div></div>
