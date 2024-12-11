@@ -6,7 +6,8 @@ const exists = inject('exists')
 const domain = ref('https://2e.aonprd.com/')
 const path = ref('Deities.aspx')
 const props = defineProps({
-  deity: { type:String, default:"" }
+  deity: { type:String, default:"" },
+  prefix: { type:String, default:"Deity: ", required:false }
 })
 
 function deityKey() {
@@ -21,8 +22,7 @@ function deityKey() {
 }
 
 const innerText = computed(() => {
-  var result = "Deity: "
-  return result.concat(`${props.deity}`)
+  return props.prefix.concat(`${props.deity}`)
 })
 
 const ancestryParams = computed(() => {
