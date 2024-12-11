@@ -28,9 +28,11 @@ const props = defineProps({
 
 function isInList(value, target){ return target.includes(value) }
 
-function isShowable(){
+const isShowable = computed(() => {
   var result = true
 
+  // If there's nothing to see, no point in rendering
+  if (props.value === ""){ return false }
   if (props.checkType){
     if (isInList(props.type, props.hideables)){ result = false }
     if (isInList(props.type, props.showables)){ result = true }
@@ -41,9 +43,11 @@ function isShowable(){
   }
 
   return result
-}
+})
 
-function renderTag(){ return props.renderTag && isShowable() }
+const renderTag = computed(() => {
+  return props.renderTag && isShowable.value
+})
 
 const innerText = computed(() => {
   var result = `Status: `
@@ -53,8 +57,8 @@ const innerText = computed(() => {
 </script>
 
 <template>
-  <Tag v-if="renderTag()"><p>{{ innerText }}</p></Tag>
-  <p v-else-if="isShowable()">{{ innerText }}</p>
+  <Tag v-if="renderTag"><p>{{ innerText }}</p></Tag>
+  <p v-else-if="isShowable">{{ innerText }}</p>
 </template>
 
 <style>
