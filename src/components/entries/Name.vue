@@ -18,7 +18,6 @@ const entryName = computed(() => {
 
 <template>
   <h1 class="entryName">{{ entryName }}</h1>
-  <!-- <h2 id="characterType">{{ charType }}</h2> -->
 </template>
 
 <style>
