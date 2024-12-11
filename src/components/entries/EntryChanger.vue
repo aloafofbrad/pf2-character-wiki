@@ -9,29 +9,30 @@ const CATEGORIES = inject('CATEGORIES')
 const props = defineProps({
   id: { type:Number, required: true },
   category: { type:String, required: true },
-  maxID: { type:Number, required: true }
+  maxID: { type:Number, required: true },
+  debug: { type:Boolean, default: true, required: false }
 })
 const emit = defineEmits(['updateSelection'])
-const prevID = computed(() => {
-  if (props.id === 0){ return props.maxID }
-  return props.id - 1
-})
-const nextID = computed(() => {
-  if (props.id === props.maxID - 1){ return 0 }
-  return props.id + 1
-})
+// TODO: fix the off-by-one error that means I have to use props.maxID - 2
+function prevID(){return props.id === 0 ? props.maxID - 2 : props.id - 1;}
+function nextID(){return props.id === props.maxID - 2 ? 0 : props.id + 1;}
 function updateSelection(id, category, caller="EntryChanger") {
+  if (props.debug){
+    console.log(`Entrychanger: curr: ${props.id}, next: ${id}, maxID: ${props.maxID}`)
+  }
   emit('updateSelection', id, category, caller)
 }
-function goTo(id, category) { updateSelection(id, category) }
+function goTo(id, category, caller="EntryChanger"){
+  updateSelection(id, category, caller)
+}
 function close() { updateSelection(DESELECTED, props.category) }
 </script>
 
 <template>
   <div class="entryChanger">
     <Tag class="prevent-select"><Entrylink :id="DESELECTED" :category="props.category" @updateSelection="close">■Exit</Entrylink></Tag>
-    <Tag class="prevent-select"><Entrylink :id="prevID" :category="props.category" @updateSelection="goTo">■Prev</Entrylink></Tag>
-    <Tag class="prevent-select"><Entrylink :id="nextID" :category="props.category" @updateSelection="goTo">■Next</Entrylink></Tag>
+    <Tag class="prevent-select"><Entrylink :id="prevID()" :category="props.category" @updateSelection="goTo">■Prev</Entrylink></Tag>
+    <Tag class="prevent-select"><Entrylink :id="nextID()" :category="props.category" @updateSelection="goTo">■Next</Entrylink></Tag>
     <Tag>Curr: {{ props.id }}</Tag>
   </div>
 </template>
