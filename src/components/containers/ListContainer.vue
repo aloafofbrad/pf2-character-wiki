@@ -35,6 +35,7 @@ function display(entry) { return entry.info[props.displayKey] }
 
 .listContainer {
   max-width: 100vw;
+  width: 120%;
   min-height: 100%;
   display: flex;
   flex-flow: column nowrap;
@@ -45,8 +46,8 @@ function display(entry) { return entry.info[props.displayKey] }
   min-height: auto;
 
   .tag {
-    margin-left: 8px;
-    margin-right: 8px;
+    margin-left: 12px;
+    margin-right: 12px;
     overflow-x: hidden;
     color: black;
     background-color: white;
