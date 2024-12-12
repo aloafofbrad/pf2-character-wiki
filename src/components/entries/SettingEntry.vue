@@ -56,8 +56,13 @@ function updateSelection(id, category, caller="JournalEntry") {
             :checkType="true" :renderTag="true"
             :showables="showables" :hideables="hideables"
             ></Status>
+            <Tag v-if="info.plane !== ''"><p>Plane: {{ info.plane }}</p></Tag>
+            <!-- TODO: update Deity component for multiple deities -->
+            <div class="deities" v-if="info.deities.length > 0">
+              <h5>Deities:</h5>
+              <Tag v-for="deity in info.deities"><Deity :deity="deity" :prefix="''"/></Tag>
+            </div>
             <Tag v-if="info.population !== ''"><p>Population: {{ info.population }}</p></Tag>
-            <Tag v-for="deity in info.deities"><Deity :deity="deity" :prefix="'Worships: '"/></Tag>
           </div>
         </div>
       </div>
@@ -85,5 +90,17 @@ function updateSelection(id, category, caller="JournalEntry") {
 .map {
   width: 256px;
   height: 256px;
+}
+
+.deities {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  h5 {
+    margin: 0;
+    margin-right: 0.25em;
+  }
 }
 </style>
