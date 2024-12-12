@@ -5,6 +5,7 @@ import EntryChanger from './EntryChanger.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
 import SeeAlso from './SeeAlso.vue'
+import Status from './Status.vue'
 import Tag from '../Tag.vue'
 
 // Components specific to characters
@@ -15,12 +16,12 @@ import Class from './Class.vue'
 import CharacterType from './CharacterType.vue'
 import Deity from './Deity.vue'
 import Picture from './Picture.vue'
-import Status from './Status.vue'
 import { inject } from 'vue'
 import Story from './Story.vue'
 const DESELECTED = inject('DESELECTED')
 const showables = ['Player', 'Normal', 'Dead', 'In Party']
 const hideables = ['Generic', 'Mythological']
+const PLACEHOLDER = 'public/silhouette.jpg'
 const props = defineProps({
   ID: { type:Number, required: true, default: -1 },
   info: { type:Object, required: true },
@@ -36,7 +37,9 @@ function updateSelection(id, category, caller="CharacterEntry") {
 }
 
 function close() { updateSelection(DESELECTED, props.category) }
-function goTo(id, category) { updateSelection(id, category) }
+function goTo(id, category, caller="CharacterEntry"){
+  updateSelection(id, category, caller)
+}
 function debug() {
   console.log(`CharacterEntry with ID`, props.ID, `(below)`)
   console.log(props.info)
@@ -56,27 +59,26 @@ if (props.debug){ debug() }
         ></EntryChanger>
         <div class="TitleBox">
           <!-- Remove the following line to remove the image: -->
-          <Picture :src="info.image" @click="close()"/>
+          <Picture class="mainPic" :src="info.image" :placeholder="PLACEHOLDER" @click="close()"/>
           <Name :name="info.name" :type="info.type" @click="close()"/>
           <CharacterType :type="info.type" :customTooltip="''"/>
         </div>
         <!-- Rest of the info. -->
         <div class="InfoBox">
-            <div class="tagList">
-              <Tag v-if="info.pronouns !== '?'">Pronouns: {{ info.pronouns }}</Tag>
-              <Status :value="info.status" :type="info.type"
-                :checkType="true" :renderTag="true"
-                :showables="showables"
-                :hideables="hideables"
-              ></Status>
-              <Tag><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></Tag>
-              <Tag><Background :background="info.background"/></Tag>
-              <Tag><Class :class="info.class" :level="info.level"/></Tag>
-              <Tag v-if="info.deity !== ''"><Deity :deity="info.deity"/></Tag>
-              <Tag><Age :age="info.age" :ancestry="info.ancestry"/></Tag>
-              <Tag><Nationality class="tag" v-if="info.nationality" :nationality="info.nationality"/></Tag>
-            </div>
+          <div class="tagList">
+            <Tag v-if="info.pronouns !== '?'">Pronouns: {{ info.pronouns }}</Tag>
+            <Status :value="info.status" :type="info.type"
+              :checkType="true" :renderTag="true"
+              :showables="showables" :hideables="hideables"
+            ></Status>
+            <Tag><Ancestry :ancestry="info.ancestry" :heritage="info.heritage"/></Tag>
+            <Tag><Background :background="info.background"/></Tag>
+            <Tag><Class :class="info.class" :level="info.level"/></Tag>
+            <Tag v-if="info.deity !== ''"><Deity :deity="info.deity"/></Tag>
+            <Tag><Age :age="info.age" :ancestry="info.ancestry"/></Tag>
+            <Tag><Nationality class="tag" v-if="info.nationality" :nationality="info.nationality"/></Tag>
           </div>
+        </div>
       </div>
       <!-- RightColumn -->
       <div class="rightColumn">
