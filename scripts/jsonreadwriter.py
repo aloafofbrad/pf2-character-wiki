@@ -1,3 +1,4 @@
+from config import INDENT
 import json
 
 # Object that reads and writes JSON files. Holds the data from them in memory so that it can be used by other objects
@@ -19,7 +20,7 @@ class JsonReadWriter:
         self.setRawData(None)
 
     def write(self) -> None:
-        json_data = json.dumps(self.__rawData, indent=4)
+        json_data = json.dumps(self.__rawData, indent=INDENT)
         try:
             with open(self.__filename, "w") as outfile:
                 outfile.write(json_data)

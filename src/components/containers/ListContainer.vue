@@ -2,32 +2,40 @@
 import Tag from '../Tag.vue';
 import { ref, computed } from 'vue'
 const props = defineProps({
-  entries: {
-    Type: Array,
-    default: []
-  }
+  entries: { Type: Array, default: [] },
+  category: { Type: String, required: true },
+  maxID: { type: Number, required: true },
+  displayKey: { type: String, required: true },
 })
-
 const emit = defineEmits(['updateSelection'])
 
 function isAValidId(id) {
-  return (id >= 0 && id <= (props.entries.length - 1))
+  // return (id >= 0 && id <= (props.entries.length - 1))
+  console.log(`id (${id}) < props.maxID (${props.maxID})`)
+  return (id >= 0 && id < props.maxID)
 }
+
+function entryClick(id) {
+  emit('updateSelection', id, props.category, "ListContainer")
+}
+
+function display(entry) { return entry.info[props.displayKey] }
 
 </script>
 
 <template>
-  <div id="ListContainer">
-    <Tag v-show="isAValidId(entry.id)" v-for="entry in props.entries" @click="$emit('updateSelection', entry.id)">
-      {{ entry.info.name }}
+  <div class="listContainer">
+    <Tag v-show="isAValidId(entry.id)" v-for="entry in props.entries" @click="entryClick(entry.id)">
+      {{ display(entry) }}
     </Tag>
   </div>
 </template>
 
 <style scoped>
 
-#ListContainer {
+.listContainer {
   max-width: 100vw;
+  width: 120%;
   min-height: 100%;
   display: flex;
   flex-flow: column nowrap;
@@ -38,8 +46,8 @@ function isAValidId(id) {
   min-height: auto;
 
   .tag {
-    margin-left: 8px;
-    margin-right: 8px;
+    margin-left: 12px;
+    margin-right: 12px;
     overflow-x: hidden;
     color: black;
     background-color: white;

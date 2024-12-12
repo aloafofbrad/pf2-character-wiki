@@ -23,6 +23,8 @@
   margin-bottom: 1px;
   margin-left: 1px;
   transition-duration: 125ms;
+  background-color: white;
+  color: black;
 
   * {
     margin: 0;
@@ -30,12 +32,19 @@
   }
 
   p {
-    color: black;
+    color: inherit;
+    background-color: inherit;
   }
 
   &:hover {
     background-color: #b4dd1e;
     scale: calc(1.05);
+    transition-duration: inherit;
+  }
+
+  *:hover {
+    background-color: inherit;
+    transition-duration: inherit;
   }
 
   div:hover, div > *:hover {
@@ -45,7 +54,7 @@
     scale: unset;
   }
 
-  a:hover {
+  a:hover, a:visited:hover {
     background-color: inherit;
     color: inherit;
   }

@@ -2,19 +2,12 @@
 
 #app {
   font-weight: normal;
-}
-
-* {
   color: #bababa;
   font-family: serif;
 }
 
-html, main, body {
-  height: 100%;
-  overflow-y: auto;
-}
-
 body {
+  overflow-y: auto;
   margin: 0;
   background-image: url('/public/act1/background.png');
   backdrop-filter: blur(8px) brightness(50%) sepia(85%);
@@ -31,8 +24,8 @@ body {
 }
 
 ::selection {
-  color: white;
-  background: black;
+  color: black;
+  background: #bababa;
 }
 
 .tagList {
@@ -41,11 +34,6 @@ body {
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: flex-start;
-}
-
-.tagList > .tag {
-  background-color: white;
-  color: black;
 }
 
 .snappy {

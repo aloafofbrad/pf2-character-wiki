@@ -2,35 +2,40 @@
 import Tile from '../Tile.vue';
 import { ref, computed } from 'vue'
 const props = defineProps({
-  entries: {
-    Type: Array,
-    default: []
-  }
+  entries: { Type: Array, default: [] },
+  category: { Type: String, required: true },
+  maxID: { type: Number, required: true },
+  displayKey: { type: String, required: true },
 })
 
 const emit = defineEmits(['updateSelection'])
 
 function isAValidId(id) {
-  return (id >= 0 && id <= (props.entries.length - 1))
+  return (id >= 0 && id < props.maxID)
+}
+
+function entryClick(id) {
+  emit('updateSelection', id, props.category, "ArtContainer")
 }
 
 </script>
 
 <template>
-  <div id="ArtContainer">
+  <div class="artContainer">
     <Tile
       v-show="isAValidId(entry.id)"
       v-for="entry in props.entries"
-      :key="entry.id"
+      :id="entry.id"
       :info="entry.info"
-      @click="$emit('updateSelection', entry.id)">
+      :displayKey="props.displayKey"
+      @click="entryClick(entry.id)">
     </Tile>
   </div>
 </template>
 
 <style scoped>
 
-#ArtContainer {
+.artContainer {
   max-width: 100vw;
   min-height: 100%;
   display: flex;

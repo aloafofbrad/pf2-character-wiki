@@ -1,6 +1,6 @@
 {
   "name": "ttrpgcharwiki",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.3.11"
+    "vue": "^3.4.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",

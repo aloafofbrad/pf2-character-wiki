@@ -1,43 +1,37 @@
 <script setup>
 // Dynamic links. Each one constructs a URL dynamically from the props given
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
+const exists = inject('exists')
 
+/* Props
+  innerText   Text to be rendered inside the a tag
+  domain      Usually 'https://2e.aonprd.com'
+  path        Usually something like Ancestries.aspx
+  params      Used to construct the URL's query string. Key:value pairs
+              to use as URL parameters for the given page. For
+              Ancestries.aspx, ID 20 redirects to ratfolk. The resulting
+              URL would be https://2e.aonprd.com/Ancestries.aspx?ID=20
+ */
 const props = defineProps({
-  innerText:{
-    // Text to be rendered inside the a tag
-    type: String,
-    default: ""
-  },
-  domain:{
-    // Usually 'https://2e.aonprd.com'
-    type: String,
-    default: ""
-  },
-  path:{
-    // Usually something like 'Ancestries.aspx'
-    type: String,
-    default: ""
-  },
-  params:{
-    // Constructs the URL's query string.
-    // Key-value pairs to use as URL parameters the given page. For Ancestries.aspx, ID 20 redirects to ratfolk.
-    // The resulting URL of this example would be https://2e.aonprd.com/Ancestries.aspx?ID=20
-    type: Object,
-    default: {}
-  }
+  innerText:{ type: String, default: "" },
+  domain:{ type: String, default: "" },
+  path:{ type: String, default: "" },
+  params:{ type: Object, default: {} }
 })
 
+function allPropsExist(){
+  return exists(props.innerText) && exists(props.domain) &&
+         exists(props.path) && exists(props.params)
+}
 // Construct a URL dynamically from the props given
 const url = computed (() => {
   var result = ""
-  if (props.innerText !== undefined && props.domain !== undefined &&
-      props.path !== undefined && props.params !== undefined && 
-      props.innerText !== null && props.domain !== null &&
-      props.path !== null && props.params !== null) {
+  if (allPropsExist()) {
     var result = props.domain + props.path
     if (props.params){
       result = result.concat("?")
-      // Construct the query string by appending each key-value pair to the URL
+      /* Construct the query string by appending each key-value pair to 
+      the URL */
       for (const [param, arg] of Object.entries(props.params)){
         result = result.concat(param)
         result = result.concat("=")
@@ -60,6 +54,7 @@ const url = computed (() => {
 .dynalink {
   /* color: #aaccff; */
   color: darkblue;
+  background-color: inherit;
 
   &:visited {
     /* color: #ffccff; */
