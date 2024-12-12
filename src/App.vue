@@ -6,28 +6,32 @@ import { provide } from 'vue'
 import packageJson from "../package.json"
 
 /* Constants
-    source          URL to your repo. Safe to use the empty string or disable
-                    rendering. Rendered in NavBar.
+    source          URL to your repo. Safe to use the empty string or 
+                    disable rendering. Rendered in NavBar.
     SEARCH_BLEACH   Used to strip userRegex of illegal characters
-    DESELECTED      Numerical ID that shows components that the user hasn't
-                    selected a character, journal entry, or setting. Arbitrary, 
-                    but should be negative.
-    INFO_KEY        Key used to access info objects in entry data. Not recommended
-                    to change this
+    DESELECTED      Numerical ID that shows components that the user 
+                    hasn't selected a character, journal entry, or 
+                    setting. Arbitrary, but should be negative.
+    INFO_KEY        Key used to access info objects in entry data. Not  
+                    recommended to change this
 
     The following are props in MainView:
-    SORT_ALPHA      Arbitrary; represents sorting an array in alphabetical order
-                    (by an entry's name or title)
-    SORT_CHRONO     Arbitrary; represents sorting an array in chronological order
-                    (by an entry's ID)
+    SORT_ALPHA    Arbitrary; represents sorting an array in alphabetical 
+                  order (by an entry's name or title)
+    SORT_CHRONO   Arbitrary; represents sorting an array in chronological 
+                  order (by an entry's ID)
 
-    ART_VIEW        Arbitrary; determines whether the ArtContainer is shown
-    INDEX_VIEW      Arbitrary; determines whether the IndexContainer is shown
-    LIST_VIEW       Arbitrary; determines whether the ListContainer is shown
-    VIEWS           Array of all views, in arbitrary order. Does not affect
-                    DEFAULT_VIEW. When changing the view, the default behavior is 
-                    to increment viewMode.value, switching to the next view in 
-                    VIEWS, and eventually cycling back to the first view.
+    ART_VIEW      Arbitrary; determines whether the ArtContainer is 
+                  shown
+    INDEX_VIEW    Arbitrary; determines whether the IndexContainer is 
+                  shown
+    LIST_VIEW     Arbitrary; determines whether the ListContainer is 
+                  shown
+    VIEWS         Array of all views, in arbitrary order. Does not affect
+                  DEFAULT_VIEW. When changing the view, the default 
+                  behavior is to increment viewMode.value, switching to 
+                  the next view in VIEWS, and eventually cycling back to 
+                  the first view.
 */
 const source = `https://github.com/aloafofbrad/pf2-character-wiki`
 const SEARCH_BLEACH = "/[^a-zA-Z0-9 -\?]/g"
@@ -46,12 +50,13 @@ const VIEWS = [ART_VIEW, INDEX_VIEW, LIST_VIEW]
 
 /* Reactive data variables
     dataMap     This the reactive map for the app. This is the single most
-                important variable in the app. Any data that you want users to be
-                able to view should be added into dataMap.
+                important variable in the app. Any data that you want 
+                users to be able to view should be added into dataMap.
                 To add data to dataMap, first import it using an import
                 statement.
                 Next, add it to the map using addArrayToReactiveMap().
-    selected    Stores the ID of the entry that the user is currently viewed
+    selected    Stores the ID of the entry that the user is currently 
+                viewed
     history     Stores a list of IDs that the user has previously viewed
     index       ???? Stores the current index of the history ????
     userRegex   Stores a user's search string
@@ -69,20 +74,21 @@ const sortKeys = reactive({
   [SORT_ALPHA]: "name",
   [SORT_CHRONO]: "id"
 })
-/* Note: I'm not 100% sure why SORT_ALPHA & SORT_CHRONO are in [brackets] in the 
-declaration of sortKeys, but I think it's to allow the keys to be set up in a way 
-that matches the string values of SORT_ALPHA & SORT_CHRONO */
+/* Note: I'm not 100% sure why SORT_ALPHA & SORT_CHRONO are in [brackets] 
+in the declaration of sortKeys, but I think it's to allow the keys to be 
+set up in a way that matches the string values of SORT_ALPHA & 
+SORT_CHRONO */
 
 // read the data from the files
 import characters from './data/characters.json'
 import journal from './data/journals.json'
 import settings from './data/settings.json'
 
-/* Adds data to dataMap
+/* Adds data to dataMap. Overwrites dataMap.value[keyName] if it exists.
     args:
     data     the data to be added to the reactive map
     keyName  the name to use for the key
-  Overwrites dataMap.value[keyName] if it already exists.
+  The order these are added matters & determines the first view users see when opening the page. See viewData for more details.
 */
 function addArrayToReactiveMap(data, keyName){
   var temp = { [keyName]: data }
@@ -93,21 +99,22 @@ addArrayToReactiveMap(characters.data, "characters")
 addArrayToReactiveMap(settings.data, "settings")
 
 /* Computed & reactive properties re: categories
-    A "category" in this context represents the type of information to be arranged
-    and presented to the user. Initially this was just the characters, but the
-    scope of the project has been expanded to include other information, such as 
-    journal entries, and descriptions of settings.
+  A "category" in this context represents the type of information to be 
+  arranged and presented to the user. Initially this was just the 
+  characters, but the scope of the project has been expanded to include 
+  other information, such as journal entries, and descriptions of 
+  settings.
 
-  CATEGORIES        Function. In short, every key for key in dataMap. Used for 
-                    error prevention (validating categories).
-  DEFAULT_CATEGORY  Constant. The first key in dataMap. The first category shown 
-                    when the app loads.
-  category          Ref. The currently viewed category. This is used to set the 
-                    selected entry from that category.
-  Since CATEGORIES and DEFAULT_CATEGORY are functions, they're both set up 
-  automatically for you. You shouldn't need to change anything in the three 
-  declarations below. The default category is always the first category of data 
-  are added to dataMap using addArrayToReactiveMap above.
+  CATEGORIES        Function. In short, every key for key in dataMap. 
+                    Used for error prevention (validating categories).
+  DEFAULT_CATEGORY  Constant. The first key in dataMap. The first 
+                    category shown when the app loads.
+  category          Ref. The currently viewed category. This is used to 
+                    set the selected entry from that category.
+  Since CATEGORIES and DEFAULT_CATEGORY are functions, they're both set 
+  up automatically for you. You shouldn't need to change anything in the 
+  three declarations below. The default category is always the first 
+  category of data are added to dataMap using addArrayToReactiveMap above.
 */
 
 function CATEGORIES() { return Object.keys(dataMap) }
@@ -120,24 +127,23 @@ console.log(`categories: `, categories)
 console.log(`default category: `, DEFAULT_CATEGORY)
 console.log(`category: `, category)
 
-/* viewData     Constant. Must be configured manually. Maps each category to a 
-                displayKey and an array of validViews.
-  displayKey    Map each category to the key you want displayed in whatever 
-                container(s) you're using. Each key:value pair here should look 
-                like one of the following:
-                [categories[0]]:"name"
-                [categories[1]]:"title"
-                etc
+/* viewData     Constant. Must be configured manually. Maps each category 
+                to a displayKey and an array of validViews.
+  displayKey    Map each category to the key you want displayed in 
+                whatever container(s) you're using. Each key:value pair 
+                here should look like one of the following:
+                [categories[0]]:"name", [categories[1]]:"title", etc
                 The value should be a key in the entry's info object.
-  validViews    Constant. Must be configured manually. Views that can be shown for 
-                each category. Each value should be an array, even if there's only 
-                one view for that category. If all views are valid for a given 
-                category, you can use the constant VIEWS here instead.
+  validViews    Constant. Must be configured manually. Views that can be 
+                shown for each category. Each value should be an array, 
+                even if there's only one view for that category. If all 
+                views are valid for a given category, you can use the 
+                constant VIEWS here instead.
 
-  DEFAULT_VIEW    Automatic. Determines the default view. Initial value is the 
-                  default category's default view.
-  viewMode        Automatic, reactive. Stores the currently displayed view. 
-                  Initial value is DEFAULT_VIEW.
+  DEFAULT_VIEW    Automatic. Determines the default view. Initial value 
+                  is the default category's default view.
+  viewMode        Automatic, reactive. Stores the currently displayed 
+                  view. Initial value is DEFAULT_VIEW.
 */
 const viewData = {
   [categories[0]]:{ // JOURNALS
@@ -150,7 +156,7 @@ const viewData = {
   },
   [categories[2]]:{ // settings
     displayKey: "name",
-    validViews: [INDEX_VIEW, LIST_VIEW]
+    validViews: [LIST_VIEW, INDEX_VIEW]
   },
 }
 var keys = Object.keys(viewData)
@@ -161,12 +167,12 @@ provide('viewData', viewData)
 const DEFAULT_VIEW = viewData[DEFAULT_CATEGORY].defaultView
 const viewMode = ref(DEFAULT_VIEW)
 
-/* displayKey (computed)    Used by containers to determine which entry info to 
-                            display. ArtContainer will always use the entry's 
-                            image key to display images regardless of the 
-                            displayKey.
-  currentViews (computed)   Returns the array of validViews for the current 
-                            category. */
+/* displayKey (computed)    Used by containers to determine which entry 
+                            info to display. ArtContainer will always use 
+                            the entry's image key to display images 
+                            regardless of the displayKey.
+  currentViews (computed)   Returns the array of validViews for the 
+                            current category. */
 const displayKey = computed(() => {
   var result = viewData[category.value].displayKey
   console.log("displayKey: ", result)
@@ -189,10 +195,6 @@ function defaultViews(cat) { return viewData[cat].defaultView }
 function getSortKey(cat){ return viewData[cat].displayKey }
 provide('getSortKey', getSortKey)
 
-/* Prints a given reactive map in the console
-   args:
-   obj   the object to print
-*/
 function consoleLogReactiveMap(obj){
   console.log("logging reactive map:")
   console.log(obj)
@@ -205,25 +207,17 @@ function exists(arg) { return arg !== undefined && arg !== null }
 provide('exists', exists)
 
 /* Helper function for sorts
-    Handles edge cases where a exists and b doesn't, vice versa, or neither exists
-    returns -1 if a exists and b does not
-    returns 1 if b exists and a does not
-    returns 0 if a and b DNE, or if a and b exist
-*/
+    Handles edge cases where a exists and b doesn't, vice versa, or neither exists */
 function compareAgainstDNE(a, b) {
   if (!DNE(a) && DNE(b)) { return -1 }
   if (DNE(a) && !DNE(b)) { return 1 }
   return 0
 }
 
-/* Helper function for sorts
-    returns -1 if a is less than b
-    returns 1 if a is greater than b
-    returns 0 if a and b are equal
-*/
+/* Helper function for sorts */
 function compareDataByKey(a, b, key) {
   if (DNE(a[INFO_KEY][key]) || DNE(b[INFO_KEY][key])) {
-    return compareAgainstDNE(a, b)
+    return compareAgainstDNE(a[INFO_KEY][key], b[INFO_KEY][key])
   }
   var aValue = a[INFO_KEY][key]
   var bValue = b[INFO_KEY][key]
@@ -244,11 +238,9 @@ function noSelectionMade() {
 // container display helper
 function goToView(num) {
   viewMode.value = num
-  var found = false
-  if (currentViews.value.includes(num)) { found = true }
-  if (found){
-    if (viewMode.value === ART_VIEW){ setSortKey(SORT_CHRONO) }
-    else { setSortKey(SORT_ALPHA) }
+  if (currentViews.value.includes(num)){
+    if (viewMode.value === INDEX_VIEW){ setSortKey(SORT_ALPHA) }
+    else { setSortKey(SORT_CHRONO) }
   }
 }
 
@@ -287,12 +279,13 @@ function isAValidHistoricalIndex(value) {
   return (value >= 0 && value <= (history.value.length - 1))
 }
 
-/* Update the history without pushing to it. Not meant to be called directly; call 
-goBack()/goForward() instead. Even though updateSelection() has a push argument 
-that can be set to false to disable pushing to the history, this is the preferred 
-way to change the history since goSomewhere() is the preferred way to change the 
-history without pushing to it, since updateSelection() requires the user to know 
-what ID and category to go to. goSomewhere() figures that out for the user. */
+/* Update the history without pushing to it. Not meant to be called 
+directly; call goBack()/goForward() instead. Even though
+updateSelection() has a push argument that can be set to false to disable 
+pushing to the history, this is the preferred way to change the history 
+since goSomewhere() is the preferred way to change the history without 
+pushing to it, since updateSelection() requires the user to know what ID 
+and category to go to. goSomewhere() figures that out for the user. */
 function goSomewhere(where) {
   setIndex(where)
   const curr = history.value[index.value]
@@ -323,7 +316,7 @@ function pushHistory(id, category) {
             different from the current category.
   caller    The component that originally called this
   push      If true, pushes id and cat to history.value
-  debug     .
+  debug     If true, runs console.logs
  */
 function updateSelection(id, cat, caller="App", push=true, debug=true) {
   if (debug){
@@ -431,12 +424,10 @@ const maxID = computed(() => {
   </header>
   
   <!-- For each type of container used in MainView, there must be a 
-   binding for it, which must take its constant value.
-   For each category of data you want to show, there must be a binding
-   for it, which must take its index from CATEGORIES(), or a hard-coded
-   value. 
-   What order the view and category bindings are declared in should not
-   matter.
+   binding for it, which must take its constant value. For each category 
+   of data you want to show, there must be a binding for it, which must 
+   take its index from CATEGORIES(), or a hard-coded value. What order 
+   the view and category bindings are declared in should not matter.
    See also the props in MainView.vue. -->
   <main>
     <MainView v-model:dataMap="arranged" v-model:selected="selected"
