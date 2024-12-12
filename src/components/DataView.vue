@@ -2,6 +2,7 @@
 <script setup>
 import CharacterEntry from './entries/CharacterEntry.vue'
 import JournalEntry from './entries/JournalEntry.vue';
+import SettingEntry from './entries/SettingEntry.vue';
 import { computed, inject } from 'vue'
 const DESELECTED = inject('DESELECTED')
 const props = defineProps({
@@ -69,7 +70,18 @@ function updateSelection(id, category, caller="DataView"){
       ></JournalEntry>
     </div>
     <!-- end JournalEntry -->
-    <!-- TODO: SETTINGS -->
+    <!-- SettingEntry -->
+    <div class="entry" v-else-if="isCurrentCategory(props.settingKey)">
+      <SettingEntry
+        :ID="props.entry.id"
+        :info="props.entry.info"
+        :category="category"
+        :maxID="props.maxID"
+        :seeAlso="props.seeAlso"
+        @update-selection="updateSelection"
+      ></SettingEntry>
+    </div>
+    <!-- end SettingEntry -->
   </div>
 </template>
 
@@ -167,10 +179,19 @@ function updateSelection(id, category, caller="DataView"){
   align-items: flex-start;
   border-color: rgba(186, 186, 186, 0.5);
   border-style: solid;
-  border-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 
 .leftColumn {
+  .mainPic {
+    width: 256px;
+    margin-left: 48px;
+    margin-right: 48px;
+    border-radius: 4px;
+    background-color: #bababa;
+  }
+
   .TitleBox {
     display: flex;
     flex-flow: column nowrap;
@@ -186,6 +207,11 @@ function updateSelection(id, category, caller="DataView"){
   .InfoBox {
     padding-right: 2em;
     width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
   }
 }
 
@@ -218,7 +244,6 @@ function updateSelection(id, category, caller="DataView"){
 <style scoped>
 /* \/ \/ \/ \/ CSS for DataView \/ \/ \/ \/ */
 .dataView {
-  /* top: auto; */
   z-index: 1;
   margin: 0;
   padding: 0;
