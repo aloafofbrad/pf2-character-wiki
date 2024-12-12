@@ -1,0 +1,410 @@
+{
+  "data": [
+    {
+      "id": -1,
+      "info": {
+        "id": -1,
+        "name": "null",
+        "image": "",
+        "type": "Normal",
+        "country": "",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 0,
+      "info": {
+        "id": 0,
+        "name": "Knork, Capitol of Kolis",
+        "image": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Capitol",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "info": {
+        "id": 1,
+        "name": "That Small Village Sol Saved From Hepatitis",
+        "image": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Normal",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "info": {
+        "id": 2,
+        "name": "Tin Trove Mountain",
+        "image": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Mountain",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "info": {
+        "id": 3,
+        "name": "Georg's Cabin",
+        "image": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Abode",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "info": {
+        "id": 4,
+        "name": "Tin Trove Mine",
+        "image": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Cave",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "info": {
+        "id": 5,
+        "name": "Lord Butler Nathaniel Hammer's Mansion",
+        "image": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Abode",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "info": {
+        "id": 6,
+        "name": "Goose Potato's Lab",
+        "image": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Dungeon",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "info": {
+        "id": 7,
+        "name": "Temple of Apsu",
+        "image": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Temple",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "info": {
+        "id": 8,
+        "name": "The Lethal Lobster",
+        "image": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Pub",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "info": {
+        "id": 9,
+        "name": "Kruska",
+        "image": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Village",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "info": {
+        "id": 10,
+        "name": "The Savage Burrows",
+        "image": "public/emblems/Frambean-Empire-Emblem.png",
+        "type": "Region",
+        "country": "Frambe",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "info": {
+        "id": 11,
+        "name": "Skutwug",
+        "image": "public/emblems/Frambean-Empire-Emblem.png",
+        "type": "City",
+        "country": "Frambe",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "info": {
+        "id": 12,
+        "name": "The Eastern Lair",
+        "image": "public/emblems/Frambean-Empire-Emblem.png",
+        "type": "Dungeon",
+        "country": "Frambe",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ]
+      }
+    }
+  ]
+}
