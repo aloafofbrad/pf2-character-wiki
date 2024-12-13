@@ -372,6 +372,7 @@ function matchesRegex(s, regex){
   }
   return result
 }
+provide('matchesRegex', matchesRegex)
 
 // Filters / searches for specific entries
 function filter(list, cat) {
