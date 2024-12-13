@@ -33,7 +33,7 @@ const arranged = computed(() => {
   var result = [];
   for (let i = 0; i < props.contents.length; i++){
     var curr = props.contents[i]
-    console.log(curr)
+    // console.log(curr)
     if (isRenderable(curr)){ result.push(curr) }
   }
   // console.log("See Also (below):")
