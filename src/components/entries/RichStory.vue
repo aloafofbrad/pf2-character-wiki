@@ -107,7 +107,7 @@ function updateSelection(id, category, caller="MDRenderer") {
        <Entrylink v-for="span in text"
         :id="span.id" :category="span.category"
         :start="span.start" :end="span.end" :length="span.fullLength"
-        :index="span.index" :tooltips="true"
+        :index="span.index" :tooltips="true" :underline="true"
         @updateSelection="updateSelection"
        >{{ span.text }}</Entrylink>
     </p>
