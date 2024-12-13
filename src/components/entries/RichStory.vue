@@ -28,13 +28,14 @@ function linkSubstrings(text){
   return result
 }
 function nonLinkSubstrings(text, links){
+  var startIndex = 0;
   if (links.length === 0){
     return [{
               text: text,
                 id: null,
           category: null,
-             start: 0,
-             index: 0,
+             start: startIndex,
+             index: startIndex,
         fullLength: text.length,
             length: text.length,
                end: text.length - 1
@@ -44,23 +45,34 @@ function nonLinkSubstrings(text, links){
   for (let i = 0; i < links.length; i++){
     var substring; var fullLength;
     var a = links[i]
-    var b = i + 1 < links.length ? links[i + 1] : null;
-    // get the index where the substring starts
-    var start = a.end + 1
-    /* get the index where the substring ends. If this happens on the 
-    last iteration of the loop, then the end will simply be -1 (the end 
-    of text) */
-    var end = b !== null ? b.start : null;
-    fullLength = b === null ? text.length - start + 1 : end - start + 1;
-    substring = end !== null ? text.slice(start, end) : text.slice(start);
-    substring = " ".concat(substring)
+    var start = 0 + startIndex
+    var end = a.start
+    substring = text.slice(start, end)
+    fullLength = start - end + 1
     var curr = {
-            text: substring,
+            text: " ".concat(substring),
               id: null,
         category: null,
            start: start,
            index: start,
       fullLength: fullLength,
+          length: substring.length,
+             end: end
+    }
+    result.push(curr)
+    startIndex = a.end + 1
+  }
+  if (startIndex + 1 !== text.length){
+    var start = 0 + startIndex
+    var end = text.length
+    var substring = text.slice(start, end)
+    var curr = {
+            text: " ".concat(substring),
+              id: null,
+        category: null,
+           start: start,
+           index: start, 
+      fullLength: start - end + 1, 
           length: substring.length,
              end: end
     }
@@ -80,8 +92,7 @@ function zipper(text){
   var links = linkSubstrings(text)
   var plains = nonLinkSubstrings(text, links)
   // Add all of the links and plaintext to the result
-  while (links.length > 0){ result.push(links.shift()) }
-  while (plains.length > 0){ result.push(plains.shift()) }
+  result = result.concat(links).concat(plains)
   /* Sort the results, by the index of where their first character 
   appears in text */
   result = result.sort(compareIndices)
