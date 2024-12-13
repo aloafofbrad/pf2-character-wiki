@@ -11,14 +11,14 @@ const viewData = inject('viewData')
 const getSortKey = inject('getSortKey')
 const exists = inject('exists')
 const props = defineProps({
-  maxID: { type: Number, required:true },
-  sort_alpha: { type: String, default: "alphabetical" },
-  sort_chrono: { type: String, default: "chronological" },
-  art_view: { type: Number, default: 0, required: true },
-  index_view: { type: Number, default: 1, required: true },
-  list_view: { type: Number, default: 2, required: true },
-  viewMode: { type: Number, required: true },
-  displayKey: { type: String, required: true },
+  maxID: { type:Number, required:true },
+  sort_alpha: { type:String, default:"alphabetical" },
+  sort_chrono: { type:String, default:"chronological" },
+  art_view: { type:Number, default:0, required:true },
+  index_view: { type:Number, default:1, required:true },
+  list_view: { type:Number, default:2, required:true },
+  viewMode: { type:Number, required:true },
+  displayKey: { type:String, required:true },
 
   /* Add a prop for each category name here, named "{category}Key". Each 
   one just needs to be a required string. See also the MainView element 
