@@ -4,10 +4,10 @@
 import Deity from './Deity.vue'
 import EntryChanger from './EntryChanger.vue'
 import Name from './Name.vue'
+import Picture from './Picture.vue'
+import RichStory from './RichStory.vue'
 import SeeAlso from './SeeAlso.vue'
 import Status from './Status.vue'
-import Story from './Story.vue'
-import Picture from './Picture.vue'
 import Tag from '../Tag.vue'
 
 // Components specific to settings
@@ -69,9 +69,12 @@ function updateSelection(id, category, caller="JournalEntry") {
       <!-- RightColumn -->
       <div class="rightColumn">
         <div class="stories">
-          <Story class="story" v-for="story in props.info.contents" 
+          <RichStory class="story" v-for="story in props.info.contents" 
+            :contents="story" :category="props.category" @updateSelection="updateSelection">
+          </RichStory>
+          <!-- <Story class="story" v-for="story in props.info.contents" 
           :contents="story">
-          </Story>
+          </Story> -->
         </div>
         <SeeAlso :contents="props.seeAlso" @updateSelection="updateSelection"/>
       </div>

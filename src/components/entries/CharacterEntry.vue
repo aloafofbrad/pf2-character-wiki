@@ -4,6 +4,7 @@
 import EntryChanger from './EntryChanger.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
+import RichStory from './RichStory.vue'
 import SeeAlso from './SeeAlso.vue'
 import Status from './Status.vue'
 import Tag from '../Tag.vue'
@@ -17,7 +18,6 @@ import CharacterType from './CharacterType.vue'
 import Deity from './Deity.vue'
 import Picture from './Picture.vue'
 import { inject } from 'vue'
-import Story from './Story.vue'
 const DESELECTED = inject('DESELECTED')
 const showables = ['Player', 'Normal', 'Dead', 'In Party']
 const hideables = ['Generic', 'Mythological']
@@ -83,9 +83,12 @@ if (props.debug){ debug() }
       <!-- RightColumn -->
       <div class="rightColumn">
         <div class="stories">
-          <Story v-for="story in props.info.contents"   
+          <RichStory class="story" v-for="story in props.info.contents" 
+            :contents="story" :category="props.category" @updateSelection="updateSelection">
+          </RichStory>
+          <!-- <Story v-for="story in props.info.contents"   
             :contents="story">
-          </Story>
+          </Story> -->
         </div>
         <SeeAlso :contents="props.seeAlso" @updateSelection="updateSelection"/>
       </div>
