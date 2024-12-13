@@ -17,7 +17,7 @@ const props = defineProps({
   active_css:  { type:String, default:"activeEL", required:false },
   inactive_css: { type:String, default:"inactiveEL", required:false },
   tooltips: { type:Boolean, default:false, required:false },
-  debug: { type:Boolean, default:true, required:false }
+  debug: { type:Boolean, default:false, required:false }
 })
 const emit = defineEmits(['updateSelection'])
 const hover = ref(false)
