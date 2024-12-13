@@ -2,6 +2,7 @@
 <script setup>
 // Components designed for multiple types of entries
 import EntryChanger from './EntryChanger.vue'
+import MDRenderer from './MDRenderer.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
 import SeeAlso from './SeeAlso.vue'
@@ -32,10 +33,6 @@ function close() { updateSelection(DESELECTED, props.category) }
 function goTo(id, category, caller="JournalEntry"){
   updateSelection(id, category, caller)
 }
-function debug() {
-  console.log("JournalEntry with ID", props.ID)
-}
-debug()
 </script>
 
 <template>
@@ -62,9 +59,12 @@ debug()
       <!-- RightColumn -->
       <div class="rightColumn">
         <div class="stories">
-          <Story class="story" v-for="story in props.info.contents" 
+          <MDRenderer class="story" v-for="story in props.info.contents" 
+            :contents="story" :category="props.category" @updateSelection="updateSelection">
+          </MDRenderer>
+          <!-- <Story class="story" v-for="story in props.info.contents" 
             :contents="story">
-          </Story>
+          </Story> -->
         </div>
         <SeeAlso :contents="props.seeAlso" @updateSelection="updateSelection"/>
       </div>
