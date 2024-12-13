@@ -17,6 +17,7 @@ const props = defineProps({
   active_css:  { type:String, default:"activeEL", required:false },
   inactive_css: { type:String, default:"inactiveEL", required:false },
   tooltips: { type:Boolean, default:false, required:false },
+  underline: { type:Boolean, default:false, required:false },
   debug: { type:Boolean, default:false, required:false }
 })
 const emit = defineEmits(['updateSelection'])
@@ -29,6 +30,12 @@ function updateSelection(id, category, caller="EntryLink") {
 }
 function open(){ updateSelection(props.id, props.category) }
 function tryOpen(){ if (VALID.value) { open() } }
+const underline = computed(() => {
+  if (props.underline && VALID.value){
+    return "text-decoration:underline;"
+  }
+  return ""
+})
 const CSSclass = computed(() => {
   var result = "entrylink "
   if (VALID.value){ return result.concat(props.active_css) }
@@ -45,7 +52,7 @@ function title(){
 </script>
 
 <template>
-  <span :class="CSSclass" @click="tryOpen" @mouseenter="hover=true" @mouseleave="hover=false" :title="title()"><slot></slot></span>
+  <span :class="CSSclass" @click="tryOpen" @mouseenter="hover=true" @mouseleave="hover=false" :style="underline" :title="title()"><slot></slot></span>
 </template>
 
 <style>
@@ -74,7 +81,6 @@ function title(){
 .activeEL {
   color: #b4dd1e;
   background-color: inherit;
-  text-decoration: underline;
 
   &:hover {
     color: black;
