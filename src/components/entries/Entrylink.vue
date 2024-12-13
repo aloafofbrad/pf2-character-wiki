@@ -43,11 +43,13 @@ const CSSclass = computed(() => {
   return result.concat(props.inactive_css)
 })
 function title(){
+  // TODO: figure out what you actually want to happen here sometime when you're not super tired
   if (!props.tooltips || !VALID.value) { return ''}
   if (props.debug){
     return `characters: ${props.start}-${props.end} (${props.index}), link: (${props.id}, ${props.category})`
   }
-  return `(${props.id}, ${props.category})`
+  if (props.tooltips){ return `(${props.id}, ${props.category})` }
+  if (!VALID.value && !props.tooltips){ return '' }
 }
 </script>
 
