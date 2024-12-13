@@ -2,9 +2,9 @@
 <script setup>
 // Components designed for multiple types of entries
 import EntryChanger from './EntryChanger.vue'
-import MDRenderer from './MDRenderer.vue'
 import Name from './Name.vue'
 import Nationality from './Nationality.vue'
+import RichStory from './RichStory.vue'
 import SeeAlso from './SeeAlso.vue'
 import Status from './Status.vue'
 import Story from './Story.vue'
@@ -17,11 +17,11 @@ const CATEGORIES = inject('CATEGORIES')
 const showables = ['Ongoing', 'Ended']
 const hideables = ['Mythological']
 const props = defineProps({
-  ID: { type:Number, required: true, default: -1 },
-  info: { type:Object, required: true },
-  category: { type:String, required: true },
-  maxID: { type:Number, required: true },
-  seeAlso: { type:Array, default: [], required: false}
+  ID: { type:Number, required:true, default:-1 },
+  info: { type:Object, required:true },
+  category: { type:String, required:true },
+  maxID: { type:Number, required:true },
+  seeAlso: { type:Array, default:[], required:false}
 })
 const emit = defineEmits(['updateSelection'])
 
@@ -59,9 +59,9 @@ function goTo(id, category, caller="JournalEntry"){
       <!-- RightColumn -->
       <div class="rightColumn">
         <div class="stories">
-          <MDRenderer class="story" v-for="story in props.info.contents" 
+          <RichStory class="story" v-for="story in props.info.contents" 
             :contents="story" :category="props.category" @updateSelection="updateSelection">
-          </MDRenderer>
+          </RichStory>
           <!-- <Story class="story" v-for="story in props.info.contents" 
             :contents="story">
           </Story> -->
