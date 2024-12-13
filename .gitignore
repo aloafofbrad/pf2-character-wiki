@@ -47,3 +47,4 @@ output.txt
 src/data
 public
 local-backup.sh
+restore-from-backup.sh
