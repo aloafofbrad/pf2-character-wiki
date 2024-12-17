@@ -26,6 +26,10 @@ class Accessor:
 
     def setFilename(self, filename:str) -> None:
         self.filename = filename
+        try:
+            self.readWriter.setFilename(self.filename)
+        except AttributeError:
+            pass
     def getFilename(self) -> str:
         return self.filename
     
