@@ -1,4 +1,5 @@
 from config import DATA_KEY, INFO_KEY
+from config import CHARACTER_FILE, JOURNAL_FILE, SETTINGS_FILE
 from Accessor import Accessor
 
 # Class that reads the characters file and outputs basic data on each character
@@ -159,13 +160,37 @@ def parse(args) -> dict:
         "ids":None,
         "names":None,
         "keys":None,
+        "file":None
         }
+    files = {}
+    files[CHARACTER_FILE] = ["characters", "c"]
+    files[JOURNAL_FILE] = ["journal", "j"]
+    files[SETTINGS_FILE] = ["settings", "s"]
     if "--ids" in args or "-i" in args:
         result["ids"] = findValues(args, flags=["--ids", "-i"])
     if "--names" in args or "-n" in args:
         result["names"] = findValues(args, flags=["--names", "-n"])
     if "--keys" in args or "-k" in args:
         result["keys"] = findValues(args, flags=["--keys", "-k"])
+    if "--file" in args or "-f" in args:
+        result["file"] = findValues(args, flags=["--file", "-f"])[0]
+        for key in files.keys():
+            if key != "all":
+                if result["file"] in files[key]:
+                    result["file"] = key
+        if result["file"] in files[CHARACTER_FILE]:
+            result["file"] = CHARACTER_FILE
+        elif result["file"] in files[JOURNAL_FILE]:
+            result["file"] = JOURNAL_FILE
+        elif result["file"] in files[SETTINGS_FILE]:
+            result["file"] = SETTINGS_FILE
+        print(f"found file {result['file']}")
+        # if result["file"] == files[0] or result["file"] == files[3]:
+        #     result["file"] = CHARACTER_FILE
+        # elif result["file"] == files[1] or result["file"] == files[4]:
+        #     result["journal"] = JOURNAL_FILE
+        # elif result["file"] == files[2] or result["file"] == files[5]:
+        #     result["file"] = SETTINGS_FILE
     return result
 
 def test():
@@ -177,15 +202,14 @@ def test():
 """
 Expected syntax for running this program:
 
-python3 printer.py --keys id,name,ancestry,class,background
-python3 printer.py -k id,name
-python3 printer.py -k "id,name"
+python3 Printer.py --keys id,name,ancestry,class,background
+python3 Printer.py -k id,name
+python3 Printer.py -k "id,name"
 
 Expected output should display all keys given that exist in each character's JSON object
 """
 def main(argv):
-    from config import CHARACTER_FILE
-    printer = Printer(CHARACTER_FILE)
+    printer = Printer("")
     args = parse(argv)
     if args["ids"] != None:
         printer.addFilter("id", args["ids"])
@@ -193,7 +217,9 @@ def main(argv):
         printer.addFilter("name", args["names"])
     if args["keys"] != None:
         printer.setKeys(args["keys"])
-    printer.printObjects()
+    if args["file"] != None:
+        printer.setFilename(args["file"])
+        printer.printObjects()
 
 if __name__ == "__main__":
     import sys
