@@ -13,16 +13,14 @@ function linkSubstrings(text){
   const matches = [...text.matchAll(entryLinkPattern)];
   for (let i = 0; i < matches.length; i++){
     const index = matches[i].index
-    var curr = {
-            text: matches[i][1],
-              id: parseInt(matches[i][2]),
-        category: matches[i][3],
-           start: matches[i].index,
-           index: matches[i].index,
-      fullLength: matches[i][0].length,
-          length: matches[i][1].length,
-             end: matches[i].index + matches[i][0].length
-    }
+    var curr = { text: matches[i][1],
+                   id: parseInt(matches[i][2]),
+             category: matches[i][3],
+                start: matches[i].index,
+                index: matches[i].index,
+           fullLength: matches[i][0].length,
+               length: matches[i][1].length,
+                  end: matches[i].index + matches[i][0].length }
     result.push(curr)
   }
   return result
@@ -30,16 +28,14 @@ function linkSubstrings(text){
 function nonLinkSubstrings(text, links){
   var startIndex = 0;
   if (links.length === 0){
-    return [{
-              text: text,
+    return [{ text: text,
                 id: null,
           category: null,
              start: startIndex,
              index: startIndex,
         fullLength: text.length,
             length: text.length,
-               end: text.length - 1
-      }]
+               end: text.length - 1 }]
   }
   var result = []
   for (let i = 0; i < links.length; i++){
@@ -49,16 +45,14 @@ function nonLinkSubstrings(text, links){
     var end = a.start
     substring = text.slice(start, end)
     fullLength = start - end + 1
-    var curr = {
-            text: " ".concat(substring),
-              id: null,
-        category: null,
-           start: start,
-           index: start,
-      fullLength: fullLength,
-          length: substring.length,
-             end: end
-    }
+    var curr = { text: " ".concat(substring),
+                   id: null,
+             category: null,
+                start: start,
+                index: start,
+           fullLength: fullLength,
+               length: substring.length,
+                  end: end }
     result.push(curr)
     startIndex = a.end + 1
   }
@@ -66,16 +60,14 @@ function nonLinkSubstrings(text, links){
     var start = 0 + startIndex
     var end = text.length
     var substring = text.slice(start, end)
-    var curr = {
-            text: " ".concat(substring),
-              id: null,
-        category: null,
-           start: start,
-           index: start, 
-      fullLength: start - end + 1, 
-          length: substring.length,
-             end: end
-    }
+    var curr = { text: " ".concat(substring),
+                   id: null,
+             category: null,
+                start: start,
+                index: start, 
+           fullLength: start - end + 1, 
+               length: substring.length,
+                  end: end }
     result.push(curr)
   }
   return result
