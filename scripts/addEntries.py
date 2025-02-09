@@ -11,10 +11,24 @@ def main():
 
     settingUpdater = Updater(SETTINGS_FILE, key="", validation=True, value=None, condition=None, arguments=[], dryRun=False)
 
-    updaters = [journalUpdater]
-    newEntries = 1
-    for updater in updaters:
-        updater.newEntry(1, 0)
+    updaters = [characterUpdater, journalUpdater, settingUpdater]
+    newEntries = [0,0,0]
+    """
+    characters
+    1. the gorgon
+    2. the thing in the chest
+
+    journals
+    1. grandpa & grandson
+    2. treasure of the mysterious underground temple
+
+    settings
+    1. the mysterious underground temple
+    2. bunahver
+    20250209
+    """
+    for i in range(0, len(updaters)):
+        updaters[i].newEntry(newEntries[i])
 
 if __name__ == "__main__":
     main()
