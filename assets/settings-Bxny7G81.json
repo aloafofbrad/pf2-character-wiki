@@ -1,0 +1,734 @@
+{
+  "data": [
+    {
+      "id": -1,
+      "info": {
+        "id": -1,
+        "name": "",
+        "emblem": "",
+        "type": "Normal",
+        "country": "",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/"
+      }
+    },
+    {
+      "id": 0,
+      "info": {
+        "id": 0,
+        "name": "Knork, Capital of Kolis",
+        "emblem": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "image": "public/act1/knork-1024.png",
+        "type": "Capital",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "The largest city in Kolis. "
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "large, dense",
+        "deities": [
+          "Apsu",
+          "Bes"
+        ],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "info": {
+        "id": 1,
+        "name": "That Small Village Sol Saved From Hepatitis or Whatever The Disease Was",
+        "emblem": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Village",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": ""
+      }
+    },
+    {
+      "id": 2,
+      "info": {
+        "id": 2,
+        "name": "Tin Trove Mountain",
+        "emblem": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Mountain",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "A large, snowy mountain in southwest Kolis. Home to a lake, and many mines."
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": 3,
+            "category": "."
+          },
+          {
+            "id": 4,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/tin-trove-mountains-1024.png"
+      }
+    },
+    {
+      "id": 3,
+      "info": {
+        "id": 3,
+        "name": "Georg's Cabin",
+        "emblem": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Abode",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/tin-trove-mountains-1024.png"
+      }
+    },
+    {
+      "id": 4,
+      "info": {
+        "id": 4,
+        "name": "Tin Trove Mine",
+        "emblem": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Cave",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/tin-trove-mountains-1024.png"
+      }
+    },
+    {
+      "id": 5,
+      "info": {
+        "id": 5,
+        "name": "Lord Butler Nathaniel Hammer's Mansion",
+        "emblem": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Abode",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/manor-256.png"
+      }
+    },
+    {
+      "id": 6,
+      "info": {
+        "id": 6,
+        "name": "Goose Potato's Lab",
+        "emblem": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Dungeon",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/knork-1024.png"
+      }
+    },
+    {
+      "id": 7,
+      "info": {
+        "id": 7,
+        "name": "Temple of Apsu",
+        "emblem": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Temple",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [
+          "Apsu"
+        ],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/knork-1024.png"
+      }
+    },
+    {
+      "id": 8,
+      "info": {
+        "id": 8,
+        "name": "The Lethal Lobster",
+        "emblem": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Pub",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          0
+        ],
+        "image": "public/act1/knork-1024.png"
+      }
+    },
+    {
+      "id": 9,
+      "info": {
+        "id": 9,
+        "name": "Kruska",
+        "emblem": "public/emblems/Protectorate-of-Kolis-Emblem.png",
+        "type": "Village",
+        "country": "Kolis",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/kruska-1024.png"
+      }
+    },
+    {
+      "id": 10,
+      "info": {
+        "id": 10,
+        "name": "The Savage Burrows",
+        "emblem": "public/emblems/Frambean-Empire-Emblem.png",
+        "type": "Region",
+        "country": "Frambe",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": ""
+      }
+    },
+    {
+      "id": 11,
+      "info": {
+        "id": 11,
+        "name": "Skutwug",
+        "emblem": "public/emblems/Frambean-Empire-Emblem.png",
+        "type": "City",
+        "country": "Frambe",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": ""
+      }
+    },
+    {
+      "id": 12,
+      "info": {
+        "id": 12,
+        "name": "The Eastern Lair",
+        "emblem": "public/emblems/Frambean-Empire-Emblem.png",
+        "type": "Dungeon",
+        "country": "Frambe",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": ""
+      }
+    },
+    {
+      "id": 13,
+      "info": {
+        "id": 13,
+        "name": "The Crystal Grotto",
+        "emblem": "",
+        "type": "Normal",
+        "country": "",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/"
+      }
+    },
+    {
+      "id": 14,
+      "info": {
+        "id": 14,
+        "name": "The Gossipbug Hive",
+        "emblem": "",
+        "type": "Normal",
+        "country": "",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "The ![gossipbug](35,characters) hive ![Yapple](33,characters) took the party to. Initially, it was mistaken for a ![mailbug](34,characters) hive, as that was what the map said.",
+              "A gossipbug hive is a mess. They might be mistaken for a mailbug hive with an insane queen, but their queens are actually quite resistant to altered mental states. Gossipbug queens are, of course, obsessed with gossip, and as such their chamber is dedicated to chit chat. Gossipbug hives have entrances and exits of course, but these are often multidirectional (occasionally these holes will be unidirectional if it's more convenient)."
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/"
+      }
+    },
+    {
+      "id": 15,
+      "info": {
+        "id": 15,
+        "name": "The Joyous Maggots' City",
+        "emblem": "",
+        "type": "Normal",
+        "country": "",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/"
+      }
+    },
+    {
+      "id": 16,
+      "info": {
+        "id": 16,
+        "name": "Silvermoon College",
+        "emblem": "",
+        "type": "Normal",
+        "country": "",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/silvermoon-1024.png"
+      }
+    },
+    {
+      "id": 17,
+      "info": {
+        "id": 17,
+        "name": "The Mysterious Underground Temple",
+        "emblem": "",
+        "type": "Normal",
+        "country": "",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/"
+      }
+    },
+    {
+      "id": 18,
+      "info": {
+        "id": 18,
+        "name": "Bunahver",
+        "emblem": "",
+        "type": "Normal",
+        "country": "Aremia",
+        "contents": [
+          {
+            "author": {
+              "name": "",
+              "id": null,
+              "date": "",
+              "addendum": ""
+            },
+            "text": [
+              "?"
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": -1,
+            "category": "."
+          }
+        ],
+        "population": "",
+        "deities": [],
+        "plane": "The Universe",
+        "owners": [
+          -1
+        ],
+        "image": "public/act1/bunahver-1024.png"
+      }
+    }
+  ]
+}
