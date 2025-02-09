@@ -1,0 +1,748 @@
+{
+    "data": [
+        {
+            "id": -1,
+            "info": {
+                "id": -1,
+                "name": "null",
+                "image": "public/silhouette.jpg",
+                "type": "null",
+                "ancestry": "?",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "?",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "?"
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 0,
+            "info": {
+                "id": 0,
+                "name": "Basil Nimble-Fingers",
+                "image": "public/act1/basil-nimble-fingers-320.png",
+                "type": "Player",
+                "ancestry": "Ratfolk",
+                "heritage": "Tunnel Rat",
+                "background": "Junk Collector",
+                "class": "Rogue",
+                "level": "3",
+                "pronouns": "He/Him",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "In Party",
+                "biography": [
+                    "He is very close and looked up to his older brother Russel gatsby. Basil had always been a little too hesitant to explore any distance outside his home but always dreamed of the things Russel must have been exploring and seeing.",
+                    "Russel was always sending him letters back of his adventures exploring historical sites and forgotten tombs. He would receive old trinkets from Russel that basil would attempt to guess what they were used for. He would often end up over thinking it and include them in some over engineered and conviluted creation and convince himself that this was definately what it would have looked like and been used for.",
+                    "One day though the letters from his brother stopped and after one too many accidental fires/explosions caused by his \"reconstructed creations\" he was encouraged by the rest of his large family to finally take the steps and explore for himself and find his brother.",
+                    "Being fresh to the world though every shiny thing Basil saw must be something far more important than what it seems to be. That shiny penny in the gutter? It must be a clue from some historical mystery because it had a slight chip in the upper right corner that could be a sypher to the next step in finding Russel or a grand treasure... For example."
+                ],
+                "deity": "Lao Shu Po"
+            }
+        },
+        {
+            "id": 1,
+            "info": {
+                "id": 1,
+                "name": "Solomon Moonfall",
+                "image": "public/act1/solomon-moonfall-192.jpg",
+                "type": "Player",
+                "ancestry": "Catfolk",
+                "heritage": "?",
+                "background": "Back-Alley Doctor",
+                "class": "Cleric",
+                "level": "3",
+                "pronouns": "He/They",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "In Party",
+                "biography": [
+                    "?"
+                ],
+                "deity": "Bes"
+            }
+        },
+        {
+            "id": 2,
+            "info": {
+                "id": 2,
+                "name": "Grandpa",
+                "image": "public/act1/grandpa-256.jpg",
+                "type": "Normal",
+                "ancestry": "Human",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "",
+                "pronouns": "He/Him",
+                "nationality": "?",
+                "age": {
+                    "age": "",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "A being of great power. He wreaks a path of devastation upon any land that he visits.",
+                    "He attacked Knork, the capitol of Kolis, where the party had just awoken in the hospital. He summoned an ogre warrior and a mysterious young man to help him attack the city. He has not been seen since this attack."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 3,
+            "info": {
+                "id": 3,
+                "name": "?",
+                "image": "public/act1/grandson-the-insufferable-448.jpg",
+                "type": "Normal",
+                "ancestry": "Human",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "",
+                "pronouns": "He/Him",
+                "nationality": "?",
+                "age": {
+                    "age": "",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "A mysterious young man who seems to be in cahoots with Grandpa. He seems to have similar powers to Grandpa."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 4,
+            "info": {
+                "id": 4,
+                "name": "Quinn",
+                "image": "public/act1/quinn-448.png",
+                "type": "Normal",
+                "ancestry": "Human",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "",
+                "pronouns": "He/Him",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "12",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "In Party",
+                "biography": [
+                    "An orphan Basil & Sol saved from the Grandpa attack in Knork, the capitol of Kolis.", "He seems to like berries."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 5,
+            "info": {
+                "id": 5,
+                "name": "Tsar Freddy",
+                "image": "public/act1/tsar-freddy-192.jpg",
+                "type": "Normal",
+                "ancestry": "Human",
+                "heritage": "?",
+                "background": "Royalty",
+                "class": "?",
+                "level": "",
+                "pronouns": "He/Him",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "40-50",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "Dead",
+                "biography": [
+                    "Freddy Tsar of Kolis.",
+                    "Freddy has scar on hand.",
+                    "Freddy die after Wubbins Goose Potato assissination plot, thanks to party and peanut allergy."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 6,
+            "info": {
+                "id": 6,
+                "name": "Mac",
+                "image": "public/act1/mac-256.jpg",
+                "type": "Normal",
+                "ancestry": "Cat",
+                "heritage": "Orange",
+                "background": "?",
+                "class": "?",
+                "level": "",
+                "pronouns": "He/Him",
+                "nationality": "Neutral",
+                "age": {
+                    "age": "1-12",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "Missing",
+                "biography": [
+                    "Mac is a mysterious little feline found at Sir George Grimcomb's house."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 7,
+            "info": {
+                "id": 7,
+                "name": "Psycho Bitch Goblins",
+                "image": "public/act1/goblin-psycho-bitch-128.png",
+                "type": "Group",
+                "ancestry": "Goblin",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "",
+                "pronouns": "She/Her",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "16-21",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "Active?",
+                "biography": [
+                    "A group of goblins. The party met them in Tin Trove Mine, where they were having an underground fashion show."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 8,
+            "info": {
+                "id": 8,
+                "name": "Georg",
+                "image": "public/act1/georg-128.jpg",
+                "type": "Normal",
+                "ancestry": "Human",
+                "heritage": "?",
+                "background": "Hermit?",
+                "class": "Barbarian?",
+                "level": "",
+                "pronouns": "He/Him",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "35-45",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "Alive",
+                "biography": [
+                    "Georg new Tsar of Kolis. Georg live in mountain after Freddy hit Georg head with lamp."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 9,
+            "info": {
+                "id": 9,
+                "name": "Aesop",
+                "image": "public/act1/aesop-448.png",
+                "type": "Normal",
+                "ancestry": "Catfolk",
+                "heritage": "Orange/Poofy",
+                "background": "Entertainer",
+                "class": "Bard?",
+                "level": "",
+                "pronouns": "He/Him",
+                "nationality": "",
+                "age": {
+                    "age": "18",
+                    "exact": true,
+                    "calculateHumanYears": true
+                },
+                "status": "?",
+                "biography": [
+                    "A mysterious entertainer, who seems to have some bigoted opinions regarding ratfolk.",
+                    "He was hired by the Psycho Bitches to play music at their underground fashion show in the Tin Trove Mine.",
+                    "Later he was hired by the Lord Butler Nathaniel Hammer to perform standup comedy at a dinner party. He made a racist joke about ratfolk when he noticed Basil Nimble-Fingers in the audience.",
+                    "Current whereabouts: unknown."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 10,
+            "info": {
+                "id": 10,
+                "name": "Leader of the Psycho Bitches?",
+                "image": "public/act1/mindy-psycho-bitch-192.png",
+                "type": "Normal",
+                "ancestry": "Human",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "",
+                "pronouns": "She/Her",
+                "nationality": "",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "The apparent leader of the Psycho Bitches."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 11,
+            "info": {
+                "id": 11,
+                "name": "Georg Dragon Egg",
+                "image": "public/act1/dragon-egg-256.png",
+                "type": "Normal",
+                "ancestry": "?",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "None",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "In Party",
+                "biography": [
+                    "Basil, Sol found Dragon Egg in Georg cabin on Tin Trove Mountain.",
+                    "Where Georg get Egg? Real big mystery.",
+                    "Seem like going to hatch.",
+                    "Georg entrust to Basil, Sol."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 12,
+            "info": {
+                "id": 12,
+                "name": "Impact, The Lord Butler's Dog",
+                "image": "public/act1/impact-the-lord-butlers-dog-320.jpg",
+                "type": "Normal",
+                "ancestry": "Dog (Straian Shepherd)",
+                "heritage": "?",
+                "background": "?",
+                "class": "Dog",
+                "level": "?",
+                "pronouns": "He/Him",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "6",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "?"
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 13,
+            "info": {
+                "id": 13,
+                "name": "The Lord Butler Nathaniel Hammer",
+                "image": "public/act1/nathaniel-hammer-the-lord-butler-192.jpg",
+                "type": "Normal",
+                "ancestry": "Human",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "He/Him",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "30-40",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "?"
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 14,
+            "info": {
+                "id": 14,
+                "name": "Barkeeps",
+                "image": "public/act1/barkeep-128.png",
+                "type": "Generic",
+                "ancestry": "Any",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "He/Him",
+                "nationality": "Any",
+                "age": {
+                    "age": "25 or older",
+                    "exact": true,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "These curious creatures can be found keeping all manner of pubs and taverns. Some hearty specimens can even be found in the occasional distillery.",
+                    "No one is quite sure how their biology truly works."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 15,
+            "info": {
+                "id": 15,
+                "name": "Bes Emissaries",
+                "image": "public/act1/bes-emissary-320.jpg",
+                "type": "Generic",
+                "ancestry": "Human (Typically)",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "She/Her",
+                "nationality": "Neutral",
+                "age": {
+                    "age": "Usually 20-35, but sometimes older",
+                    "exact": true,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "Loyal emissaries of the deity Bes."
+                ],
+                "deity": "Bes"
+            }
+        },
+        {
+            "id": 16,
+            "info": {
+                "id": 16,
+                "name": "Rachel Brooks (Bes Emissary)",
+                "image": "public/act1/toby-brooks-320.jpg",
+                "type": "Normal",
+                "ancestry": "Human",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "She/Her",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "Away",
+                "biography": [
+                    "An Emissary of Bes befriended by the party. She seems nice, albeit reserved."
+                ],
+                "deity": "Bes"
+            }
+        },
+        {
+            "id": 17,
+            "info": {
+                "id": 17,
+                "name": "Wubbins",
+                "image": "public/act1/wubbins-384.jpg",
+                "type": "Normal",
+                "ancestry": "Dog?",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "He/Him",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "Uhhh? Hmmm...",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "Alive",
+                "biography": [
+                    "\"Wubbins knows all, Wubbins sees all.\"",
+                    "A mysterious entity that oversees Kolis. He and Goose Potato asked the party to help him overthrow Tsar Freddy so that Georg could take Freddy's place."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 18,
+            "info": {
+                "id": 18,
+                "name": "Goose Potato (Alchemist)",
+                "image": "public/act1/goose-potato-128.png",
+                "type": "Normal",
+                "ancestry": "Human",
+                "heritage": "?",
+                "background": "?",
+                "class": "Alchemist?",
+                "level": "?",
+                "pronouns": "He/Him",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "",
+                    "exact": true,
+                    "calculateHumanYears": false
+                },
+                "status": "Alive",
+                "biography": [
+                    "In collaboration with Wubbins', he engineered a special poison to kill Tsar Freddy, which turned out to just be peanut oil--exploiting Freddy's peanut allergy.",
+                    "Sol, Basil, Quinn, Georg, and Rachel Brooks awoke in tubes in his lab after leaving Nathaniel Hammer's dinner party several months prior. He told them they had been asleep the entire time."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 19,
+            "info": {
+                "id": 19,
+                "name": "Georg Ex",
+                "image": "public/act1/lenna-pabalar-384.jpg",
+                "type": "Normal",
+                "ancestry": "Elf",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "She/Her",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "Alive",
+                "biography": [
+                    "Georg Ex. She slap Georg at Freddy brunch and yell at Georg in front of nobles. Embarassing.",
+                    "Seemed bit neutral about Freddy demise."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 20,
+            "info": {
+                "id": 20,
+                "name": "Lord Dessert",
+                "image": "public/act1/lord-dessert-448.jpg",
+                "type": "Normal",
+                "ancestry": "Gelatinous Cube?",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "He/Him",
+                "nationality": "Kolis",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "Dead",
+                "biography": [
+                    "A dessert that broke free from the Palace kitchens in Kolis."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 21,
+            "info": {
+                "id": 21,
+                "name": "Giant Cockroaches",
+                "image": "public/act1/giant-cockroach-128.jpg",
+                "type": "Generic",
+                "ancestry": "Cockroach",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "None",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "Hated denizens of inns, markets, kitchens, and eateries everywhere."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 22,
+            "info": {
+                "id": 22,
+                "name": "Russel Gatsby Nimble-Fingers",
+                "image": "public/silhouette.jpg",
+                "type": "Normal",
+                "ancestry": "Ratfolk",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "He/Him",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "Basil Nimble-Fingers' older brother. An explorer and archaeologist."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 23,
+            "info": {
+                "id": 23,
+                "name": "Ind",
+                "image": "public/silhouette.jpg",
+                "type": "Normal",
+                "ancestry": "?",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "He/Him",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "Russel Gatsby Nimble-Fingers' close friend."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 24,
+            "info": {
+                "id": 24,
+                "name": "Selphie",
+                "image": "public/silhouette.jpg",
+                "type": "Normal",
+                "ancestry": "?",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "She/Her(?)",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "Someone Russel mentioned in one of his letters to Basil. Not much else is known about her(?)."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 25,
+            "info": {
+                "id": 25,
+                "name": "Gendraiss",
+                "image": "public/silhouette.jpg",
+                "type": "Dragon",
+                "ancestry": "Dragon",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "He/Him(?)",
+                "nationality": "Frambe",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "Mythological",
+                "biography": [
+                    "A dragon present in Frambean folklore. Supposedly, he resides in a cavern called the Eastern Lair in the Savage Burrows."
+                ],
+                "deity": ""
+            }
+        },
+        {
+            "id": 26,
+            "info": {
+                "id": 26,
+                "name": "Reginald Wyyrmscale",
+                "image": "public/silhouette.jpg",
+                "type": "Normal",
+                "ancestry": "?",
+                "heritage": "?",
+                "background": "?",
+                "class": "?",
+                "level": "?",
+                "pronouns": "He/Him",
+                "nationality": "?",
+                "age": {
+                    "age": "?",
+                    "exact": false,
+                    "calculateHumanYears": false
+                },
+                "status": "?",
+                "biography": [
+                    "A foreign wizard hired by Wubbins to look after the village of Kursk."
+                ],
+                "deity": ""
+            }
+        }
+    ]
+}
